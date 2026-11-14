@@ -6,6 +6,9 @@ Entregar una demo reproducible para explorar imágenes infrarrojas de SPHEREx,
 con procedencia de datos, controles de calidad y una presentación verificable.
 El alcance funcional y el historial están en [PLAN.md](PLAN.md).
 
+Construcción: [PROTOCOLO_CONSTRUCCION.md](PROTOCOLO_CONSTRUCCION.md).
+Fuentes verificadas y cambios DR1/QR3: [RECURSOS_RETO.md](RECURSOS_RETO.md).
+
 Reparto establecido para cinco integrantes: Jesús, Jordi, Dany, Terán y Regalado.
 El plan indica que los cuatro compañeros no tienen experiencia técnica: sus
 entregables se pueden realizar con navegador y documentos. Jesús implementa las
@@ -14,8 +17,9 @@ correcciones de código que resulten de su revisión.
 ## Diagnóstico — 14 de noviembre de 2026
 
 - Repositorio: https://github.com/jordihuaman/orbitlens-spherex-ofi
-- Tras `git fetch origin`, la única rama remota publicada es `master`.
-- Su commit es `7dfa8095f1b64d57010c6309999632a274ba8c58` (`primer commit`).
+- En la inspección inicial, la única rama remota era `master`; después se publicó
+  `jesus/preparacion-equipo` con documentación. Ambas siguen sin código de la aplicación.
+- El commit inspeccionado de `master` es `7dfa8095f1b64d57010c6309999632a274ba8c58` (`primer commit`).
 - `git ls-tree -r --name-only origin/master` muestra únicamente `PLAN.md`.
 - No hay sparse checkout habilitado ni instrucciones `AGENTS.md` en el directorio examinado.
 - El plan describe un MVP React/Vite/TypeScript + FastAPI/Python y pruebas previas,
@@ -48,6 +52,7 @@ pipeline y frontend, y publicar una versión que pueda reproducirse.
 - [x] Inspeccionar carpeta, estado Git, ramas y contenido remoto.
 - [x] Documentar el reparto y el bloqueo de código ausente.
 - [ ] Localizar e incorporar el código existente y sus instrucciones.
+- [ ] Aplicar H0–H4 del protocolo: DR1/QR3, lectores FITS, contratos, pruebas y despliegue.
 - [ ] Reproducir instalación, pruebas Python, pruebas frontend y build disponibles.
 - [ ] Revisar el recorrido búsqueda → cola → resultado → visualización.
 - [ ] Corregir los fallos priorizados de Jordi y Dany.
@@ -70,10 +75,13 @@ datos. No requiere programar ni certificar descubrimientos.
 
 - [ ] Preparar una ficha por cada preset: Barnard, Epsilon Indi B, WISE 0855,
   RW Aurigae y R Draconis.
+- [ ] Revisar los cinco campos regenerados con DR1/QR3; no reutilizar los conteos
+  de cobertura/máscaras QR2 como si describieran los datos actuales.
 - [ ] Anotar coordenadas y época, colección, detector, fechas, número de frames,
   origen de datos y avisos de calidad que realmente aparezcan.
 - [ ] Comparar la evidencia con el plan y registrar discrepancias para Jesús.
-- [ ] Revisar etiquetas de diferencias, pila, curva central y vista Gaia/WISE.
+- [ ] Revisar etiquetas de diferencias, pila, curva central y vista Gaia/WISE
+  cuando se incorporen; registrar como fuera de alcance los extras no incluidos.
 - [ ] Entregar `REVISION_DATOS.md` con enlaces/capturas y resultados por preset.
 
 **Criterios de revisión:** `ready` significa procesamiento completado; un centro
@@ -89,13 +97,15 @@ marcada como pendiente, y texto científico del guion revisado con Terán.
 **Responsabilidad:** representar al visitante y producir errores reproducibles.
 
 - [ ] Probar los cinco presets en escritorio y al menos uno en teléfono real.
-- [ ] Revisar play/pausa, slider, velocidad, fecha y cambios de modo.
+- [ ] Revisar play/pausa, slider, velocidad, fecha y cambios de modo disponibles.
 - [ ] Abrir enlaces compartidos en una nueva sesión y comprobar sus parámetros.
 - [ ] Probar coordenadas válidas, entradas inválidas y mensajes de campos vacíos.
 - [ ] Revisar máscaras, estados sin cobertura/parcial y errores cuando puedan
   reproducirse; pedir a Jesús un entorno controlado si hace falta.
 - [ ] Comprobar legibilidad móvil, navegación por teclado y etiquetas de controles.
 - [ ] Registrar resultados en `QA_EQUIPO.md` y volver a probar cada corrección.
+- [ ] Verificar O1–O4 del plan y los estados de la sección 5 del protocolo;
+  distinguir funciones básicas de extras opcionales del reto.
 
 **Formato de cada caso:** ID, fecha, URL/commit si se conoce, dispositivo y
 navegador, pasos, resultado esperado, resultado observado, evidencia y estado
@@ -114,6 +124,8 @@ abiertos en el recorrido de presentación. Un caso bloqueado no cuenta como apro
 1–2 minutos. Dany apoya la grabación tras completar su QA.
 
 - [ ] Escribir `GUION_DEMO.md`: problema, uso de datos NASA, recorrido y límites.
+- [ ] Mostrar fechas en la animación; no narrar los planos de un cubo espectral
+  como si fueran épocas distintas.
 - [ ] Elegir con Jordi un campo cuya visualización se haya comprobado.
 - [ ] Preparar un recorrido corto: abrir preset, comparar fechas, consultar
   calidad y compartir el campo.
@@ -135,6 +147,8 @@ identificarse como grabación si se utiliza durante una presentación.
 - [ ] Redactar problema, solución, público, uso de datos y límites en `SUBMISSION.md`.
 - [ ] Preparar créditos y fuentes: NASA/SPHEREx, IRSA, SIMBAD, CDS/Aladin y
   Gaia/WISE según el uso que se confirme en la aplicación.
+- [ ] Usar DOI y atribuciones de `RECURSOS_RETO.md`; comprobar reglas de trabajo
+  previo y registrar lo reutilizado frente a lo desarrollado durante el evento.
 - [ ] Coordinar con Jesús las instrucciones del README y con los titulares la
   elección de licencia; no atribuir una licencia aún no acordada.
 - [ ] Incorporar enlaces de código, demo y video; comprobar acceso sin sesión.

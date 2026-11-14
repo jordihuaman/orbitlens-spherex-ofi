@@ -1,5 +1,108 @@
 # PLAN — Planet X and SPHEREx (NASA Space Apps 2026)
 
+## Plan vigente — revisión de fuentes del 2026-11-14
+
+Esta sección sustituye las decisiones incompatibles del historial del 5–6 de
+noviembre. Las casillas antiguas describen ejecuciones reportadas en otra copia;
+no acreditan que este repositorio contenga una aplicación ejecutable.
+
+**Estado comprobado:** `origin/master` contiene únicamente el plan original.
+La rama `jesus/preparacion-equipo` contiene la documentación del equipo. Faltan
+código, dependencias, pruebas y datos. La revisión actual es documental: no se han
+ejecutado los notebooks ni regenerado los cinco presets.
+
+### Documentos de trabajo
+
+- [Fuentes del reto y decisiones derivadas](RECURSOS_RETO.md): ocho recursos
+  enlazados por el reto y documentación técnica complementaria; incluye accesos fallidos.
+- [Protocolo de construcción](PROTOCOLO_CONSTRUCCION.md): entorno, acceso a datos,
+  pipeline, contrato API/manifiesto, pruebas, despliegue y actualización de releases.
+- [Responsables y entregables](TRABAJO_EQUIPO.md): Jesús, Jordi, Dany, Terán y Regalado.
+
+### Correcciones necesarias
+
+1. **DR1 + QR3 sustituyen el fallback QR3 + QR2.** IRSA publicó DR1 en noviembre
+   de 2026: reprocesa QR2 y forma con QR3 un conjunto procesado uniformemente.
+   QR2 ya no aparece en búsquedas IRSA/VO y solo permanece en descarga directa
+   hasta febrero de 2027. Buscar `spherex_dr1`, `spherex_qr3`,
+   `spherex_dr1_deep` y `spherex_qr3_deep`; conservar las cuatro en configuración.
+   Consultar las cuatro para construir la secuencia, no detenerse al encontrar
+   la primera imagen. Fuentes: R1, T1–T3 en `RECURSOS_RETO.md`.
+2. **Regenerar los cinco presets.** Los resultados QR2 y las cifras de máscaras
+   del historial no se trasladan a DR1. Versionar caché y manifiestos; resolver
+   nuevamente cobertura, selección temporal, calidad y longitudes de onda.
+3. **Separar producto temporal y producto espectral.** `IMAGE` de un MEF Level 2
+   es 2D; el nuevo All-Sky Cube de DR1 sí tiene 102 planos espectrales. El cubo
+   no proporciona una película de 102 fechas y queda fuera del reproductor temporal.
+4. **Comparar fechas con control espectral.** Un mismo detector no garantiza
+   igual longitud de onda en el píxel objetivo. Mostrar λ y ancho de banda;
+   diferencias/apilado requieren un criterio explícito de compatibilidad.
+   `WCS-WAVE` sirve para visualización; análisis científico requiere calibraciones
+   `CWAVE`/`CBAND` y validación adicional. Fuentes: T4, T6, T13.
+5. **Tratar las ocho consideraciones como opcionales del reto.** El enunciado
+   dice “You may (but are not required to) consider the following”. El antiguo
+   objetivo interno 8/8 deja de ser condición para entregar el MVP.
+
+### Alcance y trazabilidad
+
+| ID | Requisito del objetivo oficial | Entregable | Verificación |
+| --- | --- | --- | --- |
+| O1 | Herramienta web pública | URL de la versión entregada | Dany abre sin sesión en escritorio y móvil |
+| O2 | Entrada de ascensión recta y declinación | Formulario con unidades inequívocas | Casos decimales, sexagesimales y valores inválidos |
+| O3 | Imágenes SPHEREx de un mismo campo como secuencia temporal | Frames reales alineados, controles y fechas | Jesús comprueba procedencia/WCS; Dany reproduce el recorrido |
+| O4 | Probar Barnard, Epsilon Indi B, WISE 0855, RW Aurigae y R Draconis | Cinco fichas de revisión | Jordi registra cobertura, máscaras y limitaciones, aunque no se detecte el objeto |
+
+Fuente del objetivo: R0. La alineación, los formatos aceptados y los controles
+concretos son decisiones de implementación para satisfacerlo, no citas del reto.
+
+| Consideración opcional del reto | Prioridad del equipo | Decisión actual |
+| --- | --- | --- |
+| C1. Actualizaciones de datos | MVP técnico | Configuración DR1/QR3, procedencia y regeneración versionada |
+| C2. Visualizar bandas; espectros como extra | Bandas tras secuencia básica; espectros futuros | Distinguir λ de fecha; no sumar seis detectores indiscriminadamente |
+| C3. Sumar/restar imágenes de épocas distintas | Después del MVP | Operaciones sobre FITS válidos y espectralmente compatibles |
+| C4. Campo de visión elegible | MVP | Ancho completo 1–30 arcmin; límites propios del proyecto |
+| C5. Datos de Gaia/WISE superpuestos | Después del MVP | Gaia DR3/AllWISE; una vista contextual separada no cuenta como overlay sobre SPHEREx |
+| C6. Coordenadas en URL | MVP | Enlace reproducible con parámetros; ID de resultado para secuencia exacta |
+| C7. Metadatos de contaminación/calidad | MVP técnico | Fecha, detector, λ, cobertura y máscaras visibles |
+| C8. Reutilizar herramientas astronómicas | MVP técnico | Astropy y reproject; Aladin opcional para contexto |
+
+NEOSSat/CADC son recursos complementarios; no se exige integrar todos los
+recursos citados. La espectrofotometría, el descubrimiento automático y la
+comparación conjunta entre detectores quedan fuera del cierre del MVP.
+
+### Ejecución por hitos
+
+| Hito | Responsable y apoyo | Trabajo | Condición de salida |
+| --- | --- | --- | --- |
+| H0. Base reproducible | Jesús; Regalado documenta | Recuperar código y evidencias; si no existe, iniciar estructura según protocolo | Commit con dependencias y comandos reales de arranque |
+| H1. Dato real actual | Jesús; Jordi revisa | Consultar cuatro colecciones actuales y abrir un recorte DR1/QR3 | Procedencia, HDU, unidades, tiempo, WCS y máscaras registrados |
+| H2. Secuencia temporal | Jesús; Jordi revisa | Selección, reproyección, escala común y manifiestos de cinco campos | Frames comprobados y fichas sin afirmaciones de detección no respaldadas |
+| H3. Web de extremo a extremo | Jesús; Dany prueba | Formulario → trabajo asíncrono → reproducción → compartir | O2/O3 comprobados, estados empty/partial/error visibles |
+| H4. Versión pública | Jesús; Dany verifica | Caché, cuotas, reinicio, build y despliegue | O1/O4 comprobados; ejecución y commit registrados |
+| H5. Cierre | Terán y Regalado; Jordi/Dany revisan | Video, tres ensayos, créditos y submission | Enlaces accesibles y confirmación de envío |
+
+Recuperar una implementación permite verificar y cerrar hitos sin reescribirla.
+Los extras marcados «después del MVP» se incorporan después de H4 si no
+comprometen H5; las consideraciones elegidas como MVP técnico se verifican antes.
+No se fija una fecha de entrega oficial a partir de los días históricos del plan:
+Regalado debe comprobar plazo, zona horaria y reglas en la convocatoria vigente.
+
+### Estado de esta revisión
+
+- [x] Consultar el enunciado y los ocho enlaces de recursos; registrar el fallo
+  de acceso al portal de datos NEOSSat y la alternativa oficial CADC.
+- [x] Revisar los seis tutoriales SPHEREx y las guías de acceso/productos actuales.
+- [x] Definir el protocolo de construcción y actualizar responsabilidades.
+- [ ] Completar H0–H5 con evidencia de la implementación disponible en este repo.
+
+---
+
+## Historial conservado — no usar como configuración vigente
+
+Las referencias siguientes a QR2, a “siguiente etapa”, al objetivo 8/8 y a pruebas
+aprobadas pertenecen al historial. Para nuevas decisiones usar la sección vigente
+y el protocolo enlazado arriba.
+
 ## Coordinación del equipo — 2026-11-14
 
 Reparto actual para Jesús, Jordi, Dany, Terán y Regalado, con Jesús a cargo de
@@ -8,7 +111,7 @@ entregables, dependencias y criterios de cierre. La inspección de GitHub de est
 fecha encontró únicamente este plan en `origin/master`; recuperar el código
 descrito en el historial es el primer bloqueo técnico.
 
-## Estado vigente — 2026-11-06
+## Estado reportado históricamente — 2026-11-06
 
 - 76 pruebas Python pasan, 3 avisos conocidos; TypeScript/Vite compilan.
 - Etapa 6: enlaces y orden espectral tienen 10 pruebas frontend con runner nativo
@@ -34,7 +137,7 @@ descrito en el historial es el primer bloqueo técnico.
   no el estado vigente. Identidades, detecciones y movimientos no están validados
   científicamente. Video, ensayos y submission no se consideran terminados.
 
-> **CONTEXTO PARA NUEVA SESIÓN (leer primero):**
+> **CONTEXTO HISTÓRICO DE OTRA SESIÓN (superado por el plan vigente):**
 > - Estado: ETAPAS 1, 2 y 3 completadas: datos, pipeline y web local.
 >   Pipeline 0.2.2: 18 pruebas pasan; cinco presets con 12 frames cada uno.
 >   Datos revisados: 60 PNG, 60 FITS alineados y cinco GIF; sin artefactos faltantes.
