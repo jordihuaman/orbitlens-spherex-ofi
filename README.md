@@ -23,7 +23,8 @@ entorno es:
 
 | Comprobación | Resultado |
 | --- | --- |
-| Suite Python (`pytest`) | **94 pruebas pasan** (incluye regresión de detector y verificador) |
+| Suite Python (`pytest`) | **100 pruebas pasan** (incluye detector, VERSION, WCS espectral y UTC) |
+| Navegador real Edge / Playwright | **28 casos pasan**, escritorio y viewport móvil; sintético/proveedor controlado |
 | Build frontend (`tsc --noEmit && vite build`) | Correcto, genera `frontend/dist` |
 | Arranque `uvicorn api:app` | `/api/health`, `/api/presets` y `/` responden 200 |
 | Contrato resultado → manifiesto → PNG/FITS | Verificado con un resultado **sintético** |
@@ -101,6 +102,16 @@ Las pruebas cubren coordenadas decimales y sexagesimales, parser VOTable,
 máscaras por bits, FITS/WCS/reproyección, manifiestos, cola de trabajos y
 contratos HTTP. **No requieren red ni datos reales.**
 
+QA reproducible en Edge instalado (escritorio y viewport móvil, no teléfono real):
+
+```powershell
+npm --prefix frontend run build
+npm --prefix frontend run test:e2e
+```
+
+Playwright arranca y detiene un servidor local de pruebas con datos sintéticos
+aislados. Resultados, capturas y límites en `QA_EQUIPO.md`.
+
 ## Resultado sintético para probar la UI
 
 ```powershell
@@ -153,6 +164,11 @@ Un `empty` significa «sin frames utilizables», no «el objeto no existe».
   `verified=False`; deben revisarse antes de afirmar identificación.
 
 ## Documentación
+
+- [QA ejecutado y evidencias](QA_EQUIPO.md)
+- [Guion de demo de 90 segundos](GUION_DEMO.md) (borrador, sin video grabado)
+- [Texto y pitch para submission](SUBMISSION.md) (no enviado)
+- [Créditos y atribuciones](CREDITOS.md)
 
 - [Plan funcional e historial](PLAN.md)
 - [Protocolo de construcción](PROTOCOLO_CONSTRUCCION.md)

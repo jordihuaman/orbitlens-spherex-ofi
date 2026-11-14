@@ -15,6 +15,8 @@ data/
 frontend/node_modules/
 frontend/dist/
 frontend/.vite/
+frontend/test-results/
+frontend/playwright-report/
 
 # Configuración local y secretos
 .env

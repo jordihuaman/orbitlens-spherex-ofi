@@ -2,6 +2,17 @@
 
 ## Objetivo y equipo
 
+**Actualización de integración:** Jesús pidió asumir también las partes de los
+demás frentes. El agente preparó QA reproducible, guion, créditos y borrador de
+submission sin atribuirlos a compañeros ausentes. Material disponible:
+[QA_EQUIPO.md](QA_EQUIPO.md), [GUION_DEMO.md](GUION_DEMO.md),
+[CREDITOS.md](CREDITOS.md) y [SUBMISSION.md](SUBMISSION.md).
+QA asistido: 28 casos Edge, escritorio y viewport móvil; no teléfono físico.
+Siguen abiertos datos reales de los cinco campos, revisión científica externa,
+grabación/tres ensayos, despliegue público, licencia y envío autorizado.
+El diagnóstico inicial de abajo se conserva como historial, no describe la
+ausencia de código en el estado actual.
+
 Entregar una demo reproducible para explorar imágenes infrarrojas de SPHEREx,
 con procedencia de datos, controles de calidad y una presentación verificable.
 El alcance funcional y el historial están en [PLAN.md](PLAN.md).

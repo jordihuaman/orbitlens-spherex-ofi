@@ -11,7 +11,10 @@ const SPEEDS = [300, 600, 900, 1500];
 
 function formatDate(frame: Frame): string {
   if (frame.time.label) {
-    const date = new Date(frame.time.label);
+    // Los manifiestos antiguos usan Astropy isot sin Z, pero declaran UTC.
+    const label = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(frame.time.label)
+      ? frame.time.label : `${frame.time.label}Z`;
+    const date = new Date(label);
     if (!Number.isNaN(date.getTime())) {
       return `${date.toLocaleString("es-ES", {
         dateStyle: "medium",
@@ -32,6 +35,7 @@ function formatValue(value: number | null, unit: string): string {
 
 export default function Viewer({ manifest }: Props) {
   const frames = manifest.frames;
+  const synthetic = frames.some((frame) => frame.collection === "synthetic-demo");
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [speed, setSpeed] = useState(900);
@@ -98,10 +102,16 @@ export default function Viewer({ manifest }: Props) {
         </button>
       </div>
 
+      {synthetic && (
+        <p className="notice" role="note">
+          Demostración sintética: no son imágenes de SPHEREx ni una detección.
+        </p>
+      )}
+
       <figure className="stage">
         <img
           src={fileUrl(manifest.result_id, `${frame.frame_id}-png`)}
-          alt={`Imagen SPHEREx ${frame.obs_id}`}
+          alt={`${synthetic ? "Imagen sintética" : "Imagen SPHEREx"} ${frame.obs_id}`}
         />
         <figcaption>
           <strong>{formatDate(frame)}</strong>

@@ -63,7 +63,7 @@ def _dummy_image(wcs: WCS, shape: tuple[int, int]) -> SpherexImage:
 
 
 def main() -> int:
-    settings = Settings(data_dir=Path("data"))
+    settings = Settings.from_env()
     result_id = hashlib.sha256(b"orbitlens-synthetic-demo-v1").hexdigest()[:16]
     result_dir = settings.data_dir / "results" / result_id
     frames_dir = result_dir / "frames"

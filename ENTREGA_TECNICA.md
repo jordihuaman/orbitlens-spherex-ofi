@@ -1,5 +1,25 @@
 # Entrega técnica — OrbitLens SPHEREx
 
+## Bloque de apoyo al equipo (pipeline 0.1.2)
+
+- 100 pruebas Python y Ruff; build React correcto.
+- 28 pruebas Playwright/Edge reales, escritorio y viewport móvil en zona
+  `America/Lima`, proveedor de búsqueda controlado y archivos sintéticos.
+  Informe y capturas en `QA_EQUIPO.md` y `evidencias/qa/`.
+- Fallo encontrado y corregido: ISO sin zona se mostraba cinco horas desplazado;
+  salida UTC explícita y compatibilidad del visor con manifiestos previos.
+- Aplicación de tutoriales IRSA: VERSION de PRIMARY, detector numérico,
+  WCS espectral sin SIP preservando WCS celestial. Regresiones añadidas.
+- Recursos del reto reconsultados en Edge e integrados como enlaces explícitos;
+  WiseView recibe coordenadas/FOV sin mezclar datos de misiones.
+- Guion, créditos y borrador de submission preparados con asistencia de IA,
+  sin atribuir aprobación a compañeros. No hay video grabado ni submission enviada.
+- Recorte DR1 del tutorial intentado por IBE: HTTP 503; sin archivo real.
+  Abrir WiseView desde Edge agotó conexión; no se verificaron imágenes externas.
+
+Los bloques siguientes preservan la evidencia de versiones anteriores, no las
+cifras vigentes. H1 y la validación real de los cinco campos siguen abiertos.
+
 ## Actualización: Epsilon Indi B y detector (pipeline 0.1.1)
 
 Corrección de RA y selección estricta, pruebas y entrega a Dany/Terán en

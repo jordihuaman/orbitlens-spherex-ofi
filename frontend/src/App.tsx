@@ -9,6 +9,7 @@ import {
 import SearchForm, { type FormValues } from "./SearchForm";
 import StatusPanel from "./StatusPanel";
 import Viewer from "./Viewer";
+import ResourcesPanel from "./ResourcesPanel";
 import type { Job, Manifest, Preset, SearchPayload } from "./types";
 
 const TERMINAL: Job["status"][] = ["ready", "partial", "empty", "error"];
@@ -230,6 +231,7 @@ export default function App() {
             onSubmit={handleSubmit}
           />
           <StatusPanel job={job} error={error} busy={busy} />
+          <ResourcesPanel values={values} presets={presets} grid={manifest?.grid} />
         </section>
 
         <section className="column viewer-column">

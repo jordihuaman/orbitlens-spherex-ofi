@@ -103,12 +103,12 @@ comandos en [ENTREGA_TECNICA.md](ENTREGA_TECNICA.md); límites científicos en
 
 | Hito | Estado | Evidencia |
 | --- | --- | --- |
-| H0. Base reproducible | **Completado** | `.venv`, dependencias fijadas, 76 pruebas, build Vite |
+| H0. Base reproducible | **Completado** | `.venv`, dependencias fijadas, 100 pruebas, build Vite; QA en `QA_EQUIPO.md` |
 | H1. Dato real actual | **Bloqueado** | IRSA SIA/TAP devuelve 502 y el DNS es intermitente; no se descargó ningún FITS real |
 | H2. Secuencia temporal | **No iniciado con datos reales** | Pipeline y contrato probados con fixtures y resultado sintético |
-| H3. Web de extremo a extremo | **Parcial** | API + frontend + reproductor verificados con resultado sintético; falta el recorrido con datos reales |
+| H3. Web de extremo a extremo | **Parcial** | API + frontend; 28 casos Edge con resultado sintético/proveedor controlado; falta recorrido con datos reales |
 | H4. Versión pública | **No iniciado** | Sin despliegue en esta entrega |
-| H5. Cierre | **No iniciado** | Pendiente del equipo |
+| H5. Cierre | **En preparación, no cerrado** | Guion, pitch, créditos y borrador de submission preparados; faltan video, ensayos y envío autorizado |
 
 El resultado sintético (`scripts/make_demo_result.py`) permite probar la UI, pero
 no acredita H1/H2. No se declaran detecciones, movimiento propio ni cobertura de

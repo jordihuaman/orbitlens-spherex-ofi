@@ -1,5 +1,11 @@
 # Correcciones y revisión cruzada — 2026-11-14
 
+**Actualización posterior:** el QA asistido de navegador ya se ejecutó
+(28 casos, Edge, dos viewports) y el borrador del guion está preparado. Ver
+`QA_EQUIPO.md` y `GUION_DEMO.md`. No son entregas ni aprobación atribuidas a
+Dany o Terán. Lo pendiente de sus secciones originales sigue como registro
+del estado anterior; teléfono físico y grabación/revisión humana no se cerraron.
+
 ## Jesús: corrección técnica (pipeline 0.1.1)
 
 - Epsilon Indi B: corregido el error de un grado en RA: **330.04375 →

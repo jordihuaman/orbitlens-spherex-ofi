@@ -6,6 +6,12 @@ from orbitlens.irsa_client import SiaRecord
 from orbitlens.service import normalize_detector, select_detector
 
 
+def test_mjd_timestamp_has_explicit_utc():
+    from orbitlens.service import mjd_to_iso
+
+    assert mjd_to_iso(61000) == "2025-11-21T00:00:00.000Z"
+
+
 def record(band: str | None, instrument: str | None = None) -> SiaRecord:
     return SiaRecord(obs_id=str(band), collection="spherex_dr1",
                      access_url="https://irsa.ipac.caltech.edu/x.fits",
@@ -14,7 +20,8 @@ def record(band: str | None, instrument: str | None = None) -> SiaRecord:
 
 @pytest.mark.parametrize("raw,expected", [("D2", "D2"), ("SPHEREx-D2", "D2"),
                                          ("spherex-d6", "D6"), ("D9", None),
-                                         ("SPHEREx", None), (None, None)])
+                                         ("SPHEREx", None), (None, None),
+                                         ("2", "D2"), (6, "D6")])
 def test_detector_normalization(raw, expected):
     assert normalize_detector(raw) == expected
 
@@ -51,6 +58,7 @@ def test_unknown_and_conflicting_metadata_are_excluded():
 @pytest.mark.parametrize("requested,expected,expected_status,fits_detector", [
     ("D2", "D2", "ready", "D2"), ("auto", "D2", "ready", "D2"),
     ("D6", None, "empty", "D2"), ("D2", "D2", "error", "D3"),
+    ("D2", "D2", "ready", 2),
 ])
 def test_service_detector_contract(tmp_path, requested, expected, expected_status, fits_detector):
     import json

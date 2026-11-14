@@ -1,5 +1,12 @@
 # Revisión de datos — Jordi
 
+> Actualización de integración por el agente a petición de Jesús: la aplicación
+> ya existe (pipeline 0.1.2). Epsilon Indi B, detector, VERSION y WCS espectral
+> tienen correcciones y regresiones; ver `ENTREGA_TECNICA.md`. Hay QA de
+> navegador y guion en `QA_EQUIPO.md`/`GUION_DEMO.md`. **No hay nuevos FITS reales
+> ni una revisión científica firmada por Jordi**. Se conserva el informe
+> original de abajo, incluidas sus observaciones históricas y fichas bloqueadas.
+
 Fecha de inicio: **2026-11-14**. Rama: `jordi/datos`.
 Base documental: `d7320f5`, integrada en `master` al iniciar este trabajo.
 

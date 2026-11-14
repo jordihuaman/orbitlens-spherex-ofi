@@ -7,6 +7,7 @@ orquestación de red, que vive en ``service.py``.
 from __future__ import annotations
 
 import math
+import re
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -129,7 +130,14 @@ def _spectral_info(
     lambda_um: float | None = None
     wave_wcs: WCS | None = None
     try:
-        candidate = WCS(header, fobj=hdul, key="W")
+        # IRSA Data Overview §8b: SIP solo corresponde al WCS celestial.
+        # Construir W desde una copia para conservar el WCS espacial intacto.
+        spectral_header = header.copy()
+        for key in list(spectral_header):
+            if re.fullmatch(r"(?:A|B|AP|BP)_(?:ORDER|DMAX|\d+_\d+)", key):
+                del spectral_header[key]
+        candidate = WCS(spectral_header, fobj=hdul, key="W")
+        candidate.sip = None
         if any(
             str(ctype).upper().startswith("WAVE") for ctype in candidate.wcs.ctype
         ):
@@ -257,7 +265,7 @@ def read_spherex_image(path: Path) -> SpherexImage:
             lambda_um=lambda_um,
             bandwidth_um=bandwidth_um,
             detector=str(header.get("DETECTOR", "")).strip() or None,
-            version=str(header.get("VERSION", "")).strip() or None,
+            version=str(hdul[0].header.get("VERSION", header.get("VERSION", ""))).strip() or None,
             bunit=str(header.get("BUNIT", "")).strip() or None,
             warnings=tuple(dict.fromkeys(warnings)),
         )

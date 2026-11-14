@@ -1,0 +1,1142 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "D:\\orbitlens-spherex-of-final\\orbitlens-spherex-ofi\\frontend\\node_modules\\@playwright\\test\\cli.js",
+      "test"
+    ],
+    "configFile": "D:\\orbitlens-spherex-of-final\\orbitlens-spherex-ofi\\frontend\\playwright.config.ts",
+    "rootDir": "D:/orbitlens-spherex-of-final/orbitlens-spherex-ofi/frontend/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/orbitlens-spherex-of-final/orbitlens-spherex-ofi/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "D:/orbitlens-spherex-of-final/orbitlens-spherex-ofi/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/orbitlens-spherex-of-final/orbitlens-spherex-ofi/frontend/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile-viewport",
+        "name": "mobile-viewport",
+        "testDir": "D:/orbitlens-spherex-of-final/orbitlens-spherex-ofi/frontend/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\orbitlens-spherex-of-final\\orbitlens-spherex-ofi\\frontend\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "desktop",
+        "testDir": "D:\\orbitlens-spherex-of-final\\orbitlens-spherex-ofi\\frontend\\e2e",
+        "snapshotDir": "D:\\orbitlens-spherex-of-final\\orbitlens-spherex-ofi\\frontend\\e2e",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:8013",
+          "timezoneId": "America/Lima",
+          "channel": "msedge",
+          "screenshot": "only-on-failure",
+          "trace": "retain-on-failure",
+          "viewport": {
+            "width": 1366,
+            "height": 900
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "desktop"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\orbitlens-spherex-of-final\\orbitlens-spherex-ofi\\frontend\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "mobile-viewport",
+        "testDir": "D:\\orbitlens-spherex-of-final\\orbitlens-spherex-ofi\\frontend\\e2e",
+        "snapshotDir": "D:\\orbitlens-spherex-of-final\\orbitlens-spherex-ofi\\frontend\\e2e",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:8013",
+          "timezoneId": "America/Lima",
+          "channel": "msedge",
+          "screenshot": "only-on-failure",
+          "trace": "retain-on-failure",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "isMobile": true,
+          "hasTouch": true
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "mobile-viewport"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.1",
+    "workers": 1,
+    "webServer": {
+      "command": "\"..\\.venv\\Scripts\\python.exe\" ../scripts/start_qa_server.py",
+      "url": "http://127.0.0.1:8013/api/health",
+      "reuseExistingServer": false,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "orbitlens.spec.ts",
+      "file": "orbitlens.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "carga pública, cinco presets y teclado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 966,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:24:51.609Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz9mb3Y9MTAmZnJhbWVzPTEyIiwiZGF0YXNldCI6InN5bnRoZXRpYy1kZW1vIiwicmVhbFBob25lIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 776,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:20.561Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP2Zvdj0xMCZmcmFtZXM9MTIiLCJkYXRhc2V0Ijoic3ludGhldGljLWRlbW8iLCJyZWFsUGhvbmUiOmZhbHNlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-95bcba15b7af217115c0",
+          "file": "orbitlens.spec.ts",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "preset barnard: coordenadas de referencia y envío controlado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2036,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:24:52.905Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz90YXJnZXQ9YmFybmFyZCZyYT0yNjkuNDUyMDgwJmRlYz00LjY5MzM5MCZmb3Y9MTAmZnJhbWVzPTEyIiwiZGF0YXNldCI6InN5bnRoZXRpYy1kZW1vIiwicmVhbFBob25lIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2030,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:21.697Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP3RhcmdldD1iYXJuYXJkJnJhPTI2OS40NTIwODAmZGVjPTQuNjkzMzkwJmZvdj0xMCZmcmFtZXM9MTIiLCJkYXRhc2V0Ijoic3ludGhldGljLWRlbW8iLCJyZWFsUGhvbmUiOmZhbHNlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-deaaf66a9b9abed9b05c",
+          "file": "orbitlens.spec.ts",
+          "line": 54,
+          "column": 3
+        },
+        {
+          "title": "preset epsindi_b: coordenadas de referencia y envío controlado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2230,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:24:54.955Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz90YXJnZXQ9ZXBzaW5kaV9iJnJhPTMzMS4wNDM3NTAmZGVjPS01Ni43ODI2NDAmZm92PTEwJmZyYW1lcz0xMiIsImRhdGFzZXQiOiJzeW50aGV0aWMtZGVtbyIsInJlYWxQaG9uZSI6ZmFsc2V9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2090,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:23.738Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP3RhcmdldD1lcHNpbmRpX2ImcmE9MzMxLjA0Mzc1MCZkZWM9LTU2Ljc4MjY0MCZmb3Y9MTAmZnJhbWVzPTEyIiwiZGF0YXNldCI6InN5bnRoZXRpYy1kZW1vIiwicmVhbFBob25lIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-4591a059041ae2738e17",
+          "file": "orbitlens.spec.ts",
+          "line": 54,
+          "column": 3
+        },
+        {
+          "title": "preset wise0855: coordenadas de referencia y envío controlado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2201,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:24:57.200Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz90YXJnZXQ9d2lzZTA4NTUmcmE9MTMzLjc5NTEyMCZkZWM9LTcuMjQ1MTQwJmZvdj0xMCZmcmFtZXM9MTIiLCJkYXRhc2V0Ijoic3ludGhldGljLWRlbW8iLCJyZWFsUGhvbmUiOmZhbHNlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2179,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:25.842Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP3RhcmdldD13aXNlMDg1NSZyYT0xMzMuNzk1MTIwJmRlYz0tNy4yNDUxNDAmZm92PTEwJmZyYW1lcz0xMiIsImRhdGFzZXQiOiJzeW50aGV0aWMtZGVtbyIsInJlYWxQaG9uZSI6ZmFsc2V9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-576b9e634320a7e121f9",
+          "file": "orbitlens.spec.ts",
+          "line": 54,
+          "column": 3
+        },
+        {
+          "title": "preset rw_aur: coordenadas de referencia y envío controlado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2247,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:24:59.420Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz90YXJnZXQ9cndfYXVyJnJhPTc2Ljk1NjMzMCZkZWM9MzAuNDAxMzkwJmZvdj0xMCZmcmFtZXM9MTIiLCJkYXRhc2V0Ijoic3ludGhldGljLWRlbW8iLCJyZWFsUGhvbmUiOmZhbHNlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2180,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:28.040Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP3RhcmdldD1yd19hdXImcmE9NzYuOTU2MzMwJmRlYz0zMC40MDEzOTAmZm92PTEwJmZyYW1lcz0xMiIsImRhdGFzZXQiOiJzeW50aGV0aWMtZGVtbyIsInJlYWxQaG9uZSI6ZmFsc2V9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-8efa66a76f08d9b98d0d",
+          "file": "orbitlens.spec.ts",
+          "line": 54,
+          "column": 3
+        },
+        {
+          "title": "preset r_dra: coordenadas de referencia y envío controlado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2313,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:01.685Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz90YXJnZXQ9cl9kcmEmcmE9MjQ4LjE2NzUwMCZkZWM9NjYuNzU0OTQwJmZvdj0xMCZmcmFtZXM9MTIiLCJkYXRhc2V0Ijoic3ludGhldGljLWRlbW8iLCJyZWFsUGhvbmUiOmZhbHNlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2152,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:30.235Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP3RhcmdldD1yX2RyYSZyYT0yNDguMTY3NTAwJmRlYz02Ni43NTQ5NDAmZm92PTEwJmZyYW1lcz0xMiIsImRhdGFzZXQiOiJzeW50aGV0aWMtZGVtbyIsInJlYWxQaG9uZSI6ZmFsc2V9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-1be7eff259c4735649d4",
+          "file": "orbitlens.spec.ts",
+          "line": 54,
+          "column": 3
+        },
+        {
+          "title": "recarga exacta, imágenes, controles, compartir y descargas",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2962,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:04.011Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz9mb3Y9MTAmZnJhbWVzPTEyJnJlc3VsdD01ZTFjNzgzMzY5MzNhZmE3IiwiZGF0YXNldCI6InN5bnRoZXRpYy1kZW1vIiwicmVhbFBob25lIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2554,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:32.400Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP2Zvdj0xMCZmcmFtZXM9MTImcmVzdWx0PTVlMWM3ODMzNjkzM2FmYTciLCJkYXRhc2V0Ijoic3ludGhldGljLWRlbW8iLCJyZWFsUGhvbmUiOmZhbHNlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-5690591435805ed3f9e0",
+          "file": "orbitlens.spec.ts",
+          "line": 67,
+          "column": 1
+        },
+        {
+          "title": "vista sin desbordamiento y captura de evidencia",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1651,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:06.992Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz9mb3Y9MTAmZnJhbWVzPTEyJnJlc3VsdD01ZTFjNzgzMzY5MzNhZmE3IiwiZGF0YXNldCI6InN5bnRoZXRpYy1kZW1vIiwicmVhbFBob25lIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 898,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:34.966Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP2Zvdj0xMCZmcmFtZXM9MTImcmVzdWx0PTVlMWM3ODMzNjkzM2FmYTciLCJkYXRhc2V0Ijoic3ludGhldGljLWRlbW8iLCJyZWFsUGhvbmUiOmZhbHNlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-2e285f5bc31e7e0a6e4c",
+          "file": "orbitlens.spec.ts",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "entrada inválida rechazada por la API real",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 951,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:08.666Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz9yYT00MDAmZGVjPTIwJmZvdj0xMCZmcmFtZXM9MTIiLCJkYXRhc2V0Ijoic3ludGhldGljLWRlbW8iLCJyZWFsUGhvbmUiOmZhbHNlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 835,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:35.881Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP3JhPTQwMCZkZWM9MjAmZm92PTEwJmZyYW1lcz0xMiIsImRhdGFzZXQiOiJzeW50aGV0aWMtZGVtbyIsInJlYWxQaG9uZSI6ZmFsc2V9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-d73f76460416087031a4",
+          "file": "orbitlens.spec.ts",
+          "line": 110,
+          "column": 1
+        },
+        {
+          "title": "recursos NASA y WiseView usan coordenadas y unidades explícitas",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 869,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:09.630Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz9yYT00MDAmZGVjPS01Ni43ODI2NDAmZm92PTEwJmZyYW1lcz0xMiIsImRhdGFzZXQiOiJzeW50aGV0aWMtZGVtbyIsInJlYWxQaG9uZSI6ZmFsc2V9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 721,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:36.731Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP3JhPTQwMCZkZWM9LTU2Ljc4MjY0MCZmb3Y9MTAmZnJhbWVzPTEyIiwiZGF0YXNldCI6InN5bnRoZXRpYy1kZW1vIiwicmVhbFBob25lIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-7d0af22d241d1c7fae01",
+          "file": "orbitlens.spec.ts",
+          "line": 120,
+          "column": 1
+        },
+        {
+          "title": "sexagesimal, FOV, frames y detector conservados en petición",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 977,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:10.509Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz9yYT0yMiswNCsxMC41JmRlYz0tNTYrNDYrNTcuNSZzZXhhZ2VzaW1hbD0xJmZvdj0xMCZmcmFtZXM9NiZkZXRlY3Rvcj1EMiIsImRhdGFzZXQiOiJzeW50aGV0aWMtZGVtbyIsInJlYWxQaG9uZSI6ZmFsc2V9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 947,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:37.463Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP3JhPTIyKzA0KzEwLjUmZGVjPS01Nis0Nis1Ny41JnNleGFnZXNpbWFsPTEmZm92PTEwJmZyYW1lcz02JmRldGVjdG9yPUQyIiwiZGF0YXNldCI6InN5bnRoZXRpYy1kZW1vIiwicmVhbFBob25lIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-044301d299852e031465",
+          "file": "orbitlens.spec.ts",
+          "line": 138,
+          "column": 1
+        },
+        {
+          "title": "polling y estado ready con proveedor controlado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2503,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:11.498Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz90YXJnZXQ9YmFybmFyZCZyYT0yNjkuNDUyMDgwJmRlYz00LjY5MzM5MCZmb3Y9MTAmZnJhbWVzPTEyJnJlc3VsdD01ZTFjNzgzMzY5MzNhZmE3IiwiZGF0YXNldCI6InN5bnRoZXRpYy1kZW1vIiwicmVhbFBob25lIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2076,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:38.423Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP3RhcmdldD1iYXJuYXJkJnJhPTI2OS40NTIwODAmZGVjPTQuNjkzMzkwJmZvdj0xMCZmcmFtZXM9MTImcmVzdWx0PTVlMWM3ODMzNjkzM2FmYTciLCJkYXRhc2V0Ijoic3ludGhldGljLWRlbW8iLCJyZWFsUGhvbmUiOmZhbHNlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-7d9f321b9b6626f1c7c4",
+          "file": "orbitlens.spec.ts",
+          "line": 154,
+          "column": 3
+        },
+        {
+          "title": "polling y estado partial con proveedor controlado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2534,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:14.014Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz90YXJnZXQ9YmFybmFyZCZyYT0yNjkuNDUyMDgwJmRlYz00LjY5MzM5MCZmb3Y9MTAmZnJhbWVzPTEyJnJlc3VsdD01ZTFjNzgzMzY5MzNhZmE3IiwiZGF0YXNldCI6InN5bnRoZXRpYy1kZW1vIiwicmVhbFBob25lIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2086,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:40.513Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP3RhcmdldD1iYXJuYXJkJnJhPTI2OS40NTIwODAmZGVjPTQuNjkzMzkwJmZvdj0xMCZmcmFtZXM9MTImcmVzdWx0PTVlMWM3ODMzNjkzM2FmYTciLCJkYXRhc2V0Ijoic3ludGhldGljLWRlbW8iLCJyZWFsUGhvbmUiOmZhbHNlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-98c6f898e6ec66d96d21",
+          "file": "orbitlens.spec.ts",
+          "line": 154,
+          "column": 3
+        },
+        {
+          "title": "polling y estado error con proveedor controlado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2308,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:16.562Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjoxMzY2LCJoZWlnaHQiOjkwMH0sInRpbWV6b25lIjoiQW1lcmljYS9MaW1hIiwidXJsIjoiaHR0cDovLzEyNy4wLjAuMTo4MDEzLz90YXJnZXQ9YmFybmFyZCZyYT0yNjkuNDUyMDgwJmRlYz00LjY5MzM5MCZmb3Y9MTAmZnJhbWVzPTEyIiwiZGF0YXNldCI6InN5bnRoZXRpYy1kZW1vIiwicmVhbFBob25lIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-viewport",
+              "projectName": "mobile-viewport",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2122,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T22:25:42.611Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "environment",
+                      "contentType": "application/json",
+                      "body": "eyJicm93c2VyIjoiMTU3LjAuNDM0MS40NiIsInZpZXdwb3J0Ijp7IndpZHRoIjozOTAsImhlaWdodCI6ODQ0fSwidGltZXpvbmUiOiJBbWVyaWNhL0xpbWEiLCJ1cmwiOiJodHRwOi8vMTI3LjAuMC4xOjgwMTMvP3RhcmdldD1iYXJuYXJkJnJhPTI2OS40NTIwODAmZGVjPTQuNjkzMzkwJmZvdj0xMCZmcmFtZXM9MTIiLCJkYXRhc2V0Ijoic3ludGhldGljLWRlbW8iLCJyZWFsUGhvbmUiOmZhbHNlfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb1b44aa6a5b834daeba-c664d966b3d91f1d5996",
+          "file": "orbitlens.spec.ts",
+          "line": 154,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-14T22:24:46.923Z",
+    "duration": 59748.193,
+    "expected": 28,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

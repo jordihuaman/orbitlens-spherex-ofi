@@ -120,6 +120,42 @@ código consultado de código reutilizado.
 
 ## Pendientes de la revisión
 
+### Integración práctica posterior — 2026-11-14
+
+La pestaña **Resources se volvió a abrir en Edge real** y se comprobaron sus
+ocho enlaces: IRSA, SPHEREx Tutorial Notebooks, WiseView, Gaia/MAST y cuatro
+recursos CSA/CADC/NEOSSat. La extracción simple solo devolvía el aviso de enlaces
+externos; no se tomó ese aviso como todo el contenido de la página.
+
+Uso incorporado (pipeline 0.1.2):
+
+- Panel del visor con las ocho fuentes y los seis tutoriales SPHEREx.
+- Enlace al campo en WiseView W2, FOV arcmin×60→arcsec, sin diferencia,
+  desplazamiento ni inyección sintética activados. No es overlay ni ingestión WISE.
+- El ejemplo WISE proporcionado por el usuario se conserva como referencia
+  externa, no como coordenada astrométrica revisada de un preset.
+- Tutorial Intro §8b: SIP se excluye solo de la copia del WCS espectral;
+  se conserva el WCS celestial. Regresión con FITS sintético.
+- Tutorial Cutouts §6: `VERSION` se conserva desde PRIMARY. Se reconoce el
+  `DETECTOR` numérico del FITS (1–6), además de etiquetas SIA `SPHEREx-Dn`.
+- PSF, Source Discovery Tool, Mosaic y HiPS quedan accesibles como herramientas
+  oficiales externas. No se finge fotometría, ePSF integrada ni cubo temporal.
+
+Sonda adicional de datos: se intentó un **recorte de 0.02 grados** de la URL DR1
+publicada en el tutorial Intro (no un archivo completo, ni uno de los cinco
+objetivos). IBE devolvió **503 Service Unavailable**. No se obtuvo un FITS ni se
+cerró H1. No se usaron imágenes de la página como sustituto de datos FITS.
+
+WiseView devolvió contenido estático a la herramienta de lectura, pero abrir el
+campo en Edge terminó en `ERR_CONNECTION_TIMED_OUT`; **no se verificaron sus
+imágenes ni movimiento de WISE 0855**. Los tests de enlace solo acreditan URL y
+conversión de unidades, no la disponibilidad externa. La web oficial del reto y
+los tutoriales SPHEREx sí se leyeron en esta revisión.
+
+`CREDITOS.md`, `QA_EQUIPO.md`, `GUION_DEMO.md` y `SUBMISSION.md` distinguen estos
+usos y sus límites. La NASA lista recursos de otras instituciones: no atribuir
+Gaia, NEOSSat ni la operación de WiseView a NASA.
+
 - Acceso directo al dataset NEOSSat; no bloquea el MVP SPHEREx.
 - Ejecución acotada de consultas/cutouts actuales y comprobación de sus cabeceras.
 - Validación de máscaras, alineación, comparabilidad y cobertura de los cinco campos.

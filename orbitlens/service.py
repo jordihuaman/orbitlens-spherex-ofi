@@ -47,8 +47,11 @@ __all__ = [
 MASK_POLICY_VERSION = "1.0"
 
 
-def normalize_detector(value: str | None) -> str | None:
-    match = re.fullmatch(r"(?:SPHEREx-)?(D[1-6])", (value or "").strip(), re.IGNORECASE)
+def normalize_detector(value: str | int | None) -> str | None:
+    text = str(value if value is not None else "").strip()
+    if text in {"1", "2", "3", "4", "5", "6"}:
+        return f"D{text}"
+    match = re.fullmatch(r"(?:SPHEREx-)?(D[1-6])", text, re.IGNORECASE)
     return match.group(1).upper() if match else None
 
 
@@ -85,7 +88,7 @@ def mjd_to_iso(mjd: float | None) -> str | None:
     try:
         from astropy.time import Time
 
-        return Time(mjd, format="mjd", scale="utc").isot
+        return Time(mjd, format="mjd", scale="utc").isot + "Z"
     except Exception:  # pragma: no cover - depende de datos externos
         return None
 
@@ -468,7 +471,7 @@ class SearchService:
                 "fits": fits_rel,
                 "obs_id": record.obs_id,
                 "collection": record.collection,
-                "detector": image.detector or record.bandpass,
+                "detector": normalize_detector(image.detector) or selected_detector,
                 "version": image.version,
                 "time": {
                     "t_min_mjd": record.t_min,

@@ -90,6 +90,36 @@ def test_read_spherex_image_rejects_cube(tmp_path) -> None:
         read_spherex_image(path)
 
 
+def test_version_is_preserved_from_primary_header(tmp_path) -> None:
+    path = _write_fits(tmp_path, np.ones((20, 20)))
+    with fits.open(path, mode="update") as hdul:
+        hdul[0].header["VERSION"] = "DR1-primary"
+        del hdul["IMAGE"].header["VERSION"]
+    assert read_spherex_image(path).version == "DR1-primary"
+
+
+def test_spectral_wcs_excludes_sip_without_altering_celestial(tmp_path) -> None:
+    path = _write_fits(tmp_path, np.ones((20, 20)))
+    with fits.open(path, mode="update") as hdul:
+        header = hdul["IMAGE"].header
+        header["CTYPE1"] = "RA---TAN-SIP"
+        header["CTYPE2"] = "DEC--TAN-SIP"
+        header["A_ORDER"] = 2
+        header["B_ORDER"] = 2
+        header["A_2_0"] = 0.01
+        header["B_0_2"] = 0.01
+        for axis, ctype in ((1, "WAVE"), (2, "LINEAR")):
+            header[f"CTYPE{axis}W"] = ctype
+            header[f"CUNIT{axis}W"] = "m"
+            header[f"CRPIX{axis}W"] = 1
+            header[f"CRVAL{axis}W"] = 1e-6
+            header[f"CDELT{axis}W"] = 1e-8
+    image = read_spherex_image(path)
+    assert image.lambda_um == pytest.approx(1.1)
+    assert image.wcs.sip is not None
+    assert image.header["A_2_0"] == 0.01
+
+
 def test_reproject_identity_grid_preserves_values(tmp_path) -> None:
     data = np.arange(400, dtype=np.float64).reshape(20, 20)
     path = _write_fits(tmp_path, data)
