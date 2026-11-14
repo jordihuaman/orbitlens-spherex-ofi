@@ -74,6 +74,11 @@ no se ha comprobado la calibración real.
 
 ## 5. Tiempo
 
+Desde pipeline 0.1.1, se reconoce la etiqueta IRSA `SPHEREx-Dn`. Una selección
+explícita sin datos no cambia de detector: devuelve `empty`. Automático elige
+un único detector por número de exposiciones fechadas (empate D1–D6), sin
+interpretar esa elección como sensibilidad científica ni compatibilidad de λ.
+
 `t_min`/`t_max` se toman del registro SIA (MJD) y se convierten a ISO UTC. Los
 registros sin `t_min` se excluyen de la secuencia y se avisa de cuántos se
 descartaron. La selección se reparte uniformemente por el intervalo disponible

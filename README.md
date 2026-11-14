@@ -13,13 +13,17 @@ máscaras y longitudes de onda.
 
 ## Estado verificado — 2026-11-14
 
+Correcciones posteriores (pipeline 0.1.1): RA de Epsilon Indi B y selección
+estricta de un solo detector. Estado del recorte real y entregables de Dany y
+Terán en [CORRECCIONES_QA.md](CORRECCIONES_QA.md).
+
 Esta copia contiene una implementación nueva construida conforme a
 [PROTOCOLO_CONSTRUCCION.md](PROTOCOLO_CONSTRUCCION.md). Lo comprobado en este
 entorno es:
 
 | Comprobación | Resultado |
 | --- | --- |
-| Suite Python (`pytest`) | **76 pruebas pasan** |
+| Suite Python (`pytest`) | **94 pruebas pasan** (incluye regresión de detector y verificador) |
 | Build frontend (`tsc --noEmit && vite build`) | Correcto, genera `frontend/dist` |
 | Arranque `uvicorn api:app` | `/api/health`, `/api/presets` y `/` responden 200 |
 | Contrato resultado → manifiesto → PNG/FITS | Verificado con un resultado **sintético** |
@@ -80,6 +84,9 @@ Copiar `.env.example` como referencia. Las variables `ORBITLENS_*` se leen al
 arrancar (por ejemplo `ORBITLENS_DATA_DIR`, `ORBITLENS_COLLECTIONS`,
 `ORBITLENS_MAX_WORKERS`, `ORBITLENS_RETRY_ATTEMPTS`). No se versiona ningún
 secreto ni descarga.
+
+El archivo `.env` no se carga automáticamente: exportar sus variables en la
+shell o configurarlas en el servicio de despliegue.
 
 ## Pruebas
 

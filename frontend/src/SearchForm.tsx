@@ -28,6 +28,7 @@ export default function SearchForm({
   onChange,
   onSubmit,
 }: Props) {
+  const preset = presets.find((item) => item.id === values.presetId);
   const update = (patch: Partial<FormValues>) =>
     onChange({ ...values, ...patch });
 
@@ -77,6 +78,13 @@ export default function SearchForm({
           ))}
         </select>
       </label>
+
+      {preset && (
+        <p className="hint">
+          {preset.reference}. {preset.note}
+          {!preset.verified && " Referencia pendiente de verificación astrométrica."}
+        </p>
+      )}
 
       <div className="field-row">
         <label className="field">

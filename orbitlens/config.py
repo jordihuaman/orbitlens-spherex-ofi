@@ -10,7 +10,7 @@ import os
 from dataclasses import dataclass, replace
 from pathlib import Path
 
-PIPELINE_VERSION = "0.1.0"
+PIPELINE_VERSION = "0.1.1"
 SCHEMA_VERSION = 1
 
 # Colecciones vigentes tras la revisión de noviembre de 2026 (DR1 + QR3).

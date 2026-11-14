@@ -1,5 +1,17 @@
 # Entrega técnica — OrbitLens SPHEREx
 
+## Actualización: Epsilon Indi B y detector (pipeline 0.1.1)
+
+Corrección de RA y selección estricta, pruebas y entrega a Dany/Terán en
+[CORRECCIONES_QA.md](CORRECCIONES_QA.md). Suite actual: 94 pruebas; Ruff y build
+frontend correctos. La evidencia de 76 pruebas de abajo corresponde a la base
+0.1.0 y se conserva como registro histórico.
+
+Reintento real con RA corregida, D2, `MAXREC=5`, timeout de lectura 15 s y un
+intento por colección: DR1/DR1 deep timeout, QR3/QR3 deep HTTP 502. Sin FITS real
+ni H1 cerrado. El verificador produce ahora manifiesto y original/derivado
+indexados cuando logra el recorrido completo; el contrato se probó con fixtures.
+
 Registro de ejecución de la implementación de Jesús. Complementa
 [README.md](README.md) y [PROTOCOLO_CONSTRUCCION.md](PROTOCOLO_CONSTRUCCION.md).
 No sustituye la revisión científica de Jordi ni el QA de Dany.

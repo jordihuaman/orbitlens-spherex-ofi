@@ -47,6 +47,33 @@ __all__ = [
 MASK_POLICY_VERSION = "1.0"
 
 
+def normalize_detector(value: str | None) -> str | None:
+    match = re.fullmatch(r"(?:SPHEREx-)?(D[1-6])", (value or "").strip(), re.IGNORECASE)
+    return match.group(1).upper() if match else None
+
+
+def record_detector(record: SiaRecord) -> str | None:
+    values = {value for raw in (record.bandpass, record.instrument)
+              if (value := normalize_detector(raw)) is not None}
+    return next(iter(values)) if len(values) == 1 else None
+
+
+def select_detector(records: list[SiaRecord], requested: str) -> tuple[list[SiaRecord], str | None]:
+    """Un solo detector; auto elige más exposiciones (desempate D1–D6).
+
+    Metadatos desconocidos o contradictorios se excluyen. Nunca sustituye
+    una selección explícita por todos los detectores.
+    """
+    groups: dict[str, list[SiaRecord]] = {}
+    for record in records:
+        if detector := record_detector(record):
+            groups.setdefault(detector, []).append(record)
+    chosen = normalize_detector(requested)
+    if requested.lower() == "auto":
+        chosen = min(groups, key=lambda key: (-len(groups[key]), key)) if groups else None
+    return groups.get(chosen, []) if chosen else [], chosen
+
+
 def sanitize_name(value: str, *, fallback: str = "frame") -> str:
     cleaned = re.sub(r"[^A-Za-z0-9._-]+", "_", value).strip("._-")
     return (cleaned or fallback)[:80]
@@ -305,23 +332,6 @@ class SearchService:
             if record.dataproduct_type is None
             or record.dataproduct_type.lower() == "image"
         ]
-        if detector.lower() != "auto":
-            filtered = [
-                record
-                for record in candidates
-                if detector.lower()
-                in {
-                    str(record.bandpass or "").lower(),
-                    str(record.instrument or "").lower(),
-                }
-            ]
-            if filtered:
-                candidates = filtered
-            else:
-                job.add_warning(
-                    f"no hay imágenes del detector {detector!r}; se usan todos los detectores"
-                )
-
         without_time = sum(1 for record in candidates if record.t_min is None)
         if without_time:
             job.add_warning(
@@ -329,6 +339,11 @@ class SearchService:
             )
             candidates = [record for record in candidates if record.t_min is not None]
 
+        candidates, selected_detector = select_detector(candidates, detector)
+        job.add_warning(
+            f"Detector solicitado: {detector}; seleccionado: {selected_detector or 'ninguno'}. "
+            "Un mismo detector no garantiza compatibilidad espectral."
+        )
         selected = select_spread(candidates, min(requested_frames, self.settings.max_frames))
         job.set_counts(selected=len(selected), candidates=len(candidates))
 
@@ -359,6 +374,10 @@ class SearchService:
                         record, ra_deg, dec_deg, fov_arcmin, target_wcs, shape, budget
                     )
                 )
+                actual = normalize_detector(prepared[-1].image.detector)
+                if actual is not None and actual != selected_detector:
+                    prepared.pop()
+                    raise ValueError("el detector del FITS contradice la selección SIA")
             except Exception as exc:  # noqa: BLE001 - un frame no debe tumbar el trabajo
                 failures.append(f"{record.obs_id}: {exc}")
                 job.add_warning(f"frame descartado {record.obs_id}: {exc}")
@@ -501,6 +520,8 @@ class SearchService:
                 "overflow": outcome.overflow,
                 "from_cache": from_cache,
                 "selection": "distribución uniforme sobre el intervalo disponible",
+                "detector_requested": detector,
+                "detector_selected": selected_detector,
             },
             "grid": {
                 "ra_deg": ra_deg,

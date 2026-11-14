@@ -47,9 +47,9 @@ PRESETS: tuple[Preset, ...] = (
     Preset(
         id="epsindi_b",
         name="Epsilon Indi B",
-        ra_deg=330.04375,
+        ra_deg=331.04375,
         dec_deg=-56.78264,
-        reference="Compañera enana marrón de Epsilon Indi, J2000 aproximado",
+        reference="Epsilon Indi B (Ba/Bb), referencia aproximada 22h04m10.5s −56d46m57.5s, J2000",
         note=(
             "Centro aproximado de la compañera B, a unos 6.7 arcmin de Epsilon "
             "Indi A. Confirmar la separación y la época de la referencia."
