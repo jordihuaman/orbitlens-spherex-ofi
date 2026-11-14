@@ -20,6 +20,7 @@ from orbitlens import __version__
 from orbitlens.api_models import SearchRequest
 from orbitlens.config import PIPELINE_VERSION, Settings
 from orbitlens.jobs import JobCapacityError, JobManager
+from orbitlens.manifest import validate_file_entry, validate_manifest, validate_result_files
 from orbitlens.service import SearchService
 from orbitlens.targets import public_presets
 
@@ -136,20 +137,27 @@ def create_app(
             raise HTTPException(status_code=404, detail="resultado desconocido")
         try:
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError) as exc:
+            validate_manifest(manifest)
+            if manifest["result_id"] != result_id:
+                raise ValueError("ID del manifiesto no coincide con su directorio")
+        except (OSError, ValueError, TypeError) as exc:
             raise HTTPException(status_code=500, detail="manifiesto ilegible") from exc
         return result_dir, manifest
 
     @app.get("/api/results/{result_id}/manifest")
     def result_manifest(result_id: str, request: Request) -> JSONResponse:
-        _, manifest = load_manifest(request, result_id)
+        result_dir, manifest = load_manifest(request, result_id)
+        try:
+            validate_result_files(result_dir, manifest)
+        except (OSError, ValueError) as exc:
+            raise HTTPException(status_code=503, detail="resultado incompleto o corrupto") from exc
         return JSONResponse(content=manifest)
 
     @app.get("/api/results/{result_id}/files/{file_id}")
     def result_file(result_id: str, file_id: str, request: Request) -> FileResponse:
         result_dir, manifest = load_manifest(request, result_id)
         entry = next(
-            (item for item in manifest.get("files", []) if item.get("id") == file_id),
+            (item for item in manifest.get("files", []) if isinstance(item, dict) and item.get("id") == file_id),
             None,
         )
         if entry is None:
@@ -159,6 +167,11 @@ def create_app(
         candidate = (result_dir / relative).resolve()
         if not candidate.is_relative_to(result_dir.resolve()) or not candidate.is_file():
             raise HTTPException(status_code=404, detail="archivo no disponible")
+
+        try:
+            validate_file_entry(result_dir, entry)
+        except (OSError, ValueError) as exc:
+            raise HTTPException(status_code=503, detail="integridad del archivo inválida") from exc
 
         media_type = "image/png" if entry.get("kind") == "png" else "application/fits"
         return FileResponse(candidate, media_type=media_type)

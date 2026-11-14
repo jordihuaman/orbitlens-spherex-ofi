@@ -10,7 +10,7 @@ import os
 from dataclasses import dataclass, replace
 from pathlib import Path
 
-PIPELINE_VERSION = "0.1.3"
+PIPELINE_VERSION = "0.1.4"
 SCHEMA_VERSION = 1
 
 # Colecciones vigentes tras la revisión de noviembre de 2026 (DR1 + QR3).
@@ -77,6 +77,7 @@ class Settings:
     max_download_bytes: int = 100 * 1024 * 1024
     max_job_download_bytes: int = 512 * 1024 * 1024
     cache_ttl_hours: int = 24
+    empty_cache_ttl_s: int = 60
     allowed_cutout_hosts: tuple[str, ...] = ("irsa.ipac.caltech.edu",)
     cors_origins: tuple[str, ...] = (
         "http://localhost:5173",
@@ -102,6 +103,8 @@ class Settings:
             raise ValueError("retry_attempts debe ser >= 1")
         if self.retry_backoff_s < 0:
             raise ValueError("retry_backoff_s debe ser >= 0")
+        if self.empty_cache_ttl_s < 0:
+            raise ValueError("empty_cache_ttl_s debe ser >= 0")
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -129,6 +132,7 @@ class Settings:
             ("ORBITLENS_MAX_WORKERS", "max_workers"),
             ("ORBITLENS_MAX_ACTIVE_JOBS", "max_active_jobs"),
             ("ORBITLENS_CACHE_TTL_HOURS", "cache_ttl_hours"),
+            ("ORBITLENS_EMPTY_CACHE_TTL_S", "empty_cache_ttl_s"),
             ("ORBITLENS_RETRY_ATTEMPTS", "retry_attempts"),
         ):
             if os.environ.get(name) is not None:

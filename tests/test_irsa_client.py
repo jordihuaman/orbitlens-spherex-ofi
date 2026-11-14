@@ -67,6 +67,28 @@ def test_parse_invalid_votable() -> None:
         parse_sia_votable(b"<html>error</html>")
 
 
+def test_http_200_votable_error_is_not_empty_success():
+    content = VOTABLE.replace(b'value="OK"', b'value="ERROR"')
+    with pytest.raises(IrsaError, match="QUERY_STATUS=ERROR"):
+        parse_sia_votable(content)
+
+
+def test_missing_mandatory_column_is_not_empty_success():
+    content = VOTABLE.replace(b'name="access_url"', b'name="wrong_column"')
+    with pytest.raises(IrsaError, match="columnas obligatorias"):
+        parse_sia_votable(content)
+
+
+def test_irsa_ids_differ_from_column_names():
+    content = VOTABLE.replace(b'name="obs_id"', b'ID="col_9" name="obs_id"')
+    content = content.replace(b'name="access_url"', b'ID="col_15" name="access_url"')
+    content = content.replace(b'name="t_min"', b'ID="col_39" name="t_min"')
+    records, _ = parse_sia_votable(content)
+    assert records[0].obs_id == "obs-1"
+    assert records[0].t_min == pytest.approx(61000.1)
+    assert records[0].access_url.startswith("https://irsa.ipac.caltech.edu/")
+
+
 def test_cutout_url_preserves_query_and_replaces_size() -> None:
     record = SiaRecord(
         obs_id="obs-1",

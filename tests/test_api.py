@@ -10,6 +10,7 @@ from api import create_app
 from orbitlens.api_models import SearchRequest
 from orbitlens.config import Settings
 from orbitlens.jobs import TERMINAL_STATES, JobManager
+from orbitlens.manifest import sha256_file
 
 
 class StubService:
@@ -134,14 +135,15 @@ def test_unknown_manifest(client_and_settings) -> None:
     assert client.get(f"/api/results/{'b' * 16}/manifest").status_code == 404
 
 
-def test_manifest_and_indexed_file(client_and_settings) -> None:
-    client, settings, _, _ = client_and_settings
+def _write_valid_result(settings):
     result_id = "b" * 16
     result_dir = settings.data_dir / "results" / result_id
     frames = result_dir / "frames"
     frames.mkdir(parents=True)
     image = frames / "frame.png"
     image.write_bytes(b"png")
+    derived = frames / "frame.fits"
+    derived.write_bytes(b"fits")
 
     manifest = {
         "schema_version": 1,
@@ -166,19 +168,42 @@ def test_manifest_and_indexed_file(client_and_settings) -> None:
                 "id": "01_x-png",
                 "kind": "png",
                 "path": "frames/frame.png",
-                "sha256": "x",
+                "sha256": sha256_file(image),
                 "bytes": 3,
-            }
+            },
+            {"id": "01_x-fits", "kind": "fits", "path": "frames/frame.fits",
+             "sha256": sha256_file(derived), "bytes": 4},
         ],
         "warnings": [],
     }
     (result_dir / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+    return result_id, result_dir
+
+
+def test_manifest_and_indexed_file(client_and_settings) -> None:
+    client, settings, _, _ = client_and_settings
+    result_id, _ = _write_valid_result(settings)
 
     assert client.get(f"/api/results/{result_id}/manifest").status_code == 200
     file_response = client.get(f"/api/results/{result_id}/files/01_x-png")
     assert file_response.status_code == 200
     assert file_response.content == b"png"
     assert client.get(f"/api/results/{result_id}/files/unknown").status_code == 404
+
+
+@pytest.mark.parametrize("corruption", ["same-size", "truncated", "missing"])
+def test_corrupt_result_is_not_served_as_valid(client_and_settings, corruption):
+    client, settings, _, _ = client_and_settings
+    result_id, result_dir = _write_valid_result(settings)
+    image = result_dir / "frames" / "frame.png"
+    if corruption == "missing":
+        image.unlink()
+    else:
+        image.write_bytes(b"bad" if corruption == "same-size" else b"x")
+    assert client.get(f"/api/results/{result_id}/manifest").status_code == 503
+    assert client.get(f"/api/results/{result_id}/files/01_x-png").status_code == (
+        404 if corruption == "missing" else 503
+    )
 
 
 def test_file_path_traversal_blocked(client_and_settings) -> None:

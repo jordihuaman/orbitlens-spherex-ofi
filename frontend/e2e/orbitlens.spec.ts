@@ -107,6 +107,18 @@ test("vista sin desbordamiento y captura de evidencia", async ({ page }, info) =
   await page.screenshot({ path: `test-results/${info.project.name}.png`, fullPage: true });
 });
 
+test("dos frames permiten inspección pero no reproducción", async ({ page }) => {
+  const response = await page.request.get(`/api/results/${result}/manifest`);
+  const manifest = await response.json();
+  manifest.frames = manifest.frames.slice(0, 2);
+  await page.route(`**/api/results/${result}/manifest`, (route) => route.fulfill({ json: manifest }));
+  await page.goto(`/?result=${result}`);
+  await expect(page.getByRole("button", { name: "Reproducir", exact: true })).toBeDisabled();
+  await expect(page.getByText("Solo hay dos frames:", { exact: false })).toBeVisible();
+  await page.getByRole("button", { name: "Frame siguiente" }).click();
+  await expect(page.getByRole("img")).toHaveAttribute("alt", "Imagen sintética DEMO-02");
+});
+
 test("entrada inválida rechazada por la API real", async ({ page }) => {
   await page.goto("/");
   await page.getByLabel("RA (grados)", { exact: true }).fill("400");

@@ -13,9 +13,12 @@ máscaras y longitudes de onda.
 
 ## Estado verificado — 2026-11-14
 
-**Actualización: ya se obtuvo y verificó un recorte real DR1** del campo de
-referencia del tutorial IRSA. Ver [DATOS_REALES.md](DATOS_REALES.md) para abrirlo
-o descargarlo de nuevo. No es uno de los cinco presets ni una secuencia temporal.
+**Actualización pipeline 0.1.4:** el parser ya interpreta los nombres de campos
+reales de IRSA. Se obtuvieron **tres frames reales por cada uno de los cinco
+campos**, abiertos y reproducidos en Edge. Todos están en estado parcial por
+overflow/fallos; no se confirma identidad de fuentes ni astrometría. Ver
+[evidencia de cinco campos](evidencias/irsa/five-fields/README.md),
+[DATOS_REALES.md](DATOS_REALES.md) y [brechas pendientes](BRECHAS_REQUISITOS.md).
 
 Correcciones posteriores (pipeline 0.1.1): RA de Epsilon Indi B y selección
 estricta de un solo detector. Estado del recorte real y entregables de Dany y
@@ -27,13 +30,13 @@ entorno es:
 
 | Comprobación | Resultado |
 | --- | --- |
-| Suite Python (`pytest`) | **105 pruebas pasan** (incluye importación local y posición espectral) |
-| Navegador real Edge / Playwright | **28 casos pasan**, escritorio y viewport móvil; sintético/proveedor controlado |
+| Suite Python (`pytest`) | **124 pruebas pasan**, incluida integridad, candidatos sustitutos, estados, caché caducada y parser real |
+| Navegador real Edge / Playwright | **30 casos pasan**, escritorio y viewport móvil; sintético/proveedor controlado |
 | Build frontend (`tsc --noEmit && vite build`) | Correcto, genera `frontend/dist` |
 | Arranque `uvicorn api:app` | `/api/health`, `/api/presets` y `/` responden 200 |
-| Contrato resultado → manifiesto → PNG/FITS | Verificado con un resultado **sintético** |
-| Consulta real a IRSA SIA/TAP | Intermitente: sondas 200; consultas posteriores del preset agotan timeout |
-| FITS real descargado e inspeccionado en esta copia | **Sí**, recorte DR1 del tutorial, 3 954 240 bytes; original, derivado y manifiesto |
+| Contrato resultado → manifiesto → PNG/FITS | Sintético y real: cinco secuencias reproducibles en Edge, 45 artefactos HTTP 200 |
+| Consulta real a IRSA SIA/TAP | SIA devuelve filas reales; IBE intermitente con 503; error de nombres VOTable corregido |
+| FITS real descargado e inspeccionado en esta copia | **Sí**, originales DR1 del tutorial, derivados y manifiestos; cinco campos aún sin validar |
 
 El hito **H1 sigue parcial**: el primer FITS real y su recorrido al navegador
 están comprobados, pero la consulta de los cinco objetivos no es estable.

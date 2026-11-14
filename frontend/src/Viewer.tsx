@@ -47,7 +47,7 @@ export default function Viewer({ manifest }: Props) {
   }, [manifest.result_id]);
 
   useEffect(() => {
-    if (!playing || frames.length < 2) {
+    if (!playing || frames.length < 3) {
       return;
     }
     const timer = window.setInterval(() => {
@@ -111,6 +111,9 @@ export default function Viewer({ manifest }: Props) {
       {!synthetic && frames.length === 1 && (
         <p role="note">Recorte real individual: no constituye una secuencia temporal ni confirma una detección.</p>
       )}
+      {frames.length === 2 && (
+        <p role="note">Solo hay dos frames: puedes inspeccionarlos, pero la reproducción requiere al menos tres.</p>
+      )}
 
       <figure className="stage">
         <img
@@ -140,7 +143,7 @@ export default function Viewer({ manifest }: Props) {
           type="button"
           className="primary compact"
           onClick={() => setPlaying((current) => !current)}
-          disabled={frames.length < 2}
+          disabled={frames.length < 3}
         >
           {playing ? "Pausa" : "Reproducir"}
         </button>

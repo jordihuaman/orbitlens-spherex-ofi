@@ -1,5 +1,25 @@
 # Entrega técnica — OrbitLens SPHEREx
 
+## Bloque actual: integridad y adquisición real, pipeline 0.1.4
+
+Contraste explícito y prioridades en `BRECHAS_REQUISITOS.md`. Se corrigen nombres
+VOTable reales, errores HTTP 200, TTL de vacíos, estados parciales, validación de
+hashes/rutas, candidatos sustitutos, deduplicación y conservación de originales.
+124 pruebas Python y 30 E2E correctos; Ruff y build correctos. Un aviso de
+deprecación Starlette/AnyIO permanece, sin fallos de pruebas.
+
+Resultado real del tutorial `63aac406686a9d82`: dos frames alineados, partial
+por overflow y cuatro recortes 503. En Edge: cambio de frame y seis descargas
+200, reproducción deshabilitada por tener menos de tres frames. No cierra O4.
+`scripts/verify_real_sequences.py` añade un recorrido reproducible por los cinco
+campos y guarda estados/errores sin inventar éxitos. Presentación/video aplazados.
+
+La adquisición posterior obtuvo tres frames en cada uno de los cinco campos:
+15 originales contrastados con SIA/cabeceras y cinco secuencias reproducidas en
+Edge, 45 artefactos HTTP 200. Todos partial por overflow/fallos; astrometría y
+comparación espectral independiente pendientes. Fichas técnicas, tiempos,
+centros enmascarados y manifiestos en `evidencias/irsa/five-fields/README.md`.
+
 ## Acceso real recuperado parcialmente (pipeline 0.1.3)
 
 Se descargó de IBE un recorte DR1 real del tutorial oficial: 3 954 240 bytes,

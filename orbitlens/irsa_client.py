@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import math
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from io import BytesIO
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
@@ -201,18 +201,24 @@ def parse_sia_votable(content: bytes) -> tuple[list[SiaRecord], bool]:
         raise IrsaError(f"VOTable inválido: {exc}") from exc
 
     overflow = _has_overflow(votable)
+    for info in _iter_infos(votable):
+        if (str(getattr(info, "name", "")).upper() == "QUERY_STATUS"
+                and str(getattr(info, "value", "")).upper() == "ERROR"):
+            raise IrsaError(f"QUERY_STATUS=ERROR: {getattr(info, 'content', '')}")
     tables = list(votable.iter_tables())
     if not tables:
-        return [], overflow
+        raise IrsaError("VOTable sin tabla de resultados")
 
     try:
-        table = tables[0].to_table()
+        table = tables[0].to_table(use_names_over_ids=True)
     except Exception as exc:
         raise IrsaError(f"no se pudo materializar la tabla VOTable: {exc}") from exc
+    lower_names = {name.lower(): name for name in table.colnames}
+    if not (set(lower_names) & {"obs_id", "obsid"}
+            and set(lower_names) & {"access_url", "accessurl"}):
+        raise IrsaError("VOTable sin columnas obligatorias obs_id/access_url")
     if len(table) == 0:
         return [], overflow
-
-    lower_names = {name.lower(): name for name in table.colnames}
     records: list[SiaRecord] = []
     for row in table:
 
@@ -309,7 +315,12 @@ def query_collection(
     if not response.content:
         raise IrsaError(f"SIA {collection}: respuesta vacía")
 
-    return parse_sia_votable(response.content)
+    try:
+        records, overflow = parse_sia_votable(response.content)
+    except IrsaError as exc:
+        raise IrsaError(f"SIA {collection}: {exc}") from exc
+    return [record if record.collection else replace(record, collection=collection)
+            for record in records], overflow
 
 
 def search(

@@ -1,0 +1,279 @@
+{
+  "schema_version": 1,
+  "pipeline_version": "0.1.4",
+  "code_commit": "19fd5ef3a171eb3a695b3d4b391a36f6a7831a0f+working-tree",
+  "result_id": "69b4af920d55eff0",
+  "created_at": "2026-11-14T23:01:54Z",
+  "status": "partial",
+  "request": {
+    "ra_deg": 76.95633,
+    "dec_deg": 30.40139,
+    "fov_arcmin": 4.0,
+    "frames": 3,
+    "detector": "auto"
+  },
+  "search": {
+    "queried_at": "2026-11-14T23:01:36Z",
+    "collections": [
+      "spherex_dr1",
+      "spherex_qr3",
+      "spherex_dr1_deep",
+      "spherex_qr3_deep"
+    ],
+    "records_found": 40,
+    "candidates": 19,
+    "duplicate_exposures": 0,
+    "deduplication": "OBSID dentro del detector elegido; primera fila devuelta",
+    "selected": 3,
+    "attempted": 3,
+    "processed": 3,
+    "failures": [],
+    "failed_collections": [],
+    "overflow": true,
+    "from_cache": false,
+    "selection": "distribución uniforme sobre el intervalo disponible",
+    "detector_requested": "auto",
+    "detector_selected": "D1"
+  },
+  "grid": {
+    "ra_deg": 76.95633,
+    "dec_deg": 30.40139,
+    "fov_arcmin": 4.0,
+    "width": 39,
+    "height": 39,
+    "pixel_scale_arcsec": 6.15,
+    "projection": "RA---TAN/DEC--TAN, norte arriba"
+  },
+  "processing": {
+    "mask_policy_version": "1.0",
+    "min_valid_fraction": 0.7,
+    "background": "no sustraído; incluye fondo zodiacal",
+    "stretch": {
+      "mode": "asinh",
+      "vmin": 0.3546166955518147,
+      "vmax": 16.76130261583775,
+      "softening": 0.05,
+      "scope": "percentiles globales de la secuencia"
+    },
+    "spectral_policy": "λ y ancho de banda por frame; sin apilar"
+  },
+  "frames": [
+    {
+      "frame_id": "01_2025W36_1A_0095_1",
+      "png": "frames/01_2025W36_1A_0095_1.png",
+      "fits": "frames/01_2025W36_1A_0095_1.fits",
+      "original_fits": "frames/01_2025W36_1A_0095_1-original.fits",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W36_1A/l2b-v27-2026-232/1/level2_2025W36_1A_0095_1D1_spx_l2b-v27-2026-232.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W36_1A/l2b-v27-2026-232/1/level2_2025W36_1A_0095_1D1_spx_l2b-v27-2026-232.fits?center=76.95633000%2C30.40139000deg&size=0.10000000deg",
+      "bunit": "MJy / sr",
+      "mask_definitions": {
+        "TRANSIENT": 0,
+        "OVERFLOW": 1,
+        "SUR_ERROR": 2,
+        "NONFUNC": 6,
+        "DICHROIC": 7,
+        "MISSING_DATA": 9,
+        "HOT": 10,
+        "COLD": 11,
+        "FULLSAMPLE": 12,
+        "PHANMISS": 14,
+        "NONLINEAR": 15,
+        "PERSIST": 17,
+        "OUTLIER": 19,
+        "CROSSTALK": 20,
+        "SOURCE": 21,
+        "GHOST": 22,
+        "GHOST_FPA": 23,
+        "GHOST_EXT": 24,
+        "STREAK": 25,
+        "BLOOM": 26,
+        "SNOWBALL": 27,
+        "HALO": 28
+      },
+      "obs_id": "2025W36_1A_0095_1",
+      "collection": "spherex_dr1",
+      "detector": "D1",
+      "version": "7.0.5",
+      "time": {
+        "t_min_mjd": 60919.419647,
+        "t_max_mjd": 60919.420979,
+        "label": "2025-09-01T10:04:17.501Z"
+      },
+      "lambda_um": 1.0683171362533685,
+      "bandwidth_um": 0.02826350693549126,
+      "valid_fraction": 0.855358,
+      "center_valid": true,
+      "warnings": [
+        "1 bits de rechazo sin definición en la cabecera (SATELLITE_HALO); no se enmascaran"
+      ]
+    },
+    {
+      "frame_id": "02_2025W36_1A_0606_1",
+      "png": "frames/02_2025W36_1A_0606_1.png",
+      "fits": "frames/02_2025W36_1A_0606_1.fits",
+      "original_fits": "frames/02_2025W36_1A_0606_1-original.fits",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W36_1A/l2b-v27-2026-232/1/level2_2025W36_1A_0606_1D1_spx_l2b-v27-2026-232.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W36_1A/l2b-v27-2026-232/1/level2_2025W36_1A_0606_1D1_spx_l2b-v27-2026-232.fits?center=76.95633000%2C30.40139000deg&size=0.10000000deg",
+      "bunit": "MJy / sr",
+      "mask_definitions": {
+        "TRANSIENT": 0,
+        "OVERFLOW": 1,
+        "SUR_ERROR": 2,
+        "NONFUNC": 6,
+        "DICHROIC": 7,
+        "MISSING_DATA": 9,
+        "HOT": 10,
+        "COLD": 11,
+        "FULLSAMPLE": 12,
+        "PHANMISS": 14,
+        "NONLINEAR": 15,
+        "PERSIST": 17,
+        "OUTLIER": 19,
+        "CROSSTALK": 20,
+        "SOURCE": 21,
+        "GHOST": 22,
+        "GHOST_FPA": 23,
+        "GHOST_EXT": 24,
+        "STREAK": 25,
+        "BLOOM": 26,
+        "SNOWBALL": 27,
+        "HALO": 28
+      },
+      "obs_id": "2025W36_1A_0606_1",
+      "collection": "spherex_dr1",
+      "detector": "D1",
+      "version": "7.0.5",
+      "time": {
+        "t_min_mjd": 60921.723883,
+        "t_max_mjd": 60921.725215,
+        "label": "2025-09-03T17:22:23.491Z"
+      },
+      "lambda_um": 0.8586546841161227,
+      "bandwidth_um": 0.021520649758154646,
+      "valid_fraction": 0.877055,
+      "center_valid": false,
+      "warnings": [
+        "1 bits de rechazo sin definición en la cabecera (SATELLITE_HALO); no se enmascaran"
+      ]
+    },
+    {
+      "frame_id": "03_2026W37_1A_0234_3",
+      "png": "frames/03_2026W37_1A_0234_3.png",
+      "fits": "frames/03_2026W37_1A_0234_3.fits",
+      "original_fits": "frames/03_2026W37_1A_0234_3-original.fits",
+      "access_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W37_1A/l2b-v27-2026-255/1/level2_2026W37_1A_0234_3D1_spx_l2b-v27-2026-255.fits",
+      "cutout_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W37_1A/l2b-v27-2026-255/1/level2_2026W37_1A_0234_3D1_spx_l2b-v27-2026-255.fits?center=76.95633000%2C30.40139000deg&size=0.10000000deg",
+      "bunit": "MJy / sr",
+      "mask_definitions": {
+        "TRANSIENT": 0,
+        "OVERFLOW": 1,
+        "SUR_ERROR": 2,
+        "NONFUNC": 6,
+        "DICHROIC": 7,
+        "MISSING_DATA": 9,
+        "HOT": 10,
+        "COLD": 11,
+        "FULLSAMPLE": 12,
+        "PHANMISS": 14,
+        "NONLINEAR": 15,
+        "PERSIST": 17,
+        "OUTLIER": 19,
+        "CROSSTALK": 20,
+        "SOURCE": 21,
+        "GHOST": 22,
+        "GHOST_FPA": 23,
+        "GHOST_EXT": 24,
+        "STREAK": 25,
+        "BLOOM": 26,
+        "SNOWBALL": 27,
+        "HALO": 28
+      },
+      "obs_id": "2026W37_1A_0234_3",
+      "collection": "spherex_qr3",
+      "detector": "D1",
+      "version": "7.0.5",
+      "time": {
+        "t_min_mjd": 61291.27665,
+        "t_max_mjd": 61291.277983,
+        "label": "2026-09-08T06:38:22.560Z"
+      },
+      "lambda_um": 0.7711760359058296,
+      "bandwidth_um": 0.018229076412649113,
+      "valid_fraction": 0.886259,
+      "center_valid": true,
+      "warnings": [
+        "1 bits de rechazo sin definición en la cabecera (SATELLITE_HALO); no se enmascaran"
+      ]
+    }
+  ],
+  "files": [
+    {
+      "id": "01_2025W36_1A_0095_1-png",
+      "kind": "png",
+      "path": "frames/01_2025W36_1A_0095_1.png",
+      "sha256": "109fd9b4c1f47bdec91de1460977302850ae231e265b782a779563cfa7bd5b11",
+      "bytes": 2554
+    },
+    {
+      "id": "01_2025W36_1A_0095_1-fits",
+      "kind": "fits",
+      "path": "frames/01_2025W36_1A_0095_1.fits",
+      "sha256": "6459f3f6512a3b5f3f745ad929a6f084f6a988613ebc10a84974a5b999375e5c",
+      "bytes": 11520
+    },
+    {
+      "id": "01_2025W36_1A_0095_1-original",
+      "kind": "fits",
+      "path": "frames/01_2025W36_1A_0095_1-original.fits",
+      "sha256": "3763600a8058f05f3351b97bb2c48fbeb5e9f55107d612dc6b09c98e382d8a7d",
+      "bytes": 4000320
+    },
+    {
+      "id": "02_2025W36_1A_0606_1-png",
+      "kind": "png",
+      "path": "frames/02_2025W36_1A_0606_1.png",
+      "sha256": "15d5714077f542ba68b16613653240f13a52b0ac5b021ca6cbcbde7fc544f828",
+      "bytes": 2323
+    },
+    {
+      "id": "02_2025W36_1A_0606_1-fits",
+      "kind": "fits",
+      "path": "frames/02_2025W36_1A_0606_1.fits",
+      "sha256": "20d73a446f720d905391783932405e5e908bc95b02a4f5698ac7b16cc53722b2",
+      "bytes": 11520
+    },
+    {
+      "id": "02_2025W36_1A_0606_1-original",
+      "kind": "fits",
+      "path": "frames/02_2025W36_1A_0606_1-original.fits",
+      "sha256": "5efac8e4850d7c8015b53ec401d87461903b873d227c1461241c80e67918da9c",
+      "bytes": 4000320
+    },
+    {
+      "id": "03_2026W37_1A_0234_3-png",
+      "kind": "png",
+      "path": "frames/03_2026W37_1A_0234_3.png",
+      "sha256": "bfec992cf7c291166ebb498d585cf0ac55285f8634a23ee2d1fe2070d9d06623",
+      "bytes": 2186
+    },
+    {
+      "id": "03_2026W37_1A_0234_3-fits",
+      "kind": "fits",
+      "path": "frames/03_2026W37_1A_0234_3.fits",
+      "sha256": "54d393dc8f2c38fd344c57bc56c473233ab0c2b0e0808068a0df766bec021867",
+      "bytes": 11520
+    },
+    {
+      "id": "03_2026W37_1A_0234_3-original",
+      "kind": "fits",
+      "path": "frames/03_2026W37_1A_0234_3-original.fits",
+      "sha256": "58ae240e1cf6842b650f9950fed43db342bea9d6132835fdaeb2da7dbe4624d5",
+      "bytes": 4000320
+    }
+  ],
+  "warnings": [
+    "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+    "spherex_qr3: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+    "Detector solicitado: auto; seleccionado: D1. Un mismo detector no garantiza compatibilidad espectral."
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "started_at": "2026-11-14T23:00:19Z",
+  "pipeline_version": "0.1.4",
+  "code_commit": "19fd5ef3a171eb3a695b3d4b391a36f6a7831a0f+working-tree",
+  "limits": {
+    "target": "all",
+    "fov": 4.0,
+    "detector": "auto",
+    "frames": 3,
+    "maxrec": 20,
+    "max_candidates": 6,
+    "connect_timeout": 5,
+    "read_timeout": 12
+  },
+  "fields": [
+    {
+      "field": {
+        "id": "barnard",
+        "name": "Estrella de Barnard",
+        "ra_deg": 269.45208,
+        "dec_deg": 4.69339,
+        "reference": "GJ 699 / V* V2500 Oph, J2000 aproximado",
+        "note": "Enana roja de alto movimiento propio. Coordenada de catálogo para centrar el campo; verificar época y movimiento propio antes de interpretar desplazamientos.",
+        "verified": false
+      },
+      "elapsed_s": 25.953,
+      "job": {
+        "job_id": "verify-barnard",
+        "status": "partial",
+        "phase": null,
+        "created_at": "2026-11-14T23:00:19Z",
+        "updated_at": "2026-11-14T23:00:45Z",
+        "result_id": "3b1352edd877bddd",
+        "error": null,
+        "warnings": [
+          "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "spherex_qr3: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "Detector solicitado: auto; seleccionado: D3. Un mismo detector no garantiza compatibilidad espectral.",
+          "frame descartado 2025W34_2B_0030_1: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W34_2B/l2b-v27-2026-229/3/level2_2025W34_2B_0030_1D3_spx_l2b-v27-2026-229.fits?center=269.45208000%2C4.69339000deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W34_2B/l2b-v27-2026-229/3/level2_2025W34_2B_0030_1D3_spx_l2b-v27-2026-229.fits?center=269.45208000%2C4.69339000deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503"
+        ],
+        "counts": {
+          "collections_queried": 4,
+          "records_found": 40,
+          "selected": 3,
+          "candidates": 19,
+          "attempted": 4,
+          "processed": 3,
+          "failed": 1
+        },
+        "request": {
+          "ra_deg": 269.45208,
+          "dec_deg": 4.69339,
+          "fov_arcmin": 4.0,
+          "frames": 3,
+          "detector": "auto"
+        },
+        "status_url": "/api/status/verify-barnard"
+      }
+    },
+    {
+      "field": {
+        "id": "epsindi_b",
+        "name": "Epsilon Indi B",
+        "ra_deg": 331.04375,
+        "dec_deg": -56.78264,
+        "reference": "Epsilon Indi B (Ba/Bb), referencia aproximada 22h04m10.5s −56d46m57.5s, J2000",
+        "note": "Centro aproximado de la compañera B, a unos 6.7 arcmin de Epsilon Indi A. Confirmar la separación y la época de la referencia.",
+        "verified": false
+      },
+      "elapsed_s": 26.063,
+      "job": {
+        "job_id": "verify-epsindi_b",
+        "status": "partial",
+        "phase": null,
+        "created_at": "2026-11-14T23:00:45Z",
+        "updated_at": "2026-11-14T23:01:11Z",
+        "result_id": "40457e8dccea6c10",
+        "error": null,
+        "warnings": [
+          "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "spherex_qr3: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "Detector solicitado: auto; seleccionado: D6. Un mismo detector no garantiza compatibilidad espectral.",
+          "frame descartado 2025W18_1B_0081_1: la coordenada solicitada queda fuera del recorte FITS"
+        ],
+        "counts": {
+          "collections_queried": 4,
+          "records_found": 40,
+          "selected": 3,
+          "candidates": 21,
+          "attempted": 4,
+          "processed": 3,
+          "failed": 1
+        },
+        "request": {
+          "ra_deg": 331.04375,
+          "dec_deg": -56.78264,
+          "fov_arcmin": 4.0,
+          "frames": 3,
+          "detector": "auto"
+        },
+        "status_url": "/api/status/verify-epsindi_b"
+      }
+    },
+    {
+      "field": {
+        "id": "wise0855",
+        "name": "WISE 0855−0714",
+        "ra_deg": 133.79512,
+        "dec_deg": -7.24514,
+        "reference": "WISE J085510.83−071442.5, J2000 aproximado",
+        "note": "Enana marrón fría con gran movimiento propio. La cobertura SPHEREx debe comprobarse por campo; no se asume detección.",
+        "verified": false
+      },
+      "elapsed_s": 25.079,
+      "job": {
+        "job_id": "verify-wise0855",
+        "status": "partial",
+        "phase": null,
+        "created_at": "2026-11-14T23:01:11Z",
+        "updated_at": "2026-11-14T23:01:36Z",
+        "result_id": "1966b97f9c87160f",
+        "error": null,
+        "warnings": [
+          "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "Detector solicitado: auto; seleccionado: D2. Un mismo detector no garantiza compatibilidad espectral.",
+          "frame descartado 2025W19_1B_0181_1: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W19_1B/l2b-v27-2026-197/2/level2_2025W19_1B_0181_1D2_spx_l2b-v27-2026-197.fits?center=133.79512000%2C-7.24514000deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W19_1B/l2b-v27-2026-197/2/level2_2025W19_1B_0181_1D2_spx_l2b-v27-2026-197.fits?center=133.79512000%2C-7.24514000deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
+          "frame descartado 2025W19_1B_0181_4: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W19_1B/l2b-v27-2026-197/2/level2_2025W19_1B_0181_4D2_spx_l2b-v27-2026-197.fits?center=133.79512000%2C-7.24514000deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W19_1B/l2b-v27-2026-197/2/level2_2025W19_1B_0181_4D2_spx_l2b-v27-2026-197.fits?center=133.79512000%2C-7.24514000deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503"
+        ],
+        "counts": {
+          "collections_queried": 4,
+          "records_found": 20,
+          "selected": 3,
+          "candidates": 7,
+          "attempted": 5,
+          "processed": 3,
+          "failed": 2
+        },
+        "request": {
+          "ra_deg": 133.79512,
+          "dec_deg": -7.24514,
+          "fov_arcmin": 4.0,
+          "frames": 3,
+          "detector": "auto"
+        },
+        "status_url": "/api/status/verify-wise0855"
+      }
+    },
+    {
+      "field": {
+        "id": "rw_aur",
+        "name": "RW Aurigae",
+        "ra_deg": 76.95633,
+        "dec_deg": 30.40139,
+        "reference": "RW Aur, J2000 aproximado",
+        "note": "Estrella joven con variabilidad y eyecciones. Comparar épocas exige declarar que la variabilidad intrínseca puede dominar la señal.",
+        "verified": false
+      },
+      "elapsed_s": 17.89,
+      "job": {
+        "job_id": "verify-rw_aur",
+        "status": "partial",
+        "phase": null,
+        "created_at": "2026-11-14T23:01:36Z",
+        "updated_at": "2026-11-14T23:01:54Z",
+        "result_id": "69b4af920d55eff0",
+        "error": null,
+        "warnings": [
+          "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "spherex_qr3: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "Detector solicitado: auto; seleccionado: D1. Un mismo detector no garantiza compatibilidad espectral."
+        ],
+        "counts": {
+          "collections_queried": 4,
+          "records_found": 40,
+          "selected": 3,
+          "candidates": 19,
+          "attempted": 3,
+          "processed": 3,
+          "failed": 0
+        },
+        "request": {
+          "ra_deg": 76.95633,
+          "dec_deg": 30.40139,
+          "fov_arcmin": 4.0,
+          "frames": 3,
+          "detector": "auto"
+        },
+        "status_url": "/api/status/verify-rw_aur"
+      }
+    },
+    {
+      "field": {
+        "id": "r_dra",
+        "name": "R Draconis",
+        "ra_deg": 248.1675,
+        "dec_deg": 66.75494,
+        "reference": "R Dra, J2000 aproximado",
+        "note": "Gigante variable de largo periodo. Las diferencias entre épocas pueden reflejar el ciclo estelar, no movimiento propio.",
+        "verified": false
+      },
+      "elapsed_s": 14.687,
+      "job": {
+        "job_id": "verify-r_dra",
+        "status": "partial",
+        "phase": null,
+        "created_at": "2026-11-14T23:01:54Z",
+        "updated_at": "2026-11-14T23:02:09Z",
+        "result_id": "7266e9f837994b6f",
+        "error": null,
+        "warnings": [
+          "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "spherex_qr3: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "spherex_dr1_deep: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "spherex_qr3_deep: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "Detector solicitado: auto; seleccionado: D6. Un mismo detector no garantiza compatibilidad espectral.",
+          "frame descartado 2025W18_1B_0085_1: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W18_1B/l2b-v27-2026-196/6/level2_2025W18_1B_0085_1D6_spx_l2b-v27-2026-196.fits?center=248.16750000%2C66.75494000deg&size=0.10000000deg: Client error '422 Unprocessable Content' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W18_1B/l2b-v27-2026-196/6/level2_2025W18_1B_0085_1D6_spx_l2b-v27-2026-196.fits?center=248.16750000%2C66.75494000deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422",
+          "frame descartado 2025W18_1B_0085_2: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W18_1B/l2b-v27-2026-196/6/level2_2025W18_1B_0085_2D6_spx_l2b-v27-2026-196.fits?center=248.16750000%2C66.75494000deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W18_1B/l2b-v27-2026-196/6/level2_2025W18_1B_0085_2D6_spx_l2b-v27-2026-196.fits?center=248.16750000%2C66.75494000deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503"
+        ],
+        "counts": {
+          "collections_queried": 4,
+          "records_found": 80,
+          "selected": 3,
+          "candidates": 32,
+          "attempted": 5,
+          "processed": 3,
+          "failed": 2
+        },
+        "request": {
+          "ra_deg": 248.1675,
+          "dec_deg": 66.75494,
+          "fov_arcmin": 4.0,
+          "frames": 3,
+          "detector": "auto"
+        },
+        "status_url": "/api/status/verify-r_dra"
+      }
+    }
+  ],
+  "limitations": [
+    "Coordenadas de referencia no verificadas astrométricamente.",
+    "ready/partial no confirman detección ni movimiento propio.",
+    "Timeouts por petición; aún no hay presupuesto temporal total por trabajo."
+  ],
+  "finished_at": "2026-11-14T23:02:09Z"
+}

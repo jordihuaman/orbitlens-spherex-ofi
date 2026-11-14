@@ -1,5 +1,52 @@
 # Datos reales IRSA — primer recorte verificado, 2026-11-14
 
+## Resultado más reciente: cinco secuencias reales parciales
+
+La ejecución posterior del nuevo script consiguió tres frames para **cada uno
+de los cinco campos**. Los 15 originales coinciden en OBSID/detector/VERSION y
+MJD con sus manifiestos/SIA. Se abrieron los cinco resultados en Edge, se probó
+reproducción/pausa y se descargaron los 45 artefactos con HTTP 200.
+
+IDs, intervalos, λ, máscaras, tiempos, capturas e informes:
+[evidencias/irsa/five-fields/README.md](evidencias/irsa/five-fields/README.md).
+Todos son `partial`: overflow y algunos recortes fallidos. Hay centros
+enmascarados y λ distinta entre frames; los presets siguen `verified=False`.
+Esto no valida astrometría ni confirma detecciones. Las secciones siguientes
+conservan la progresión desde el campo del tutorial.
+
+## Actualización: dos frames reales mediante SIA, pipeline 0.1.4
+
+Se corrigió un fallo del parser: los FIELD de IRSA tienen IDs `col_*` y nombres
+astronómicos distintos. Astropy debe usar `use_names_over_ids=True`. La respuesta
+guardada en `data/real-data/sia-reference.vot` contiene tres filas reales y se
+interpreta correctamente; no todo el bloqueo previo era de conectividad.
+
+El pipeline consultó las cuatro colecciones y encontró 40 registros (MAXREC=20
+por colección, búsqueda truncada), diez candidatos D1. Intentó seis recortes:
+dos descargados y cuatro rechazados por 503. Generó `63aac406686a9d82`, estado
+**partial**, con dos frames alineados, escala común y FITS originales/derivados.
+Es el campo del tutorial, no uno de los cinco objetivos. Los dos frames son
+exposiciones cercanas, no evidencia de variación ni movimiento.
+
+Abrir <http://127.0.0.1:8000/?result=63aac406686a9d82> tras arrancar el servidor.
+Se comprobó en Edge 157: cambio entre `2025W18_1B_0074_2` y
+`2025W18_1B_0074_3`, reproducción deshabilitada, manifiesto y seis artefactos
+con HTTP 200. Captura: `evidencias/irsa/real-two-frames-browser.png`.
+El manifiesto conserva `code_commit=dev` de esa ejecución; no se reescribe la
+evidencia para atribuirle posteriormente otro commit.
+
+Para repetir el pipeline completo con informes persistidos:
+
+```powershell
+.\.venv\Scripts\python.exe -u scripts\verify_real_sequences.py --target reference --fov 1.2 --detector D1
+.\.venv\Scripts\python.exe -u scripts\verify_real_sequences.py --target all --fov 4
+```
+
+Ver límites, estados y requisitos abiertos en `BRECHAS_REQUISITOS.md`.
+La sección siguiente conserva la evidencia del primer recorte individual.
+
+## Primer recorte individual (pipeline 0.1.3)
+
 **Ya hay un recorte real DR1 descargado, abierto, procesado y servido en el
 navegador.** No es sintético. Es el campo de referencia del tutorial Intro de
 IRSA, **no Epsilon Indi B ni otro de los cinco presets**. Un único frame no es

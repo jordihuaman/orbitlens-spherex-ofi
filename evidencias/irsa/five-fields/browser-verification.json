@@ -1,0 +1,126 @@
+{
+  "browser": "157.0.4341.46",
+  "viewport": {
+    "width": 1366,
+    "height": 900
+  },
+  "timezone": "America/Lima",
+  "scope": "Persisted real results; not acquisition from form, physical mobile, astrometry or detection validation",
+  "results": [
+    {
+      "field": "barnard",
+      "result_id": "3b1352edd877bddd",
+      "status": "partial",
+      "manifest_http": 200,
+      "frames": [
+        "Imagen SPHEREx 2025W33_2C_0321_1",
+        "Imagen SPHEREx 2025W33_2C_0321_2",
+        "Imagen SPHEREx 2026W34_2A_0081_1"
+      ],
+      "artifact_http": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "play_pause": true
+    },
+    {
+      "field": "epsindi_b",
+      "result_id": "40457e8dccea6c10",
+      "status": "partial",
+      "manifest_http": 200,
+      "frames": [
+        "Imagen SPHEREx 2025W18_1B_0081_2",
+        "Imagen SPHEREx 2025W18_1B_0238_1",
+        "Imagen SPHEREx 2026W39_1A_0578_4"
+      ],
+      "artifact_http": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "play_pause": true
+    },
+    {
+      "field": "wise0855",
+      "result_id": "1966b97f9c87160f",
+      "status": "partial",
+      "manifest_http": 200,
+      "frames": [
+        "Imagen SPHEREx 2025W19_1B_0181_2",
+        "Imagen SPHEREx 2025W19_1B_0181_3",
+        "Imagen SPHEREx 2025W19_1B_0231_3"
+      ],
+      "artifact_http": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "play_pause": true
+    },
+    {
+      "field": "rw_aur",
+      "result_id": "69b4af920d55eff0",
+      "status": "partial",
+      "manifest_http": 200,
+      "frames": [
+        "Imagen SPHEREx 2025W36_1A_0095_1",
+        "Imagen SPHEREx 2025W36_1A_0606_1",
+        "Imagen SPHEREx 2026W37_1A_0234_3"
+      ],
+      "artifact_http": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "play_pause": true
+    },
+    {
+      "field": "r_dra",
+      "result_id": "7266e9f837994b6f",
+      "status": "partial",
+      "manifest_http": 200,
+      "frames": [
+        "Imagen SPHEREx 2025W18_1B_0085_3",
+        "Imagen SPHEREx 2025W21_1B_0329_2",
+        "Imagen SPHEREx 2026W21_2A_0325_3"
+      ],
+      "artifact_http": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "play_pause": true
+    }
+  ]
+}

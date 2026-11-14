@@ -1,5 +1,22 @@
 # Evidencia del primer recorte real DR1
 
+## Pipeline 0.1.4: dos frames reales
+
+- `real-two-frames-browser.png`: Edge 157, 1366×900; dos frames reales del
+  tutorial, botón Reproducir deshabilitado y aviso de mínimo tres.
+- `two-frames-manifest.json`: copia sin modificar de
+  `data/results/63aac406686a9d82/manifest.json`; `code_commit=dev` refleja la
+  ejecución original con árbol de trabajo, no un commit publicado.
+- El manifiesto y los seis artefactos (dos originales, dos derivados, dos PNG)
+  respondieron HTTP 200 después de validar tamaño/SHA-256. IDs de exposición:
+  `2025W18_1B_0074_2` y `2025W18_1B_0074_3`. Estado partial por overflow/503.
+
+No es una secuencia de los cinco objetivos ni demuestra una detección. Los
+FITS siguen en `data/` ignorado; esta carpeta conserva evidencia, no un paquete
+completo para abrir sin adquisición de datos.
+
+## Pipeline 0.1.3: primer recorte
+
 - `manifest.json`: copia del manifiesto generado con código `a0ed4`, pipeline
   0.1.3, SHA-256 del original y derivados, inspección de HDU/FLAGS y tiempos FITS.
 - `real-dr1-browser.png`: captura de Edge 157.0.4341.46, 1366×900, zona

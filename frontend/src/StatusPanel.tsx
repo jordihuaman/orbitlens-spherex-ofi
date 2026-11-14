@@ -30,6 +30,7 @@ const COUNT_LABELS: Record<string, string> = {
   candidates: "candidatos",
   selected: "seleccionados",
   downloaded: "descargados",
+  attempted: "intentados",
   processed: "procesados",
   failed: "fallidos",
 };

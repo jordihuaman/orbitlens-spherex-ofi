@@ -1,0 +1,235 @@
+{
+  "pipeline_version": "0.1.4",
+  "verification": [
+    {
+      "field": "barnard",
+      "result_id": "3b1352edd877bddd",
+      "integrity": "all indexed files validated by size and SHA-256",
+      "metadata": "OBSID, detector, VERSION and MJD-OBS agree with manifest; MJD tolerance 1e-6 day",
+      "frames": [
+        {
+          "obs_id": "2025W33_2C_0321_1",
+          "mjd_sia": 60902.864715,
+          "mjd_fits": 60902.86471456,
+          "detector_fits": 3,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 2.2880884607606062,
+          "bandwidth_um": 0.056910448989806045,
+          "valid_fraction": 0.959895,
+          "center_valid": true
+        },
+        {
+          "obs_id": "2025W33_2C_0321_2",
+          "mjd_sia": 60902.866207,
+          "mjd_fits": 60902.866206806,
+          "detector_fits": 3,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 2.3405956744749,
+          "bandwidth_um": 0.05802003851278957,
+          "valid_fraction": 0.933596,
+          "center_valid": true
+        },
+        {
+          "obs_id": "2026W34_2A_0081_1",
+          "mjd_sia": 61272.906175,
+          "mjd_fits": 61272.906175231,
+          "detector_fits": 3,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 2.2041608844612393,
+          "bandwidth_um": 0.055230274434322574,
+          "valid_fraction": 0.962525,
+          "center_valid": true
+        }
+      ],
+      "astrometry_verified": false,
+      "detection_confirmed": false
+    },
+    {
+      "field": "epsindi_b",
+      "result_id": "40457e8dccea6c10",
+      "integrity": "all indexed files validated by size and SHA-256",
+      "metadata": "OBSID, detector, VERSION and MJD-OBS agree with manifest; MJD tolerance 1e-6 day",
+      "frames": [
+        {
+          "obs_id": "2025W18_1B_0081_2",
+          "mjd_sia": 60794.064813,
+          "mjd_fits": 60794.064812731,
+          "detector_fits": 6,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 4.42654502052032,
+          "bandwidth_um": 0.03669269165880817,
+          "valid_fraction": 0.940828,
+          "center_valid": false
+        },
+        {
+          "obs_id": "2025W18_1B_0238_1",
+          "mjd_sia": 60795.082689,
+          "mjd_fits": 60795.08268941,
+          "detector_fits": 6,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 4.724415733779466,
+          "bandwidth_um": 0.03681947462756144,
+          "valid_fraction": 0.921762,
+          "center_valid": true
+        },
+        {
+          "obs_id": "2026W39_1A_0578_4",
+          "mjd_sia": 61306.724295,
+          "mjd_fits": 61306.724295035,
+          "detector_fits": 6,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 4.8667569092933505,
+          "bandwidth_um": 0.0369646523531827,
+          "valid_fraction": 0.742932,
+          "center_valid": false
+        }
+      ],
+      "astrometry_verified": false,
+      "detection_confirmed": false
+    },
+    {
+      "field": "wise0855",
+      "result_id": "1966b97f9c87160f",
+      "integrity": "all indexed files validated by size and SHA-256",
+      "metadata": "OBSID, detector, VERSION and MJD-OBS agree with manifest; MJD tolerance 1e-6 day",
+      "frames": [
+        {
+          "obs_id": "2025W19_1B_0181_2",
+          "mjd_sia": 60801.108089,
+          "mjd_fits": 60801.108088657,
+          "detector_fits": 2,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 1.5537275426030657,
+          "bandwidth_um": 0.038024401084843444,
+          "valid_fraction": 0.86785,
+          "center_valid": true
+        },
+        {
+          "obs_id": "2025W19_1B_0181_3",
+          "mjd_sia": 60801.109581,
+          "mjd_fits": 60801.109580914,
+          "detector_fits": 2,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 1.5912529713108858,
+          "bandwidth_um": 0.038529035167221226,
+          "valid_fraction": 0.912558,
+          "center_valid": true
+        },
+        {
+          "obs_id": "2025W19_1B_0231_3",
+          "mjd_sia": 60801.448624,
+          "mjd_fits": 60801.448624398,
+          "detector_fits": 2,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 1.3416779146043125,
+          "bandwidth_um": 0.032035951293235575,
+          "valid_fraction": 0.902696,
+          "center_valid": true
+        }
+      ],
+      "astrometry_verified": false,
+      "detection_confirmed": false
+    },
+    {
+      "field": "rw_aur",
+      "result_id": "69b4af920d55eff0",
+      "integrity": "all indexed files validated by size and SHA-256",
+      "metadata": "OBSID, detector, VERSION and MJD-OBS agree with manifest; MJD tolerance 1e-6 day",
+      "frames": [
+        {
+          "obs_id": "2025W36_1A_0095_1",
+          "mjd_sia": 60919.419647,
+          "mjd_fits": 60919.419646597,
+          "detector_fits": 1,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 1.0683171362533685,
+          "bandwidth_um": 0.02826350693549126,
+          "valid_fraction": 0.855358,
+          "center_valid": true
+        },
+        {
+          "obs_id": "2025W36_1A_0606_1",
+          "mjd_sia": 60921.723883,
+          "mjd_fits": 60921.723883056,
+          "detector_fits": 1,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 0.8586546841161227,
+          "bandwidth_um": 0.021520649758154646,
+          "valid_fraction": 0.877055,
+          "center_valid": false
+        },
+        {
+          "obs_id": "2026W37_1A_0234_3",
+          "mjd_sia": 61291.27665,
+          "mjd_fits": 61291.276650255,
+          "detector_fits": 1,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 0.7711760359058296,
+          "bandwidth_um": 0.018229076412649113,
+          "valid_fraction": 0.886259,
+          "center_valid": true
+        }
+      ],
+      "astrometry_verified": false,
+      "detection_confirmed": false
+    },
+    {
+      "field": "r_dra",
+      "result_id": "7266e9f837994b6f",
+      "integrity": "all indexed files validated by size and SHA-256",
+      "metadata": "OBSID, detector, VERSION and MJD-OBS agree with manifest; MJD tolerance 1e-6 day",
+      "frames": [
+        {
+          "obs_id": "2025W18_1B_0085_3",
+          "mjd_sia": 60794.093521,
+          "mjd_fits": 60794.093520833,
+          "detector_fits": 6,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 4.456209327678515,
+          "bandwidth_um": 0.03642888741642719,
+          "valid_fraction": 0.885602,
+          "center_valid": false
+        },
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "mjd_sia": 60815.694173,
+          "mjd_fits": 60815.694172685,
+          "detector_fits": 6,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 4.5989053164319085,
+          "bandwidth_um": 0.03607616669478213,
+          "valid_fraction": 0.83432,
+          "center_valid": false
+        },
+        {
+          "obs_id": "2026W21_2A_0325_3",
+          "mjd_sia": 61183.49349,
+          "mjd_fits": 61183.493489595,
+          "detector_fits": 6,
+          "version_fits": "7.0.5",
+          "bunit": "MJy / sr",
+          "lambda_um": 4.725591166263368,
+          "bandwidth_um": 0.03648043841191689,
+          "valid_fraction": 0.87311,
+          "center_valid": false
+        }
+      ],
+      "astrometry_verified": false,
+      "detection_confirmed": false
+    }
+  ]
+}

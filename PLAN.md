@@ -6,10 +6,10 @@ Esta sección sustituye las decisiones incompatibles del historial del 5–6 de
 noviembre. Las casillas antiguas describen ejecuciones reportadas en otra copia;
 no acreditan que este repositorio contenga una aplicación ejecutable.
 
-**Estado comprobado:** `origin/master` contiene únicamente el plan original.
-La rama `jesus/preparacion-equipo` contiene la documentación del equipo. Faltan
-código, dependencias, pruebas y datos. La revisión actual es documental: no se han
-ejecutado los notebooks ni regenerado los cinco presets.
+**Estado de la revisión inicial (histórico):** al comenzar solo se había
+comprobado el plan/documentación. El estado actual de implementación está en la
+tabla inferior y en [BRECHAS_REQUISITOS.md](BRECHAS_REQUISITOS.md); ya hay código,
+pruebas y recortes reales. Los cinco presets aún no están validados.
 
 ### Documentos de trabajo
 
@@ -103,12 +103,12 @@ comandos en [ENTREGA_TECNICA.md](ENTREGA_TECNICA.md); límites científicos en
 
 | Hito | Estado | Evidencia |
 | --- | --- | --- |
-| H0. Base reproducible | **Completado** | `.venv`, dependencias fijadas, 105 pruebas, build Vite; QA en `QA_EQUIPO.md` |
+| H0. Base reproducible | **Completado localmente** | `.venv`, dependencias fijadas, 124 pruebas Python, 30 E2E, Ruff y build Vite |
 | H1. Dato real actual | **Parcial: primer FITS verificado** | Recorte real DR1 del tutorial procesado y abierto en navegador; consultas de presets todavía inestables. Ver `DATOS_REALES.md` |
-| H2. Secuencia temporal | **No iniciado con datos reales** | Pipeline y contrato probados con fixtures y resultado sintético |
-| H3. Web de extremo a extremo | **Parcial** | API + frontend; 28 casos Edge con resultado sintético/proveedor controlado; falta recorrido con datos reales |
+| H2. Secuencia temporal | **Cinco secuencias reales, revisión pendiente** | Tres frames por campo (15 originales), todos partial por overflow/fallos; fichas técnicas y límites en `evidencias/irsa/five-fields/README.md`; astrometría no validada |
+| H3. Web de extremo a extremo | **Parcial** | 30 casos Edge controlados; cinco resultados reales abiertos con reproducción/pausa y 45 artefactos HTTP 200; falta adquisición real desde formulario |
 | H4. Versión pública | **No iniciado** | Sin despliegue en esta entrega |
-| H5. Cierre | **En preparación, no cerrado** | Guion, pitch, créditos y borrador de submission preparados; faltan video, ensayos y envío autorizado |
+| H5. Cierre | **Aplazado por el usuario** | Guion, pitch, créditos y borrador preparados; video, ensayos y envío fuera de la prioridad actual |
 
 El resultado sintético (`scripts/make_demo_result.py`) permite probar la UI, pero
 no acredita H1/H2. No se declaran detecciones, movimiento propio ni cobertura de
