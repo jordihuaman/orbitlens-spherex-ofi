@@ -13,6 +13,7 @@ import math
 import os
 import re
 import shutil
+import time
 from collections.abc import Callable
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -22,6 +23,7 @@ import httpx
 from .cache import FileCache
 from .config import PIPELINE_VERSION, SCHEMA_VERSION, Settings
 from .downloads import DownloadBudget, download_to_file
+from .execution import DeadlineExceeded, check_deadline, execution_budget
 from .irsa_client import SearchOutcome, SiaRecord, search
 from .jobs import Job
 from .manifest import sha256_file, utc_now_iso, validate_result_files, write_json_atomic
@@ -36,6 +38,7 @@ from .pipeline import (
     write_derived_fits,
     write_png,
 )
+from .storage import KeyedLocks, StorageError, StorageManager
 
 __all__ = [
     "SearchService",
@@ -155,6 +158,9 @@ class SearchService:
         )
         self._search = search_fn
         self._download = download_fn
+        self.storage = StorageManager(settings.data_dir, settings.storage_max_bytes, settings.min_free_disk_bytes)
+        self._locks = KeyedLocks()
+        self.search_provenance = {"method": "sia"}
 
     def close(self) -> None:
         if self._owns_client:
@@ -212,6 +218,13 @@ class SearchService:
 
     # ---------------------------------------------------------------- búsqueda
     def _find_records(
+        self, job: Job, ra_deg: float, dec_deg: float, fov_arcmin: float
+    ) -> tuple[SearchOutcome, str, bool]:
+        key = self._search_cache_key(ra_deg, dec_deg, fov_arcmin)
+        with self._locks.hold(("sia", key)):
+            return self._find_records_locked(job, ra_deg, dec_deg, fov_arcmin)
+
+    def _find_records_locked(
         self, job: Job, ra_deg: float, dec_deg: float, fov_arcmin: float
     ) -> tuple[SearchOutcome, str, bool]:
         key = self._search_cache_key(ra_deg, dec_deg, fov_arcmin)
@@ -296,18 +309,38 @@ class SearchService:
         )
         filename = f"{sanitize_name(record.obs_id, fallback='cutout')}.fits"
         raw_path = self.cache.path("cutout", cache_key, filename)
-        if not raw_path.is_file():
-            self._download(
-                self.client,
-                cutout_url,
-                raw_path,
-                max_bytes=self.settings.max_download_bytes,
-                budget=budget,
-                attempts=self.settings.retry_attempts,
-                backoff=self.settings.retry_backoff_s,
-            )
+        with self._locks.hold(("cutout", cache_key)):
+            checksum_path = raw_path.with_suffix(".integrity.json")
+            if raw_path.is_file() and checksum_path.is_file():
+                try:
+                    integrity = json.loads(checksum_path.read_text(encoding="utf-8"))
+                    intact = (raw_path.stat().st_size == integrity["bytes"]
+                              and sha256_file(raw_path) == integrity["sha256"])
+                except (OSError, ValueError, TypeError, KeyError):
+                    intact = False
+                if not intact:
+                    raw_path.unlink()
+                    checksum_path.unlink(missing_ok=True)
+            if not raw_path.is_file():
+                self._download(
+                    self.client, cutout_url, raw_path,
+                    max_bytes=self.settings.max_download_bytes, budget=budget,
+                    attempts=self.settings.retry_attempts, backoff=self.settings.retry_backoff_s,
+                    space_check=self.storage.ensure_space,
+                )
+            if not checksum_path.is_file():
+                write_json_atomic({"bytes": raw_path.stat().st_size, "sha256": sha256_file(raw_path)}, checksum_path)
+            os.utime(raw_path, (time.time(), raw_path.stat().st_mtime))
 
         image = read_spherex_image(raw_path, target=(ra_deg, dec_deg))
+        if normalize_detector(image.detector) is None or not image.version or not image.bunit:
+            raise ValueError("FITS sin detector reconocible, VERSION o BUNIT")
+        if image.header.get("OBSID") and str(image.header["OBSID"]).strip() != record.obs_id:
+            raise ValueError("el OBSID del FITS contradice la selección SIA")
+        if "MJD-OBS" in image.header and record.t_min is not None:
+            actual_time = float(image.header["MJD-OBS"])
+            if not math.isfinite(actual_time) or abs(actual_time - record.t_min) > 1e-5:
+                raise ValueError("MJD-OBS del FITS contradice el tiempo SIA")
         if image.valid_fraction < self.settings.min_valid_fraction:
             raise ValueError(
                 f"cobertura válida {image.valid_fraction:.1%} < "
@@ -323,6 +356,11 @@ class SearchService:
 
     # ------------------------------------------------------------------ público
     def run(self, job: Job, request: dict[str, object]) -> None:
+        with execution_budget(self.settings.job_timeout_s):
+            with self.storage.activity(), self._locks.hold(("request", json.dumps(request, sort_keys=True))):
+                self._run(job, request)
+
+    def _run(self, job: Job, request: dict[str, object]) -> None:
         ra_deg = float(request["ra_deg"])
         dec_deg = float(request["dec_deg"])
         fov_arcmin = float(request["fov_arcmin"])
@@ -370,6 +408,7 @@ class SearchService:
             f"Detector solicitado: {detector}; seleccionado: {selected_detector or 'ninguno'}. "
             "Un mismo detector no garantiza compatibilidad espectral."
         )
+        check_deadline()
         limit = min(requested_frames, self.settings.max_frames)
         selected = select_spread(candidates, limit)
         job.set_counts(selected=len(selected), candidates=len(candidates))
@@ -403,6 +442,7 @@ class SearchService:
         attempts = (selected + select_spread(remaining, len(remaining)))[:self.settings.max_candidates]
         attempted = 0
         for index, record in enumerate(attempts, start=1):
+            check_deadline()
             attempted = index
             try:
                 prepared.append(
@@ -414,6 +454,8 @@ class SearchService:
                 if actual is not None and actual != selected_detector:
                     prepared.pop()
                     raise ValueError("el detector del FITS contradice la selección SIA")
+            except (DeadlineExceeded, StorageError):
+                raise
             except Exception as exc:  # noqa: BLE001 - un frame no debe tumbar el trabajo
                 failures.append(f"{record.obs_id}: {exc}")
                 job.add_warning(f"frame descartado {record.obs_id}: {exc}")
@@ -450,6 +492,7 @@ class SearchService:
             "pipeline_version": PIPELINE_VERSION,
             "mask_policy": MASK_POLICY_VERSION,
             "search_incomplete": [failed_collections, outcome.overflow],
+            "provenance": self.search_provenance,
             "grid": [round(ra_deg, 6), round(dec_deg, 6), fov_arcmin, width, height],
         }
         result_id = hashlib.sha256(
@@ -483,6 +526,7 @@ class SearchService:
         file_entries: list[dict[str, object]] = []
 
         for index, prepared_frame in enumerate(prepared, start=1):
+            check_deadline()
             record = prepared_frame.record
             processed = prepared_frame.processed
             image = prepared_frame.image
@@ -491,6 +535,7 @@ class SearchService:
             fits_rel = f"frames/{frame_id}.fits"
             original_rel = f"frames/{frame_id}-original.fits"
             original_path = result_dir / original_rel
+            self.storage.ensure_space(image.path.stat().st_size + width * height * 8)
             shutil.copyfile(image.path, original_path)
 
             rgba = render_rgba(processed, vmin, vmax)
@@ -537,6 +582,12 @@ class SearchService:
                 "center_valid": processed.center_valid,
                 "warnings": list(image.warnings),
             }
+            http_metadata = image.path.with_suffix(image.path.suffix + ".http.json")
+            if http_metadata.is_file():
+                try:
+                    frame_entry["http_metadata"] = json.loads(http_metadata.read_text(encoding="utf-8"))
+                except (OSError, ValueError):
+                    pass
             frame_entries.append(frame_entry)
 
             for suffix, kind, relative, path in (
@@ -563,6 +614,7 @@ class SearchService:
             "status": status,
             "request": request,
             "search": {
+                **self.search_provenance,
                 "queried_at": queried_at,
                 "collections": outcome.collections,
                 "records_found": len(outcome.records),
@@ -607,6 +659,7 @@ class SearchService:
             "warnings": list(job.public()["warnings"]),
         }
         validate_result_files(result_dir, manifest)
+        check_deadline()
         write_json_atomic(manifest, manifest_path)
 
         job.update(status=status, phase=None, result_id=result_id)

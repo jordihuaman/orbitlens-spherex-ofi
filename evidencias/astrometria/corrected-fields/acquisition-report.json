@@ -1,0 +1,287 @@
+{
+  "started_at": "2026-11-14T23:24:24Z",
+  "pipeline_version": "0.1.5",
+  "code_commit": "afc971b565b1bece9f923e0b739b627d709b4387+working-tree",
+  "limits": {
+    "target": "all",
+    "fov": 4.0,
+    "detector": "auto",
+    "frames": 3,
+    "maxrec": 200,
+    "max_candidates": 8,
+    "connect_timeout": 5,
+    "read_timeout": 12
+  },
+  "fields": [
+    {
+      "field": {
+        "id": "barnard",
+        "name": "Estrella de Barnard",
+        "ra_deg": 269.446267879734,
+        "dec_deg": 4.768204411842282,
+        "reference": "GJ 699, ICRS J2026 aproximado; SIMBAD/2020yCat.1350....0G, PM desde J2000",
+        "note": "Enana roja de alto movimiento propio. Coordenada de catálogo para centrar el campo; verificar época y movimiento propio antes de interpretar desplazamientos.",
+        "verified": false,
+        "epoch_jyear": 2026.0,
+        "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita"
+      },
+      "elapsed_s": 20.015,
+      "job": {
+        "job_id": "verify-barnard",
+        "status": "partial",
+        "phase": null,
+        "created_at": "2026-11-14T23:24:24Z",
+        "updated_at": "2026-11-14T23:24:44Z",
+        "result_id": "59e0515d0d3a48a8",
+        "error": null,
+        "warnings": [
+          "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "Detector solicitado: auto; seleccionado: D1. Un mismo detector no garantiza compatibilidad espectral.",
+          "frame descartado 2025W35_1A_0432_3: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W35_1A/l2b-v27-2026-230/1/level2_2025W35_1A_0432_3D1_spx_l2b-v27-2026-230.fits?center=269.44626788%2C4.76820441deg&size=0.10000000deg: Client error '422 Unprocessable Content' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W35_1A/l2b-v27-2026-230/1/level2_2025W35_1A_0432_3D1_spx_l2b-v27-2026-230.fits?center=269.44626788%2C4.76820441deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422",
+          "frame descartado 2026W36_1A_0510_1: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W36_1A/l2b-v27-2026-252/1/level2_2026W36_1A_0510_1D1_spx_l2b-v27-2026-252.fits?center=269.44626788%2C4.76820441deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W36_1A/l2b-v27-2026-252/1/level2_2026W36_1A_0510_1D1_spx_l2b-v27-2026-252.fits?center=269.44626788%2C4.76820441deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
+          "frame descartado 2025W35_1A_0658_1: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W35_1A/l2b-v27-2026-230/1/level2_2025W35_1A_0658_1D1_spx_l2b-v27-2026-230.fits?center=269.44626788%2C4.76820441deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W35_1A/l2b-v27-2026-230/1/level2_2025W35_1A_0658_1D1_spx_l2b-v27-2026-230.fits?center=269.44626788%2C4.76820441deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503"
+        ],
+        "counts": {
+          "collections_queried": 4,
+          "records_found": 329,
+          "selected": 3,
+          "candidates": 64,
+          "attempted": 6,
+          "processed": 3,
+          "failed": 3
+        },
+        "request": {
+          "ra_deg": 269.446267879734,
+          "dec_deg": 4.768204411842282,
+          "fov_arcmin": 4.0,
+          "frames": 3,
+          "detector": "auto",
+          "coordinate_epoch_jyear": 2026.0,
+          "coordinate_reference": "GJ 699, ICRS J2026 aproximado; SIMBAD/2020yCat.1350....0G, PM desde J2000",
+          "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita",
+          "astrometry_fitted_to_spherex": false
+        },
+        "status_url": "/api/status/verify-barnard",
+        "queue_position": null
+      }
+    },
+    {
+      "field": {
+        "id": "epsindi_b",
+        "name": "Epsilon Indi B",
+        "ra_deg": 331.0966687786697,
+        "dec_deg": -56.80064917366798,
+        "reference": "Epsilon Indi B, ICRS J2026 aproximado; SIMBAD/2020yCat.1350....0G, PM desde J2000",
+        "note": "Centro aproximado de la compañera B, a unos 6.7 arcmin de Epsilon Indi A. Confirmar la separación y la época de la referencia.",
+        "verified": false,
+        "epoch_jyear": 2026.0,
+        "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita"
+      },
+      "elapsed_s": 28.484,
+      "job": {
+        "job_id": "verify-epsindi_b",
+        "status": "partial",
+        "phase": null,
+        "created_at": "2026-11-14T23:24:44Z",
+        "updated_at": "2026-11-14T23:25:13Z",
+        "result_id": "9867e7a480d0fcce",
+        "error": null,
+        "warnings": [
+          "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "Detector solicitado: auto; seleccionado: D3. Un mismo detector no garantiza compatibilidad espectral.",
+          "frame descartado 2025W18_1B_0081_1: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W18_1B/l2b-v27-2026-196/3/level2_2025W18_1B_0081_1D3_spx_l2b-v27-2026-196.fits?center=331.09666878%2C-56.80064917deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W18_1B/l2b-v27-2026-196/3/level2_2025W18_1B_0081_1D3_spx_l2b-v27-2026-196.fits?center=331.09666878%2C-56.80064917deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503"
+        ],
+        "counts": {
+          "collections_queried": 4,
+          "records_found": 320,
+          "selected": 3,
+          "candidates": 86,
+          "attempted": 4,
+          "processed": 3,
+          "failed": 1
+        },
+        "request": {
+          "ra_deg": 331.0966687786697,
+          "dec_deg": -56.80064917366798,
+          "fov_arcmin": 4.0,
+          "frames": 3,
+          "detector": "auto",
+          "coordinate_epoch_jyear": 2026.0,
+          "coordinate_reference": "Epsilon Indi B, ICRS J2026 aproximado; SIMBAD/2020yCat.1350....0G, PM desde J2000",
+          "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita",
+          "astrometry_fitted_to_spherex": false
+        },
+        "status_url": "/api/status/verify-epsindi_b",
+        "queue_position": null
+      }
+    },
+    {
+      "field": {
+        "id": "wise0855",
+        "name": "WISE 0855−0714",
+        "ra_deg": 133.7597652706523,
+        "dec_deg": -7.242182182634441,
+        "reference": "WISEA J085510.74−071442.5, ICRS J2026 aproximado; SIMBAD/2021ApJS..253....7K, PM desde J2000",
+        "note": "Enana marrón fría con gran movimiento propio. La cobertura SPHEREx debe comprobarse por campo; no se asume detección.",
+        "verified": false,
+        "epoch_jyear": 2026.0,
+        "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita"
+      },
+      "elapsed_s": 39.062,
+      "job": {
+        "job_id": "verify-wise0855",
+        "status": "partial",
+        "phase": null,
+        "created_at": "2026-11-14T23:25:13Z",
+        "updated_at": "2026-11-14T23:25:52Z",
+        "result_id": "799cfc2d9920b4bf",
+        "error": null,
+        "warnings": [
+          "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "Detector solicitado: auto; seleccionado: D3. Un mismo detector no garantiza compatibilidad espectral.",
+          "frame descartado 2026W18_2A_0065_1: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2026W18_2A/l2b-v27-2026-244/3/level2_2026W18_2A_0065_1D3_spx_l2b-v27-2026-244.fits?center=133.75976527%2C-7.24218218deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2026W18_2A/l2b-v27-2026-244/3/level2_2026W18_2A_0065_1D3_spx_l2b-v27-2026-244.fits?center=133.75976527%2C-7.24218218deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
+          "frame descartado 2025W19_1B_0116_2: cobertura válida 26.0% < 70%"
+        ],
+        "counts": {
+          "collections_queried": 4,
+          "records_found": 200,
+          "selected": 3,
+          "candidates": 41,
+          "attempted": 5,
+          "processed": 3,
+          "failed": 2
+        },
+        "request": {
+          "ra_deg": 133.7597652706523,
+          "dec_deg": -7.242182182634441,
+          "fov_arcmin": 4.0,
+          "frames": 3,
+          "detector": "auto",
+          "coordinate_epoch_jyear": 2026.0,
+          "coordinate_reference": "WISEA J085510.74−071442.5, ICRS J2026 aproximado; SIMBAD/2021ApJS..253....7K, PM desde J2000",
+          "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita",
+          "astrometry_fitted_to_spherex": false
+        },
+        "status_url": "/api/status/verify-wise0855",
+        "queue_position": null
+      }
+    },
+    {
+      "field": {
+        "id": "rw_aur",
+        "name": "RW Aurigae",
+        "ra_deg": 76.95658657548722,
+        "dec_deg": 30.401291346097146,
+        "reference": "RW Aur, ICRS J2026 aproximado; SIMBAD/2007A&A...474..653V, PM desde J2000",
+        "note": "Estrella joven con variabilidad y eyecciones. Comparar épocas exige declarar que la variabilidad intrínseca puede dominar la señal.",
+        "verified": false,
+        "epoch_jyear": 2026.0,
+        "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita"
+      },
+      "elapsed_s": 39.484,
+      "job": {
+        "job_id": "verify-rw_aur",
+        "status": "partial",
+        "phase": null,
+        "created_at": "2026-11-14T23:25:52Z",
+        "updated_at": "2026-11-14T23:26:31Z",
+        "result_id": "f3f8e67c01bbaf99",
+        "error": null,
+        "warnings": [
+          "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "Detector solicitado: auto; seleccionado: D6. Un mismo detector no garantiza compatibilidad espectral.",
+          "frame descartado 2025W37_2A_0051_1: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W37_2A/l2b-v27-2026-236/6/level2_2025W37_2A_0051_1D6_spx_l2b-v27-2026-236.fits?center=76.95658658%2C30.40129135deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W37_2A/l2b-v27-2026-236/6/level2_2025W37_2A_0051_1D6_spx_l2b-v27-2026-236.fits?center=76.95658658%2C30.40129135deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
+          "frame descartado 2026W09_2A_0224_3: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2026W09_2A/l2b-v27-2026-229/6/level2_2026W09_2A_0224_3D6_spx_l2b-v27-2026-229.fits?center=76.95658658%2C30.40129135deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2026W09_2A/l2b-v27-2026-229/6/level2_2026W09_2A_0224_3D6_spx_l2b-v27-2026-229.fits?center=76.95658658%2C30.40129135deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
+          "frame descartado 2026W38_1A_0565_1: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0565_1D6_spx_l2b-v27-2026-261.fits?center=76.95658658%2C30.40129135deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W38_1A/l2b-v27-2026-261/6/level2_2026W38_1A_0565_1D6_spx_l2b-v27-2026-261.fits?center=76.95658658%2C30.40129135deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
+          "frame descartado 2025W38_1A_0538_2: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W38_1A/l2b-v27-2026-237/6/level2_2025W38_1A_0538_2D6_spx_l2b-v27-2026-237.fits?center=76.95658658%2C30.40129135deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W38_1A/l2b-v27-2026-237/6/level2_2025W38_1A_0538_2D6_spx_l2b-v27-2026-237.fits?center=76.95658658%2C30.40129135deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503"
+        ],
+        "counts": {
+          "collections_queried": 4,
+          "records_found": 315,
+          "selected": 3,
+          "candidates": 58,
+          "attempted": 7,
+          "processed": 3,
+          "failed": 4
+        },
+        "request": {
+          "ra_deg": 76.95658657548722,
+          "dec_deg": 30.401291346097146,
+          "fov_arcmin": 4.0,
+          "frames": 3,
+          "detector": "auto",
+          "coordinate_epoch_jyear": 2026.0,
+          "coordinate_reference": "RW Aur, ICRS J2026 aproximado; SIMBAD/2007A&A...474..653V, PM desde J2000",
+          "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita",
+          "astrometry_fitted_to_spherex": false
+        },
+        "status_url": "/api/status/verify-rw_aur",
+        "queue_position": null
+      }
+    },
+    {
+      "field": {
+        "id": "r_dra",
+        "name": "R Draconis",
+        "ra_deg": 248.16723307211964,
+        "dec_deg": 66.75502382621288,
+        "reference": "R Dra, ICRS J2026 aproximado; SIMBAD/2020yCat.1350....0G, PM desde J2000",
+        "note": "Gigante variable de largo periodo. Las diferencias entre épocas pueden reflejar el ciclo estelar, no movimiento propio.",
+        "verified": false,
+        "epoch_jyear": 2026.0,
+        "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita"
+      },
+      "elapsed_s": 58.359,
+      "job": {
+        "job_id": "verify-r_dra",
+        "status": "partial",
+        "phase": null,
+        "created_at": "2026-11-14T23:26:31Z",
+        "updated_at": "2026-11-14T23:27:30Z",
+        "result_id": "10a5e91142c39ebd",
+        "error": null,
+        "warnings": [
+          "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+          "SIA spherex_dr1_deep: The read operation timed out",
+          "SIA spherex_qr3_deep: The read operation timed out",
+          "Detector solicitado: auto; seleccionado: D2. Un mismo detector no garantiza compatibilidad espectral.",
+          "frame descartado 2025W26_2A_0170_4: cobertura válida de salida 65.6% < 70%",
+          "frame descartado 2026W26_1A_0324_3: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W26_1A/l2b-v27-2026-273/2/level2_2026W26_1A_0324_3D2_spx_l2b-v27-2026-273.fits?center=248.16723307%2C66.75502383deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/qr3/level2/2026W26_1A/l2b-v27-2026-273/2/level2_2026W26_1A_0324_3D2_spx_l2b-v27-2026-273.fits?center=248.16723307%2C66.75502383deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
+          "frame descartado 2025W23_2B_0696_2: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W23_2B/l2b-v27-2026-201/2/level2_2025W23_2B_0696_2D2_spx_l2b-v27-2026-201.fits?center=248.16723307%2C66.75502383deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W23_2B/l2b-v27-2026-201/2/level2_2025W23_2B_0696_2D2_spx_l2b-v27-2026-201.fits?center=248.16723307%2C66.75502383deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
+          "frame descartado 2025W23_2B_0696_3: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W23_2B/l2b-v27-2026-201/2/level2_2025W23_2B_0696_3D2_spx_l2b-v27-2026-201.fits?center=248.16723307%2C66.75502383deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W23_2B/l2b-v27-2026-201/2/level2_2025W23_2B_0696_3D2_spx_l2b-v27-2026-201.fits?center=248.16723307%2C66.75502383deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
+          "frame descartado 2025W23_2B_0696_4: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W23_2B/l2b-v27-2026-201/2/level2_2025W23_2B_0696_4D2_spx_l2b-v27-2026-201.fits?center=248.16723307%2C66.75502383deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W23_2B/l2b-v27-2026-201/2/level2_2025W23_2B_0696_4D2_spx_l2b-v27-2026-201.fits?center=248.16723307%2C66.75502383deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
+          "frame descartado 2025W24_1A_0123_1: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W24_1A/l2b-v27-2026-201/2/level2_2025W24_1A_0123_1D2_spx_l2b-v27-2026-201.fits?center=248.16723307%2C66.75502383deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W24_1A/l2b-v27-2026-201/2/level2_2025W24_1A_0123_1D2_spx_l2b-v27-2026-201.fits?center=248.16723307%2C66.75502383deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
+          "frame descartado 2025W24_1A_0123_2: descarga fallida https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W24_1A/l2b-v27-2026-201/2/level2_2025W24_1A_0123_2D2_spx_l2b-v27-2026-201.fits?center=248.16723307%2C66.75502383deg&size=0.10000000deg: Server error '503 Service Unavailable' for url 'https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W24_1A/l2b-v27-2026-201/2/level2_2025W24_1A_0123_2D2_spx_l2b-v27-2026-201.fits?center=248.16723307%2C66.75502383deg&size=0.10000000deg'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503"
+        ],
+        "counts": {
+          "collections_queried": 4,
+          "records_found": 327,
+          "selected": 3,
+          "candidates": 57,
+          "attempted": 8,
+          "processed": 1,
+          "failed": 7
+        },
+        "request": {
+          "ra_deg": 248.16723307211964,
+          "dec_deg": 66.75502382621288,
+          "fov_arcmin": 4.0,
+          "frames": 3,
+          "detector": "auto",
+          "coordinate_epoch_jyear": 2026.0,
+          "coordinate_reference": "R Dra, ICRS J2026 aproximado; SIMBAD/2020yCat.1350....0G, PM desde J2000",
+          "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita",
+          "astrometry_fitted_to_spherex": false
+        },
+        "status_url": "/api/status/verify-r_dra",
+        "queue_position": null
+      }
+    }
+  ],
+  "limitations": [
+    "Centros aproximados de catálogo propagados a J2026; sin ajuste astrométrico a SPHEREx.",
+    "ready/partial no confirman detección ni movimiento propio.",
+    "Timeouts por petición; aún no hay presupuesto temporal total por trabajo."
+  ],
+  "finished_at": "2026-11-14T23:27:30Z"
+}

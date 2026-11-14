@@ -8,7 +8,6 @@ un cliente falso sin tocar la red.
 from __future__ import annotations
 
 import math
-import time
 from dataclasses import dataclass, field, replace
 from io import BytesIO
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
@@ -18,6 +17,7 @@ import numpy as np
 from astropy.io.votable import parse as parse_votable
 
 from .config import Settings
+from .execution import check_deadline, request_timeout, retry_delay, wait_retry
 
 __all__ = [
     "IrsaError",
@@ -262,15 +262,28 @@ def _get_with_retries(
     collection: str,
     attempts: int,
     backoff: float,
+    max_bytes: int = 16 * 1024 * 1024,
 ) -> httpx.Response:
     last_error: Exception | None = None
     for attempt in range(max(1, attempts)):
+        check_deadline()
+        retry_after = None
         try:
-            response = client.get(url, params=params)
+            with client.stream("GET", url, params=params, timeout=request_timeout(client)) as stream:
+                chunks = []
+                size = 0
+                for chunk in stream.iter_bytes(65536):
+                    check_deadline()
+                    size += len(chunk)
+                    if size > max_bytes:
+                        raise IrsaError(f"SIA {collection}: respuesta excede {max_bytes} bytes")
+                    chunks.append(chunk)
+                response = httpx.Response(stream.status_code, headers=stream.headers,
+                                          content=b"".join(chunks), request=stream.request)
         except httpx.TransportError as exc:
             last_error = exc
         else:
-            if response.status_code < 500:
+            if response.status_code not in {429, 500, 502, 503, 504}:
                 try:
                     response.raise_for_status()
                 except httpx.HTTPStatusError as exc:
@@ -279,8 +292,9 @@ def _get_with_retries(
             last_error = IrsaError(
                 f"SIA {collection}: HTTP {response.status_code} del servidor"
             )
+            retry_after = response.headers.get("Retry-After")
         if attempt + 1 < attempts:
-            time.sleep(backoff * (2**attempt))
+            wait_retry(retry_delay(retry_after, backoff * (2**attempt)))
     raise IrsaError(f"SIA {collection}: {last_error}") from last_error
 
 
@@ -310,6 +324,7 @@ def query_collection(
         collection=collection,
         attempts=settings.retry_attempts,
         backoff=settings.retry_backoff_s,
+        max_bytes=settings.max_sia_bytes,
     )
 
     if not response.content:
@@ -344,6 +359,7 @@ def search(
     seen: set[tuple[str, str, str | None, float | None]] = set()
 
     for collection in collections or settings.collections:
+        check_deadline()
         outcome.collections.append(collection)
         try:
             records, overflow = query_collection(

@@ -7,6 +7,7 @@ Ejecutar en desarrollo:
 from __future__ import annotations
 
 import json
+import os
 import re
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -18,6 +19,7 @@ from fastapi.staticfiles import StaticFiles
 
 from orbitlens import __version__
 from orbitlens.api_models import SearchRequest
+from orbitlens.client_ip import client_ip
 from orbitlens.config import PIPELINE_VERSION, Settings
 from orbitlens.jobs import JobCapacityError, JobManager
 from orbitlens.manifest import validate_file_entry, validate_manifest, validate_result_files
@@ -43,6 +45,9 @@ def create_app(
         active_manager = manager or JobManager(
             max_workers=active_settings.max_workers,
             max_active=active_settings.max_active_jobs,
+            max_active_per_ip=active_settings.max_active_per_ip,
+            searches_per_minute=active_settings.searches_per_minute,
+            store_dir=active_settings.data_dir / "jobs",
         )
         app.state.settings = active_settings
         app.state.service = active_service
@@ -51,7 +56,7 @@ def create_app(
             yield
         finally:
             if owned_manager:
-                active_manager.shutdown(wait=False)
+                active_manager.shutdown(wait=True)
             if owned_service:
                 active_service.close()
 
@@ -87,13 +92,41 @@ def create_app(
             "status": "ok",
             "version": __version__,
             "pipeline_version": PIPELINE_VERSION,
+            "code_commit": os.environ.get("ORBITLENS_CODE_COMMIT", "dev"),
             "collections": list(current.collections),
             "active_jobs": get_manager(request).active_count,
         }
 
     @app.get("/api/presets")
-    def presets() -> dict[str, object]:
-        return {"presets": public_presets(), "count": len(public_presets())}
+    def presets(request: Request) -> dict[str, object]:
+        items = public_presets()
+        index_path = get_settings(request).data_dir / "presets.json"
+        try:
+            index = json.loads(index_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            index = {}
+        if not isinstance(index, dict):
+            index = {}
+        for item in items:
+            result_id = index.get(item["id"])
+            if not isinstance(result_id, str) or not RESULT_ID_RE.fullmatch(result_id):
+                continue
+            root = get_settings(request).data_dir / "results" / result_id
+            try:
+                manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+                validate_result_files(root, manifest)
+                if any(frame.get("collection") == "synthetic-demo" for frame in manifest["frames"]):
+                    continue
+                if (manifest["result_id"] != result_id
+                        or abs(manifest["request"]["ra_deg"] - item["ra_deg"]) > 1e-7
+                        or abs(manifest["request"]["dec_deg"] - item["dec_deg"]) > 1e-7):
+                    continue
+                item.update(result_id=result_id, result_status=manifest.get("status", "partial"),
+                            result_method=manifest["search"].get("method", "sia"),
+                            manifest_url=f"/api/results/{result_id}/manifest")
+            except (OSError, ValueError, TypeError, KeyError):
+                continue
+        return {"presets": items, "count": len(items)}
 
     @app.post("/api/search", status_code=202)
     def start_search(payload: SearchRequest, request: Request) -> JSONResponse:
@@ -102,13 +135,15 @@ def create_app(
         current_service = get_service(request)
         try:
             job, created = get_manager(request).submit(
-                normalized, key, lambda current_job: current_service.run(current_job, normalized)
+                normalized, key, lambda current_job: current_service.run(current_job, normalized),
+                owner=client_ip(request.client.host if request.client else "unknown",
+                                request.headers.get("x-forwarded-for"), get_settings(request).trusted_proxies),
             )
         except JobCapacityError as exc:
             raise HTTPException(
                 status_code=429,
                 detail=str(exc),
-                headers={"Retry-After": "30"},
+                headers={"Retry-After": str(getattr(exc, "retry_after", 30))},
             ) from exc
 
         return JSONResponse(

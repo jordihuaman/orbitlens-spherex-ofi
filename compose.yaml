@@ -1,0 +1,19 @@
+services:
+  orbitlens:
+    build:
+      context: .
+      args:
+        CODE_COMMIT: ${ORBITLENS_CODE_COMMIT:-unknown}
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      ORBITLENS_DATA_DIR: /app/data
+      ORBITLENS_JOB_TIMEOUT_S: "600"
+      ORBITLENS_TRUSTED_PROXIES: ""
+    volumes:
+      - orbitlens-data:/app/data
+    restart: unless-stopped
+    stop_grace_period: 650s
+
+volumes:
+  orbitlens-data:

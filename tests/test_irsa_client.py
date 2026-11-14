@@ -126,15 +126,16 @@ class _FakeResponse:
             )
 
 
-class _FakeClient:
+class _FakeClient(httpx.Client):
     def __init__(self, responses: dict[str, object]) -> None:
         self.responses = responses
+        super().__init__(transport=httpx.MockTransport(self._respond))
 
-    def get(self, url: str, params: dict[str, str]):  # noqa: ANN201
-        result = self.responses[params["COLLECTION"]]
+    def _respond(self, request):
+        result = self.responses[request.url.params["COLLECTION"]]
         if isinstance(result, Exception):
             raise result
-        return result
+        return httpx.Response(result.status_code, content=result.content)
 
 
 def test_search_merges_and_deduplicates() -> None:
@@ -153,17 +154,18 @@ def test_search_merges_and_deduplicates() -> None:
     assert outcome.collections == list(settings.collections)
 
 
-class _FlakyClient:
+class _FlakyClient(httpx.Client):
     def __init__(self, failures: int, response: _FakeResponse) -> None:
         self.failures = failures
         self.response = response
         self.calls = 0
+        super().__init__(transport=httpx.MockTransport(self._respond))
 
-    def get(self, url: str, params: dict[str, str]):  # noqa: ANN201
+    def _respond(self, request):
         self.calls += 1
         if self.calls <= self.failures:
             raise httpx.ConnectError("fallo transitorio")
-        return self.response
+        return httpx.Response(self.response.status_code, content=self.response.content)
 
 
 def test_query_collection_retries_transient_failure() -> None:

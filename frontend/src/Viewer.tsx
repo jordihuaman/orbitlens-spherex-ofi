@@ -103,6 +103,12 @@ export default function Viewer({ manifest }: Props) {
         </button>
       </div>
 
+      {manifest.status === "partial" && (
+        <p role="note">Resultado parcial: la consulta o construcción no es exhaustiva. Revisa los avisos antes de interpretar cambios.</p>
+      )}
+      {manifest.search.method === "local-sequence-import" && (
+        <p role="note">Secuencia importada localmente: procedencia declarada por el operador, sin nueva consulta a IRSA.</p>
+      )}
       {synthetic && (
         <p className="notice" role="note">
           Demostración sintética: no son imágenes de SPHEREx ni una detección.

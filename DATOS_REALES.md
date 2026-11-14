@@ -1,5 +1,31 @@
 # Datos reales IRSA — primer recorte verificado, 2026-11-14
 
+## Estado vigente: pipeline 0.1.5, centros J2026 y operación
+
+**Corrección importante:** el catálogo/PM mostró que Barnard y WISE 0855 no
+quedaban dentro de sus recortes anteriores de 4′. Las secciones posteriores
+son historial; usar los centros y los IDs nuevos de [ASTROMETRIA.md](ASTROMETRIA.md).
+Hay tres frames por campo en la selección actual: cuatro paquetes SIA partial
+y R Draconis importado explícitamente de originales D6 existentes. Posiciones
+predichas dentro de los 15 frames; no implica detección ni píxel válido.
+
+La UI ofrece abrir los resultados guardados si existe `data/presets.json`:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\index_presets.py --report data\real-data\selected-corrected-fields.json
+```
+
+La nueva ruta sin red usa `scripts/import_irsa_sequence.py --index ARCHIVO.json`;
+exige 2–16 MEF del mismo detector, metadatos completos, fuente DR1/QR3 declarada,
+hashes opcionales de entrada y tiempos finitos. No infiere wide/deep ni autentica
+el operador. Comparte máscara, reproyección, escala y publicación con el servicio.
+
+Recorrido real desde formulario y recuperación tras reinicio comprobados en
+`evidencias/operacion/live-http.json` (SIA real en caché; recortes descargados).
+Se conserva también un intento anterior con timeout, sin declararlo vacío.
+Para reproducir explícitamente con red, desde `frontend/`:
+`node e2e/live-check.mjs`. No forma parte del CI ni demuestra hosting público.
+
 ## Resultado más reciente: cinco secuencias reales parciales
 
 La ejecución posterior del nuevo script consiguió tres frames para **cada uno

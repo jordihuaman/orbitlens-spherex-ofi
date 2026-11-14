@@ -1,0 +1,131 @@
+[
+  {
+    "name": "CDS POST",
+    "url": "https://simbad.cds.unistra.fr/simbad/sim-tap/sync",
+    "status": 404,
+    "body": "<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <meta name=\"robots\" content=\"noindex, nofollow\">\n  <meta name="
+  },
+  {
+    "name": "Harvard mirror GET",
+    "url": "https://simbad.harvard.edu/simbad/sim-tap/sync?REQUEST=doQuery&LANG=ADQL&FORMAT=json&QUERY=SELECT+b.main_id%2Cb.ra%2Cb.dec%2Cb.pmra%2Cb.pmdec%2Cb.coo_bibcode%2Cb.pm_bibcode%2Ci.id+FROM+basic+AS+b+JOIN+ident+AS+i+ON+b.oid%3Di.oidref+WHERE+i.id+IN+%28%27GJ+699%27%2C%27eps+Ind+B%27%2C%27WISE+J085510.83-071442.5%27%2C%27RW+Aur%27%2C%27R+Dra%27%29",
+    "status": 200,
+    "body": "{\"metadata\":[{\"name\":\"main_id\",\"description\":\"Main identifier for an object\",\"datatype\":\"CHAR\",\"arraysize\":\"*\",\"ucd\":\"meta.id;meta.main\",\"utype\":\"mango:MangoObject.identifier\"},{\"name\":\"ra\",\"descripti",
+    "response": {
+      "metadata": [
+        {
+          "name": "main_id",
+          "description": "Main identifier for an object",
+          "datatype": "CHAR",
+          "arraysize": "*",
+          "ucd": "meta.id;meta.main",
+          "utype": "mango:MangoObject.identifier"
+        },
+        {
+          "name": "ra",
+          "description": "Right ascension",
+          "datatype": "DOUBLE",
+          "unit": "deg",
+          "ucd": "pos.eq.ra;meta.main",
+          "utype": "mango:EpochPosition.longitude[CS.spaceSys=ICRS CT.epoch=J2000]"
+        },
+        {
+          "name": "dec",
+          "description": "Declination",
+          "datatype": "DOUBLE",
+          "unit": "deg",
+          "ucd": "pos.eq.dec;meta.main",
+          "utype": "mango:EpochPosition.latitude[CS.spaceSys=ICRS CT.epoch=J2000]"
+        },
+        {
+          "name": "pmra",
+          "description": "Proper motion in RA",
+          "datatype": "DOUBLE",
+          "unit": "mas.yr-1",
+          "ucd": "pos.pm;pos.eq.ra",
+          "utype": "mango:EpochPosition.pmLongitude[CS.spaceSys=ICRS CT.epoch=J2000]"
+        },
+        {
+          "name": "pmdec",
+          "description": "Proper motion in DEC",
+          "datatype": "DOUBLE",
+          "unit": "mas.yr-1",
+          "ucd": "pos.pm;pos.eq.dec",
+          "utype": "mango:EpochPosition.pmLatitude[CS.spaceSys=ICRS CT.epoch=J2000]"
+        },
+        {
+          "name": "coo_bibcode",
+          "description": "Coordinate reference",
+          "datatype": "CHAR",
+          "arraysize": "19",
+          "ucd": "meta.bib.bibcode;pos.eq"
+        },
+        {
+          "name": "pm_bibcode",
+          "description": "Proper motion reference",
+          "datatype": "CHAR",
+          "arraysize": "19",
+          "ucd": "meta.bib.bibcode;pos.pm"
+        },
+        {
+          "name": "id",
+          "description": "Identifier",
+          "datatype": "CHAR",
+          "arraysize": "*",
+          "ucd": "meta.id"
+        }
+      ],
+      "data": [
+        [
+          "* eps Ind B",
+          331.04414658852124,
+          -56.782844195116105,
+          3981.977,
+          -2466.832,
+          "2020yCat.1350....0G",
+          "2020yCat.1350....0G",
+          "* eps Ind B"
+        ],
+        [
+          "NAME Barnard's star",
+          269.4520769586187,
+          4.693364966576667,
+          -801.551,
+          10362.394,
+          "2020yCat.1350....0G",
+          "2020yCat.1350....0G",
+          "GJ 699"
+        ],
+        [
+          "V* R Dra",
+          248.16761083295,
+          66.75497941722,
+          -20.643,
+          6.149,
+          "2020yCat.1350....0G",
+          "2020yCat.1350....0G",
+          "V* R Dra"
+        ],
+        [
+          "V* RW Aur",
+          76.95652603458333,
+          30.401438173888888,
+          7.23,
+          -20.33,
+          "2007A&A...474..653V",
+          "2007A&A...474..653V",
+          "V* RW Aur"
+        ],
+        [
+          "WISEA J085510.74-071442.5",
+          133.81890825,
+          -7.247048000000001,
+          -8123.7,
+          673.2,
+          "2021ApJS..253....7K",
+          "2021ApJS..253....7K",
+          "WISE J085510.83-071442.5"
+        ]
+      ]
+    }
+  }
+]

@@ -38,6 +38,7 @@ def pipeline(tmp_path):
         header = wcs.to_header()
         header["DETECTOR"] = 2
         header["BUNIT"] = "MJy/sr"
+        header.update(state.get("metadata", {}))
         primary = fits.PrimaryHDU()
         primary.header["VERSION"] = "fixture"
         fits.HDUList([primary, fits.ImageHDU(
@@ -204,3 +205,24 @@ def test_stale_empty_cannot_confirm_no_coverage_during_outage(pipeline):
     state["warnings"] = ["SIA spherex_dr1: HTTP 503", "SIA spherex_qr3: HTTP 503"]
     with pytest.raises(RuntimeError, match="todas las colecciones IRSA fallaron"):
         run(service, request)
+
+
+@pytest.mark.parametrize("metadata", [{"OBSID": "wrong-observation"}, {"MJD-OBS": 50000}, {"DETECTOR": 9}])
+def test_fits_metadata_cannot_contradict_sia(pipeline, metadata):
+    service, request, state = pipeline
+    state["metadata"] = metadata
+    job, _, _ = run(service, request)
+    assert job.status == "error"
+    assert job.result_id is None
+    assert any("contradice" in warning or "detector reconocible" in warning for warning in job.warnings)
+
+
+def test_corrupt_original_cache_is_downloaded_again(pipeline):
+    service, request, state = pipeline
+    assert run(service, request)[0].status == "ready"
+    downloads = len(state["downloads"])
+    raw = next(service.cache.root.glob("cutout/*/*.fits"))
+    data = raw.read_bytes()
+    raw.write_bytes(b"BROKEN" + data[6:])
+    assert run(service, request)[0].status == "ready"
+    assert len(state["downloads"]) == downloads + 1

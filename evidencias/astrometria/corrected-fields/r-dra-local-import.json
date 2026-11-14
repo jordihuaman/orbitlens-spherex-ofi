@@ -1,0 +1,51 @@
+{
+  "method": "local-sequence-import",
+  "source_result": "7266e9f837994b6f",
+  "fields": [
+    {
+      "field": {
+        "id": "r_dra",
+        "name": "R Draconis",
+        "ra_deg": 248.16723307211964,
+        "dec_deg": 66.75502382621288,
+        "reference": "R Dra, ICRS J2026 aproximado; SIMBAD/2020yCat.1350....0G, PM desde J2000",
+        "note": "Gigante variable de largo periodo. Las diferencias entre épocas pueden reflejar el ciclo estelar, no movimiento propio.",
+        "verified": false,
+        "epoch_jyear": 2026.0,
+        "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita"
+      },
+      "job": {
+        "job_id": "local-sequence",
+        "status": "ready",
+        "phase": null,
+        "created_at": "2026-11-14T23:29:20Z",
+        "updated_at": "2026-11-14T23:29:21Z",
+        "result_id": "27ade5bccee5d737",
+        "error": null,
+        "warnings": [
+          "Importación local sin consulta de red; procedencia declarada por el operador.",
+          "No se infiere survey wide/deep de la ruta. No confirma detección ni movimiento.",
+          "Detector solicitado: D6; seleccionado: D6. Un mismo detector no garantiza compatibilidad espectral."
+        ],
+        "counts": {
+          "collections_queried": 0,
+          "records_found": 3,
+          "selected": 3,
+          "candidates": 3,
+          "attempted": 3,
+          "processed": 3,
+          "failed": 0
+        },
+        "request": {
+          "ra_deg": 248.16723307211964,
+          "dec_deg": 66.75502382621288,
+          "fov_arcmin": 4,
+          "frames": 3,
+          "detector": "D6"
+        },
+        "status_url": "/api/status/local-sequence",
+        "queue_position": null
+      }
+    }
+  ]
+}

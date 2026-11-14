@@ -2,8 +2,8 @@ import { expect, test, type Page } from "@playwright/test";
 
 const result = "5e1c78336933afa7";
 const presets = [
-  ["barnard", "269.452080"], ["epsindi_b", "331.043750"],
-  ["wise0855", "133.795120"], ["rw_aur", "76.956330"], ["r_dra", "248.167500"],
+  ["barnard", "269.446268"], ["epsindi_b", "331.096669"],
+  ["wise0855", "133.759765"], ["rw_aur", "76.956587"], ["r_dra", "248.167233"],
 ];
 
 // Solo el flujo búsqueda/estado se simula; navegador, HTML, JS, manifiesto,
@@ -55,7 +55,7 @@ for (const [id, ra] of presets) {
     await page.goto("/");
     await page.getByLabel("Objetivo de prueba").selectOption(id);
     await expect(page.getByLabel("RA (grados)", { exact: true })).toHaveValue(ra);
-    await expect(page.getByText("Referencia pendiente de verificación astrométrica.", { exact: false })).toBeVisible();
+    await expect(page.getByText("identificación astrométrica en SPHEREx pendiente.", { exact: false })).toBeVisible();
     await controlledSearch(page, "empty");
     const request = page.waitForRequest((req) => req.url().endsWith("/api/search"));
     await page.getByRole("button", { name: "Buscar secuencia", exact: true }).click();
@@ -135,7 +135,7 @@ test("recursos NASA y WiseView usan coordenadas y unidades explícitas", async (
   await expect(link).toBeVisible();
   const url = new URL((await link.getAttribute("href"))!);
   const params = new URLSearchParams(url.hash.slice(1));
-  expect(params.get("ra")).toBe("331.04375");
+  expect(Number(params.get("ra"))).toBeCloseTo(331.0966687786697, 8);
   expect(params.get("size")).toBe("600");
   expect(params.get("band")).toBe("2");
   expect(params.get("synth_a")).toBe("0");

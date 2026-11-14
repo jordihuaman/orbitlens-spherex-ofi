@@ -28,14 +28,15 @@ def test_unknown_preset() -> None:
     assert get_preset("Planeta X") is None
 
 
-def test_epsilon_indi_b_is_not_one_degree_west() -> None:
+def test_epsilon_indi_b_uses_catalog_motion_not_indi_a() -> None:
     import pytest
 
-    from orbitlens.coordinates import parse_dec, parse_ra
+    from orbitlens.astrometry import position_at
 
     preset = get_preset("epsindi_b")
-    assert preset.ra_deg == pytest.approx(parse_ra("22 04 10.5", sexagesimal=True))
-    assert preset.dec_deg == pytest.approx(parse_dec("-56 46 57.5", sexagesimal=True), abs=1e-5)
+    assert (preset.ra_deg, preset.dec_deg) == pytest.approx(position_at("epsindi_b", 2026))
+    assert 331 < preset.ra_deg < 331.2
+    assert preset.epoch_jyear == 2026
     assert not preset.verified
 
 

@@ -1,4 +1,4 @@
-# Contraste de requisitos y ejecución — pipeline 0.1.4
+# Contraste de requisitos y ejecución — pipeline 0.1.5
 
 Revisión: 2026-11-14. Base: `PLAN.md` (O1–O4),
 `PROTOCOLO_CONSTRUCCION.md` (§§4–7) y evidencia de esta copia.
@@ -10,11 +10,11 @@ La presentación y el video están aplazados por el usuario.
 | --- | --- | --- |
 | O1: web pública / H4 | Pendiente | Hay ejecución local, no URL pública del código actual ni prueba sin sesión en teléfono físico. |
 | O2: entrada RA/Dec | Implementado y probado | API valida decimales/sexagesimales y rangos; QA de navegador controlada. No implica resolver astrometría de presets. |
-| O3: secuencia real de un mismo campo / H2 | Implementado, datos parciales | Tres frames alineados y reproducibles en navegador para cada uno de los cinco campos; todos partial por overflow/fallos. Falta revisión astrométrica/científica e independencia de λ. |
-| O4: cinco campos | Probados técnicamente, revisión pendiente | 15 originales contrastados con OBSID/detector/VERSION/tiempos SIA; cinco fichas técnicas en `evidencias/irsa/five-fields/README.md`. Presets siguen `verified=False`; no se atribuye identificación de fuentes ni revisión a compañeros. |
-| H0: base reproducible | Verificado localmente | 124 pruebas Python, 30 E2E, Ruff y build correctos; CI no depende de IRSA. |
+| O3: secuencia real de un mismo campo / H2 | Implementado, límites explícitos | Tres frames por campo con centrado J2026: cuatro paquetes SIA partial y uno de importación local ready de construcción. Ver `ASTROMETRIA.md`; no son mediciones científicas. |
+| O4: cinco campos | Revisados técnicamente y por catálogo | Los centros anteriores de Barnard/WISE 0855 no incluían sus posiciones predichas; se corrigieron y regeneraron. En los 15 frames seleccionados la posición predicha está dentro, pero muchos píxeles están enmascarados. Sin identificación/detección confirmada. |
+| H0: base reproducible | Verificado localmente | 166 pruebas Python, 30 E2E, Ruff y build; CI sin IRSA añadido, no se declara su ejecución remota antes de comprobarla. |
 | H1: primer dato real actual | Evidencia parcial suficiente para lector/visor | FITS DR1 original del tutorial inspeccionado y abierto en Edge; falta contrastar píxel/λ con Firefly/tutorial y revisión astrométrica de objetivos. |
-| H3: recorrido web | Parcial | Recorte individual real comprobado; estados/polling y dos frames probados con proveedor controlado. Falta recorrido completo de adquisición real desde formulario. |
+| H3: recorrido web | Verificado localmente con caché real | Formulario → pipeline → tres frames → reproducción → nueve descargas 200 → reinicio → trabajo/resultado recuperados. Metadatos SIA reales en caché, recortes de IRSA; un intento anterior agotó timeout y se conserva. Ver `evidencias/operacion/`. |
 | H5: presentación/video/envío | Aplazado | No bloquea este bloque de ingeniería. No se declara enviado. |
 
 ## Brechas de robustez corregidas en este bloque
@@ -31,6 +31,13 @@ La presentación y el video están aplazados por el usuario.
 | Calidad tras reproyección | Umbral de fracción válida también en rejilla de salida; rechazo documentado. |
 | Procedencia reproducible | Original FITS por frame, hash en identidad del resultado, URLs, unidades y bits de máscara conservados. |
 | Reproducción >=3 frames | Uno/dos frames se inspeccionan; botón de reproducción deshabilitado. Prueba en escritorio y viewport móvil. |
+| Cuotas y proxy | 2 trabajos nuevos activos/IP y 10/min, Retry-After, deduplicación antes de cuota. Cadena X-Forwarded-For desde la derecha solo con proxy autorizado; arranque con proxy_headers=False. |
+| Tiempo y reintentos | 600 s cooperativos, timeouts acotados al restante, 429/transitorios y Retry-After dentro del presupuesto. No se interrumpe un cálculo nativo en curso. |
+| Reinicio y cola | Snapshots JSON atómicos, trabajos interrumpidos pasan a error recuperable; posición en cola visible. Recorrido real de recuperación probado. |
+| Disco y concurrencia | LRU de caché regenerable solo sin constructores activos, presupuesto blando 2 GiB, reserva libre y locks por clave; temporales de descarga/caché únicos; originales cacheados con checksum. Resultados/entradas protegidos. |
+| Procedencia HTTP | ETag/Last-Modified se conservan si el servidor los devuelve, sin inventarlos para archivos anteriores. |
+| Importación local | Varios MEF con OBSID/tiempos/detector del FITS, URLs y hashes; orden temporal y escala común sin red. R Draconis D6 reimportado explícitamente, no fallback oculto. |
+| Presets recuperables | Índice persistente validado por integridad y centro actual; la UI ofrece abrir el resultado guardado e identifica el método. No anuncia sintéticos como resultados reales. |
 
 Pruebas principales: `tests/test_irsa_client.py`, `tests/test_service_reliability.py`,
 `tests/test_api.py`, `frontend/e2e/orbitlens.spec.ts`. Las fixtures sintéticas no
@@ -38,22 +45,21 @@ son evidencia científica. La adquisición real se registra separadamente.
 
 ## Trabajo pendiente priorizado
 
-1. **Datos reales:** ya se ejecutó `scripts/verify_real_sequences.py` para los cinco
-   campos: tres frames por campo, todos partial. Revisar astrometría/épocas y λ
-   independientemente; ampliar selección si se busca mayor línea temporal o
-   resolver overflow. Un fallo 503 no prueba falta de cobertura. Los tres centros
-   de R Draconis están enmascarados. Evidencia en `evidencias/irsa/five-fields/`.
-2. **Ruta alternativa:** construir una secuencia desde varios recortes locales;
-   hoy el importador solo publica uno. S3 anónimo sigue sin fallback integrado.
-3. **Límites operativos:** cuota por IP (2 activos, 10/min), proxies confiables,
-   presupuesto total 600 s y `Retry-After` dentro del presupuesto; ya existen
-   semáforos globales, cola y límites de bytes, pero no satisfacen todo §6.
-4. **Persistencia y almacenamiento:** presupuesto conjunto 2 GiB/LRU sin borrar
-   archivos activos, bloqueo por clave de publicación, `ETag`/`Last-Modified`,
-   resultados expirados conocidos 410 y posición de cola. Persistir estados para
-   distinguir trabajos interrumpidos de IDs desconocidos tras reinicio.
-5. **Publicación:** desplegar commit concreto y repetir recorrido real, reinicio,
-   concurrencia y teléfono físico. No confundir viewport emulado con dispositivo.
+1. **Publicación:** elegir/proveer acceso al host y volumen persistente; Docker,
+   Compose, arranque y guía listos, pero no hay Docker instalado ni hosting
+   autorizado/configurado en esta máquina. TLS/proxy y teléfono físico pendientes.
+2. **Validación científica:** revisar errores de catálogo/épocas y binariedad;
+   contrastar λ con Firefly/calibraciones, no solo con el mismo lector. Un píxel
+   válido no confirma fuente; muchas posiciones predichas están enmascaradas.
+   Ampliar muestra o bandas explícitas si aporta utilidad, sin ocultar rechazos.
+3. **Operación avanzada:** probar cuotas/proxy en despliegue real, estrés sostenido
+   y retención de jobs. El límite temporal/disco es cooperativo/blando, no una
+   reserva o cancelación forzada de proceso. Un solo propietario por directorio.
+4. **Retención de resultados:** actualmente están protegidos, sin expiración
+   automática. Mantener 404 para desconocidos; añadir tombstones/410 antes de
+   implementar expiración. No borrar paquetes existentes sin decisión explícita.
+5. **Acceso alternativo remoto:** S3 anónimo sigue sin fallback integrado; requiere
+   recorte parcial correcto de MEF/WCS-WAVE, no añadir query center a un objeto S3.
 
 No son bloqueantes del MVP oficial: espectros, diferencias/apilado y overlays
 Gaia/WISE. WiseView es contexto externo, no un overlay SPHEREx. Mantener DR1,
@@ -68,7 +74,8 @@ $env:ORBITLENS_CODE_COMMIT = (git rev-parse HEAD) + '+working-tree'
 
 Se consultan las cuatro colecciones, secuencialmente por campo, con un intento
 por petición, timeouts 5/12 s, MAXREC=20 y hasta seis candidatos por campo.
-Los límites son ajustables por argumentos; **no son aún un deadline global**.
+Los límites son ajustables por argumentos; existe presupuesto cooperativo global
+de 600 s por trabajo en ejecución (no incluye cola), no interrupción forzada.
 El informe se guarda en `data/real-data/sequences-*.json` con duración, petición,
 estado, fallos y `result_id`; los paquetes permanecen en `data/results/`.
 Código de salida 1 si algún campo no es `ready`: no significa necesariamente

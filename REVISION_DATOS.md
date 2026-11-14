@@ -1,5 +1,11 @@
 # Revisión de datos — Jordi
 
+> Actualización técnica por el agente, pipeline 0.1.5: catálogo/PM consultados
+> desde SIMBAD Harvard y centrado propagado a J2026. Los paquetes anteriores de
+> Barnard/WISE 0855 no contenían sus posiciones predichas; usar la selección nueva
+> de `ASTROMETRIA.md`. Se registra geometría/máscara, no detección. No se atribuye
+> esta auditoría al trabajo personal de Jordi ni se declara revisión científica cerrada.
+
 > Evidencia real nueva registrada por el agente: un recorte DR1 del **campo de
 > referencia del tutorial**, no de los cinco objetivos, fue inspeccionado y
 > servido en navegador. Detalles/hashes en `DATOS_REALES.md`. Las fichas de los

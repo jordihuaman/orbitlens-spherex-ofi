@@ -1,5 +1,31 @@
 # Entrega técnica — OrbitLens SPHEREx
 
+## Bloque vigente: operación y catálogo, pipeline 0.1.5
+
+166 pruebas Python, 30 E2E, Ruff/build correctos. Se añaden cuotas por IP y
+cadena de proxies, snapshots/recuperación y posición de cola, presupuesto temporal
+cooperativo con Retry-After, descarga global acotada, límites de cuerpo SIA,
+temporales únicos, validación de metadata FITS/SIA y checksum de caché original.
+LRU conservador de caché y comprobación de disco; resultados/manuales protegidos.
+
+Importación de secuencias locales sin red e índice de presets validados por
+centro/integridad, con enlaces desde la UI y método visible. Docker/Compose,
+arranque de producción y CI preparados; **no se ha construido Docker ni se ha
+publicado en un hosting**. Ver `DEPLOYMENT.md` para límites y aceptación pendiente.
+
+SIMBAD Harvard proporcionó catálogo/PM con bibliografía y metadata de época.
+Se corrigieron centros a J2026; la auditoría anterior detectó Barnard/WISE 0855
+fuera de sus salidas de 4′. Los 15 frames seleccionados nuevos contienen la
+posición predicha, no una detección confirmada. Cuatro paquetes SIA partial +
+R Dra local explícito; ver `ASTROMETRIA.md` y `evidencias/astrometria/`.
+
+Recorrido real desde formulario hasta tres frames, nueve descargas 200 y
+reapertura del trabajo/resultado tras reinicio. Ensayo con caché SIA real;
+intento anterior fallido por timeout conservado. Evidencia en `evidencias/operacion/`.
+No se atribuye al equipo una validación científica, hosting o teléfono físico.
+
+Las secciones siguientes conservan el historial de bloques anteriores.
+
 ## Bloque actual: integridad y adquisición real, pipeline 0.1.4
 
 Contraste explícito y prioridades en `BRECHAS_REQUISITOS.md`. Se corrigen nombres

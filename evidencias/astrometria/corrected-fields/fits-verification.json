@@ -1,0 +1,140 @@
+{
+  "scope": "FITS originals OBSID, VERSION, MJD and indexed SHA-256; not detection validation",
+  "frames": [
+    {
+      "target": "barnard",
+      "obs_id": "2025W35_1A_0432_4",
+      "sha256_valid": true,
+      "mjd_fits": 60914.212530266,
+      "mjd_manifest": 60914.21253,
+      "center_valid": false,
+      "lambda_um": 0.7501960141945551
+    },
+    {
+      "target": "barnard",
+      "obs_id": "2025W35_1A_0658_2",
+      "sha256_valid": true,
+      "mjd_fits": 60915.432626204,
+      "mjd_manifest": 60915.432626,
+      "center_valid": false,
+      "lambda_um": 0.7853089308274009
+    },
+    {
+      "target": "barnard",
+      "obs_id": "2026W11_1A_0511_3",
+      "sha256_valid": true,
+      "mjd_fits": 61110.43604272,
+      "mjd_manifest": 61110.436043,
+      "center_valid": false,
+      "lambda_um": 0.8429063151471785
+    },
+    {
+      "target": "epsindi_b",
+      "obs_id": "2025W18_1B_0081_2",
+      "sha256_valid": true,
+      "mjd_fits": 60794.06481272,
+      "mjd_manifest": 60794.064813,
+      "center_valid": true,
+      "lambda_um": 1.6471410819433125
+    },
+    {
+      "target": "epsindi_b",
+      "obs_id": "2025W40_1A_0444_2",
+      "sha256_valid": true,
+      "mjd_fits": 60949.000772604,
+      "mjd_manifest": 60949.000773,
+      "center_valid": false,
+      "lambda_um": 2.1888201863352528
+    },
+    {
+      "target": "epsindi_b",
+      "obs_id": "2026W40_1A_0070_2",
+      "sha256_valid": true,
+      "mjd_fits": 61311.336624051,
+      "mjd_manifest": 61311.336624,
+      "center_valid": true,
+      "lambda_um": 1.934049417139461
+    },
+    {
+      "target": "wise0855",
+      "obs_id": "2025W19_1B_0116_1",
+      "sha256_valid": true,
+      "mjd_fits": 60800.700028461,
+      "mjd_manifest": 60800.700028,
+      "center_valid": true,
+      "lambda_um": 2.363383314690013
+    },
+    {
+      "target": "wise0855",
+      "obs_id": "2025W19_1B_0138_1",
+      "sha256_valid": true,
+      "mjd_fits": 60800.834437847,
+      "mjd_manifest": 60800.834438,
+      "center_valid": true,
+      "lambda_um": 2.207865695319404
+    },
+    {
+      "target": "wise0855",
+      "obs_id": "2025W46_2A_0289_1",
+      "sha256_valid": true,
+      "mjd_fits": 60993.912885127,
+      "mjd_manifest": 60993.912885,
+      "center_valid": true,
+      "lambda_um": 2.3853956529768063
+    },
+    {
+      "target": "rw_aur",
+      "obs_id": "2025W38_1A_0538_1",
+      "sha256_valid": true,
+      "mjd_fits": 60935.106636794,
+      "mjd_manifest": 60935.106637,
+      "center_valid": false,
+      "lambda_um": 4.409242193027302
+    },
+    {
+      "target": "rw_aur",
+      "obs_id": "2025W38_1A_0538_3",
+      "sha256_valid": true,
+      "mjd_fits": 60935.109621296,
+      "mjd_manifest": 60935.109621,
+      "center_valid": false,
+      "lambda_um": 4.472321235514364
+    },
+    {
+      "target": "rw_aur",
+      "obs_id": "2025W38_1A_0691_1",
+      "sha256_valid": true,
+      "mjd_fits": 60935.92194088,
+      "mjd_manifest": 60935.921941,
+      "center_valid": false,
+      "lambda_um": 4.504513238301984
+    },
+    {
+      "target": "r_dra",
+      "obs_id": "2025W18_1B_0085_3",
+      "sha256_valid": true,
+      "mjd_fits": 60794.093520833,
+      "mjd_manifest": 60794.093520833,
+      "center_valid": false,
+      "lambda_um": 4.456189181382897
+    },
+    {
+      "target": "r_dra",
+      "obs_id": "2025W21_1B_0329_2",
+      "sha256_valid": true,
+      "mjd_fits": 60815.694172685,
+      "mjd_manifest": 60815.694172685,
+      "center_valid": false,
+      "lambda_um": 4.598882173368916
+    },
+    {
+      "target": "r_dra",
+      "obs_id": "2026W21_2A_0325_3",
+      "sha256_valid": true,
+      "mjd_fits": 61183.493489595,
+      "mjd_manifest": 61183.493489595,
+      "center_valid": false,
+      "lambda_um": 4.725567623178878
+    }
+  ]
+}

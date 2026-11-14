@@ -1,0 +1,126 @@
+{
+  "browser": "157.0.4341.46",
+  "scope": "Persisted real corrected results, desktop and emulated viewport; no physical phone or detection validation",
+  "results": [
+    {
+      "field": "barnard",
+      "result_id": "59e0515d0d3a48a8",
+      "method": "sia",
+      "status": "partial",
+      "frames": [
+        "2025W35_1A_0432_4",
+        "2025W35_1A_0658_2",
+        "2026W11_1A_0511_3"
+      ],
+      "artifact_http": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "play_pause": true,
+      "mobileViewportWithoutOverflow": true
+    },
+    {
+      "field": "epsindi_b",
+      "result_id": "9867e7a480d0fcce",
+      "method": "sia",
+      "status": "partial",
+      "frames": [
+        "2025W18_1B_0081_2",
+        "2025W40_1A_0444_2",
+        "2026W40_1A_0070_2"
+      ],
+      "artifact_http": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "play_pause": true,
+      "mobileViewportWithoutOverflow": true
+    },
+    {
+      "field": "wise0855",
+      "result_id": "799cfc2d9920b4bf",
+      "method": "sia",
+      "status": "partial",
+      "frames": [
+        "2025W19_1B_0116_1",
+        "2025W19_1B_0138_1",
+        "2025W46_2A_0289_1"
+      ],
+      "artifact_http": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "play_pause": true,
+      "mobileViewportWithoutOverflow": true
+    },
+    {
+      "field": "rw_aur",
+      "result_id": "f3f8e67c01bbaf99",
+      "method": "sia",
+      "status": "partial",
+      "frames": [
+        "2025W38_1A_0538_1",
+        "2025W38_1A_0538_3",
+        "2025W38_1A_0691_1"
+      ],
+      "artifact_http": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "play_pause": true,
+      "mobileViewportWithoutOverflow": true
+    },
+    {
+      "field": "r_dra",
+      "result_id": "27ade5bccee5d737",
+      "method": "local-sequence-import",
+      "status": "ready",
+      "frames": [
+        "2025W18_1B_0085_3",
+        "2025W21_1B_0329_2",
+        "2026W21_2A_0325_3"
+      ],
+      "artifact_http": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "play_pause": true,
+      "mobileViewportWithoutOverflow": true
+    }
+  ]
+}

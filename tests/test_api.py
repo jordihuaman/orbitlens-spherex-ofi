@@ -85,7 +85,9 @@ def test_search_by_target_name(client_and_settings) -> None:
     finished = _wait(client, payload["job_id"])
     assert finished["status"] == "ready"
     assert finished["result_id"] == "a" * 16
-    assert service.requests[0]["ra_deg"] == pytest.approx(269.45208)
+    assert service.requests[0]["ra_deg"] == pytest.approx(269.446267879734)
+    assert service.requests[0]["coordinate_epoch_jyear"] == 2026
+    assert service.requests[0]["astrometry_fitted_to_spherex"] is False
 
 
 def test_search_accepts_sexagesimal(client_and_settings) -> None:
@@ -204,6 +206,36 @@ def test_corrupt_result_is_not_served_as_valid(client_and_settings, corruption):
     assert client.get(f"/api/results/{result_id}/files/01_x-png").status_code == (
         404 if corruption == "missing" else 503
     )
+
+
+@pytest.mark.parametrize("state", ["valid", "corrupt", "old-center", "synthetic"])
+def test_preset_index_advertises_only_current_intact_real_results(client_and_settings, state):
+    from orbitlens.targets import get_preset
+    from scripts.index_presets import build_index
+
+    client, settings, _, _ = client_and_settings
+    result_id, root = _write_valid_result(settings)
+    path = root / "manifest.json"
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    preset = get_preset("barnard")
+    manifest["request"] = {"ra_deg": preset.ra_deg, "dec_deg": preset.dec_deg}
+    manifest["frames"][0]["collection"] = "synthetic-demo" if state == "synthetic" else "spherex_dr1"
+    manifest["status"] = "partial"
+    if state == "old-center":
+        manifest["request"]["ra_deg"] += 0.1
+    path.write_text(json.dumps(manifest), encoding="utf-8")
+    report = {"fields": [{"field": {"id": "barnard"}, "job": {"result_id": result_id}}]}
+    if state == "corrupt":
+        (root / "frames" / "frame.png").write_bytes(b"bad")
+    if state == "valid":
+        assert build_index(report, settings.data_dir) == {"barnard": result_id}
+    else:
+        with pytest.raises(ValueError):
+            build_index(report, settings.data_dir)
+    (settings.data_dir / "presets.json").write_text(json.dumps({"barnard": result_id}), encoding="utf-8")
+    item = next(p for p in client.get("/api/presets").json()["presets"] if p["id"] == "barnard")
+    assert item["verified"] is False
+    assert ("result_id" in item) == (state == "valid")
 
 
 def test_file_path_traversal_blocked(client_and_settings) -> None:

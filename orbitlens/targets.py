@@ -1,14 +1,17 @@
 """Los cinco campos de prueba exigidos por el reto.
 
-Las coordenadas son referencias J2000 aproximadas para *localizar* el campo.
-No son una resolución astrométrica nueva ni sustituyen la verificación de Jordi
-en SIMBAD/Gaia. La aplicación debe mostrar siempre la procedencia.
+Centros ICRS propagados a J2026 desde un snapshot SIMBAD J2000 con movimiento
+propio tangencial. No son un ajuste a píxeles SPHEREx ni confirman detección.
 """
 
 from __future__ import annotations
 
 import unicodedata
 from dataclasses import asdict, dataclass
+
+from .astrometry import SNAPSHOT, position_at
+
+_CENTERS = {target: position_at(target, 2026.0) for target in SNAPSHOT["entries"]}
 
 __all__ = ["Preset", "PRESETS", "get_preset", "public_presets"]
 
@@ -23,6 +26,8 @@ class Preset:
     note: str
     verified: bool = False
     aliases: tuple[str, ...] = ()
+    epoch_jyear: float = 2026.0
+    coordinate_model: str = "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita"
 
     def public(self) -> dict[str, object]:
         data = asdict(self)
@@ -34,9 +39,9 @@ PRESETS: tuple[Preset, ...] = (
     Preset(
         id="barnard",
         name="Estrella de Barnard",
-        ra_deg=269.45208,
-        dec_deg=4.69339,
-        reference="GJ 699 / V* V2500 Oph, J2000 aproximado",
+        ra_deg=_CENTERS["barnard"][0],
+        dec_deg=_CENTERS["barnard"][1],
+        reference="GJ 699, ICRS J2026 aproximado; SIMBAD/2020yCat.1350....0G, PM desde J2000",
         note=(
             "Enana roja de alto movimiento propio. Coordenada de catálogo para "
             "centrar el campo; verificar época y movimiento propio antes de "
@@ -47,9 +52,9 @@ PRESETS: tuple[Preset, ...] = (
     Preset(
         id="epsindi_b",
         name="Epsilon Indi B",
-        ra_deg=331.04375,
-        dec_deg=-56.78264,
-        reference="Epsilon Indi B (Ba/Bb), referencia aproximada 22h04m10.5s −56d46m57.5s, J2000",
+        ra_deg=_CENTERS["epsindi_b"][0],
+        dec_deg=_CENTERS["epsindi_b"][1],
+        reference="Epsilon Indi B, ICRS J2026 aproximado; SIMBAD/2020yCat.1350....0G, PM desde J2000",
         note=(
             "Centro aproximado de la compañera B, a unos 6.7 arcmin de Epsilon "
             "Indi A. Confirmar la separación y la época de la referencia."
@@ -59,9 +64,9 @@ PRESETS: tuple[Preset, ...] = (
     Preset(
         id="wise0855",
         name="WISE 0855−0714",
-        ra_deg=133.79512,
-        dec_deg=-7.24514,
-        reference="WISE J085510.83−071442.5, J2000 aproximado",
+        ra_deg=_CENTERS["wise0855"][0],
+        dec_deg=_CENTERS["wise0855"][1],
+        reference="WISEA J085510.74−071442.5, ICRS J2026 aproximado; SIMBAD/2021ApJS..253....7K, PM desde J2000",
         note=(
             "Enana marrón fría con gran movimiento propio. La cobertura SPHEREx "
             "debe comprobarse por campo; no se asume detección."
@@ -71,9 +76,9 @@ PRESETS: tuple[Preset, ...] = (
     Preset(
         id="rw_aur",
         name="RW Aurigae",
-        ra_deg=76.95633,
-        dec_deg=30.40139,
-        reference="RW Aur, J2000 aproximado",
+        ra_deg=_CENTERS["rw_aur"][0],
+        dec_deg=_CENTERS["rw_aur"][1],
+        reference="RW Aur, ICRS J2026 aproximado; SIMBAD/2007A&A...474..653V, PM desde J2000",
         note=(
             "Estrella joven con variabilidad y eyecciones. Comparar épocas exige "
             "declarar que la variabilidad intrínseca puede dominar la señal."
@@ -83,9 +88,9 @@ PRESETS: tuple[Preset, ...] = (
     Preset(
         id="r_dra",
         name="R Draconis",
-        ra_deg=248.16750,
-        dec_deg=66.75494,
-        reference="R Dra, J2000 aproximado",
+        ra_deg=_CENTERS["r_dra"][0],
+        dec_deg=_CENTERS["r_dra"][1],
+        reference="R Dra, ICRS J2026 aproximado; SIMBAD/2020yCat.1350....0G, PM desde J2000",
         note=(
             "Gigante variable de largo periodo. Las diferencias entre épocas "
             "pueden reflejar el ciclo estelar, no movimiento propio."

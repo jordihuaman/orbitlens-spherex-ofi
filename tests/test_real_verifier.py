@@ -11,6 +11,7 @@ from astropy.io import fits
 from orbitlens.irsa_client import SearchOutcome, SiaRecord
 from orbitlens.manifest import sha256_file
 from orbitlens.pipeline import build_target_wcs
+from orbitlens.targets import get_preset
 
 
 def test_verifier_publishes_original_derived_and_manifest(tmp_path, monkeypatch):
@@ -26,7 +27,8 @@ def test_verifier_publishes_original_derived_and_manifest(tmp_path, monkeypatch)
         return SearchOutcome(records=[item], collections=["spherex_dr1"])
 
     def download(client, url, path, **kwargs):
-        wcs, width, height = build_target_wcs(331.04375, -56.78264, 1)
+        preset = get_preset("epsindi_b")
+        wcs, width, height = build_target_wcs(preset.ra_deg, preset.dec_deg, 1)
         header = wcs.to_header()
         header["DETECTOR"] = "D2"
         header["BUNIT"] = "MJy/sr"

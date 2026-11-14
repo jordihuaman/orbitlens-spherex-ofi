@@ -7,6 +7,7 @@ import json
 import os
 import shutil
 import time
+import uuid
 from pathlib import Path
 from typing import Any
 
@@ -38,12 +39,15 @@ class FileCache:
     def write_bytes(self, namespace: str, key: str, filename: str, content: bytes) -> Path:
         destination = self.path(namespace, key, filename)
         destination.parent.mkdir(parents=True, exist_ok=True)
-        temporary = destination.with_name(destination.name + ".tmp")
-        with temporary.open("wb") as handle:
-            handle.write(content)
-            handle.flush()
-            os.fsync(handle.fileno())
-        os.replace(temporary, destination)
+        temporary = destination.with_name(destination.name + f".{uuid.uuid4().hex}.tmp")
+        try:
+            with temporary.open("wb") as handle:
+                handle.write(content)
+                handle.flush()
+                os.fsync(handle.fileno())
+            os.replace(temporary, destination)
+        finally:
+            temporary.unlink(missing_ok=True)
         return destination
 
     def write_json(self, namespace: str, key: str, filename: str, data: Any) -> Path:
@@ -51,8 +55,11 @@ class FileCache:
         return self.write_bytes(namespace, key, filename, text.encode("utf-8"))
 
     def read_json(self, namespace: str, key: str, filename: str) -> Any:
-        with self.path(namespace, key, filename).open("r", encoding="utf-8") as handle:
-            return json.load(handle)
+        path = self.path(namespace, key, filename)
+        with path.open("r", encoding="utf-8") as handle:
+            data = json.load(handle)
+        os.utime(path, (time.time(), path.stat().st_mtime))
+        return data
 
     def is_fresh(self, namespace: str, key: str, filename: str, ttl_hours: float) -> bool:
         path = self.path(namespace, key, filename)

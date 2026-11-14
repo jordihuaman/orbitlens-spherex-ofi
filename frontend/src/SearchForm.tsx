@@ -82,8 +82,11 @@ export default function SearchForm({
       {preset && (
         <p className="hint">
           {preset.reference}. {preset.note}
-          {!preset.verified && " Referencia pendiente de verificación astrométrica."}
+          {!preset.verified && " Centrado por catálogo; identificación astrométrica en SPHEREx pendiente."}
         </p>
+      )}
+      {preset?.result_id && (
+        <p><a href={`/?result=${preset.result_id}`}>Abrir secuencia real guardada ({preset.result_status}, {preset.result_method})</a></p>
       )}
 
       <div className="field-row">

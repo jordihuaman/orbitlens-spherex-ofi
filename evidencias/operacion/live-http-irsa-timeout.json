@@ -1,0 +1,49 @@
+{
+  "scope": "Formulario real → IRSA → resultado → reinicio; no hosting público ni teléfono físico",
+  "data_dir": "data/live-http (aislado por defecto)",
+  "started_at": "2026-11-14T23:29:26.195Z",
+  "browser": "157.0.4341.46",
+  "accepted": {
+    "job_id": "e13d64efbf40",
+    "status": "running",
+    "status_url": "/api/status/e13d64efbf40",
+    "deduplicated": false
+  },
+  "job": {
+    "job_id": "e13d64efbf40",
+    "status": "error",
+    "phase": null,
+    "created_at": "2026-11-14T23:29:32Z",
+    "updated_at": "2026-11-14T23:30:04Z",
+    "result_id": null,
+    "error": "consulta incompleta: no se puede confirmar ausencia de imágenes",
+    "warnings": [
+      "SIA spherex_dr1: The read operation timed out",
+      "SIA spherex_qr3: The read operation timed out",
+      "Detector solicitado: D1; seleccionado: D1. Un mismo detector no garantiza compatibilidad espectral."
+    ],
+    "counts": {
+      "collections_queried": 4,
+      "records_found": 0,
+      "selected": 0,
+      "candidates": 0
+    },
+    "request": {
+      "ra_deg": 76.95658658,
+      "dec_deg": 30.40129135,
+      "fov_arcmin": 4,
+      "frames": 3,
+      "detector": "D1",
+      "target_name": "rw_aur",
+      "coordinate_epoch_jyear": 2026,
+      "coordinate_reference": "RW Aur, ICRS J2026 aproximado; SIMBAD/2007A&A...474..653V, PM desde J2000",
+      "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita",
+      "astrometry_fitted_to_spherex": false
+    },
+    "status_url": "/api/status/e13d64efbf40",
+    "queue_position": null
+  },
+  "ok": false,
+  "error": "Error: expect(received).toContain(expected) // indexOf\n\nExpected value: \"error\"\nReceived array: [\"ready\", \"partial\"]",
+  "finished_at": "2026-11-14T23:30:06.469Z"
+}

@@ -6,11 +6,13 @@ sobrescribir por entorno para despliegue sin tocar el código.
 
 from __future__ import annotations
 
+import ipaddress
+import math
 import os
 from dataclasses import dataclass, replace
 from pathlib import Path
 
-PIPELINE_VERSION = "0.1.4"
+PIPELINE_VERSION = "0.1.5"
 SCHEMA_VERSION = 1
 
 # Colecciones vigentes tras la revisión de noviembre de 2026 (DR1 + QR3).
@@ -87,8 +89,26 @@ class Settings:
     # Cola
     max_workers: int = 3
     max_active_jobs: int = 32
+    max_active_per_ip: int = 2
+    searches_per_minute: int = 10
+    trusted_proxies: tuple[str, ...] = ()
+    job_timeout_s: float = 600.0
+    max_sia_bytes: int = 16 * 1024 * 1024
+    storage_max_bytes: int = 2 * 1024 * 1024 * 1024
+    min_free_disk_bytes: int = 64 * 1024 * 1024
 
     def __post_init__(self) -> None:
+        for name in ("connect_timeout_s", "read_timeout_s", "job_timeout_s", "pixel_scale_arcsec"):
+            value = getattr(self, name)
+            if not math.isfinite(value) or value <= 0:
+                raise ValueError(f"{name} debe ser finito y positivo")
+        for name in ("max_workers", "max_active_jobs", "max_active_per_ip", "searches_per_minute",
+                     "max_download_bytes", "max_job_download_bytes", "max_sia_bytes", "max_candidates",
+                     "storage_max_bytes"):
+            if getattr(self, name) < 1:
+                raise ValueError(f"{name} debe ser positivo")
+        for proxy in self.trusted_proxies:
+            ipaddress.ip_network(proxy)
         if self.min_frames < 2:
             raise ValueError("min_frames debe ser >= 2")
         if not (self.min_frames <= self.default_frames <= self.max_frames):
@@ -101,10 +121,12 @@ class Settings:
             raise ValueError("cutout_margin debe ser >= 1")
         if self.retry_attempts < 1:
             raise ValueError("retry_attempts debe ser >= 1")
-        if self.retry_backoff_s < 0:
+        if not math.isfinite(self.retry_backoff_s) or self.retry_backoff_s < 0:
             raise ValueError("retry_backoff_s debe ser >= 0")
         if self.empty_cache_ttl_s < 0:
             raise ValueError("empty_cache_ttl_s debe ser >= 0")
+        if self.min_free_disk_bytes < 0:
+            raise ValueError("min_free_disk_bytes debe ser >= 0")
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -123,6 +145,8 @@ class Settings:
             overrides["allowed_cutout_hosts"] = _split_csv(raw)
         if raw := os.environ.get("ORBITLENS_CORS_ORIGINS"):
             overrides["cors_origins"] = _split_csv(raw)
+        if raw := os.environ.get("ORBITLENS_TRUSTED_PROXIES"):
+            overrides["trusted_proxies"] = _split_csv(raw)
 
         for name, field_name in (
             ("ORBITLENS_MAX_FRAMES", "max_frames"),
@@ -134,6 +158,13 @@ class Settings:
             ("ORBITLENS_CACHE_TTL_HOURS", "cache_ttl_hours"),
             ("ORBITLENS_EMPTY_CACHE_TTL_S", "empty_cache_ttl_s"),
             ("ORBITLENS_RETRY_ATTEMPTS", "retry_attempts"),
+            ("ORBITLENS_MAX_ACTIVE_PER_IP", "max_active_per_ip"),
+            ("ORBITLENS_SEARCHES_PER_MINUTE", "searches_per_minute"),
+            ("ORBITLENS_MAX_DOWNLOAD_BYTES", "max_download_bytes"),
+            ("ORBITLENS_MAX_JOB_DOWNLOAD_BYTES", "max_job_download_bytes"),
+            ("ORBITLENS_MAX_SIA_BYTES", "max_sia_bytes"),
+            ("ORBITLENS_STORAGE_MAX_BYTES", "storage_max_bytes"),
+            ("ORBITLENS_MIN_FREE_DISK_BYTES", "min_free_disk_bytes"),
         ):
             if os.environ.get(name) is not None:
                 overrides[field_name] = _env_int(name, int(getattr(base, field_name)))
@@ -145,6 +176,7 @@ class Settings:
             ("ORBITLENS_READ_TIMEOUT_S", "read_timeout_s"),
             ("ORBITLENS_CONNECT_TIMEOUT_S", "connect_timeout_s"),
             ("ORBITLENS_RETRY_BACKOFF_S", "retry_backoff_s"),
+            ("ORBITLENS_JOB_TIMEOUT_S", "job_timeout_s"),
         ):
             if os.environ.get(name) is not None:
                 overrides[field_name] = _env_float(name, float(getattr(base, field_name)))

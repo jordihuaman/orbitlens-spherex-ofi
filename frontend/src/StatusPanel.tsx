@@ -75,6 +75,9 @@ export default function StatusPanel({ job, error, busy }: Props) {
           {job.status === "running" && <span className="pulse" aria-hidden />}
         </p>
       )}
+      {job.status === "queued" && job.queue_position != null && (
+        <p>Posición en cola: {job.queue_position}</p>
+      )}
 
       {job.status === "empty" && (
         <p>
@@ -94,7 +97,7 @@ export default function StatusPanel({ job, error, busy }: Props) {
       {job.status === "partial" && (
         <p>
           Hay menos frames de los solicitados o algún fallo parcial. La
-          secuencia disponible se puede reproducir, pero no es exhaustiva.
+          secuencia no es exhaustiva. La reproducción requiere al menos tres frames.
         </p>
       )}
 

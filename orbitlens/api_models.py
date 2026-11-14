@@ -57,7 +57,7 @@ class SearchRequest(BaseModel):
     def normalized(self) -> dict[str, object]:
         """Representación estable usada por la cola y el manifiesto."""
 
-        return {
+        normalized = {
             "ra_deg": round(float(self.ra_deg), 8),
             "dec_deg": round(float(self.dec_deg), 8),
             "fov_arcmin": float(self.fov_arcmin),
@@ -65,3 +65,10 @@ class SearchRequest(BaseModel):
             "detector": self.detector,
             "target_name": self.target_name,
         }
+        if self.target_name:
+            preset = get_preset(self.target_name)
+            normalized.update(coordinate_epoch_jyear=preset.epoch_jyear,
+                              coordinate_reference=preset.reference,
+                              coordinate_model=preset.coordinate_model,
+                              astrometry_fitted_to_spherex=False)
+        return normalized

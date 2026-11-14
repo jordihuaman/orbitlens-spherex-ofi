@@ -13,12 +13,13 @@ máscaras y longitudes de onda.
 
 ## Estado verificado — 2026-11-14
 
-**Actualización pipeline 0.1.4:** el parser ya interpreta los nombres de campos
-reales de IRSA. Se obtuvieron **tres frames reales por cada uno de los cinco
-campos**, abiertos y reproducidos en Edge. Todos están en estado parcial por
-overflow/fallos; no se confirma identidad de fuentes ni astrometría. Ver
-[evidencia de cinco campos](evidencias/irsa/five-fields/README.md),
-[DATOS_REALES.md](DATOS_REALES.md) y [brechas pendientes](BRECHAS_REQUISITOS.md).
+**Actualización pipeline 0.1.5:** cuotas, snapshots de trabajos, presupuesto
+temporal/disco e importación de secuencias locales. Los centros de los cinco
+presets se corrigieron con catálogo/PM a J2026: los recortes anteriores de
+Barnard/WISE 0855 no incluían sus posiciones predichas. Hay tres frames reales
+por campo en la selección actual (cuatro paquetes SIA partial y R Draconis por
+importación local explícita). Ver [ASTROMETRIA.md](ASTROMETRIA.md),
+[DEPLOYMENT.md](DEPLOYMENT.md) y [brechas pendientes](BRECHAS_REQUISITOS.md).
 
 Correcciones posteriores (pipeline 0.1.1): RA de Epsilon Indi B y selección
 estricta de un solo detector. Estado del recorte real y entregables de Dany y
@@ -30,18 +31,20 @@ entorno es:
 
 | Comprobación | Resultado |
 | --- | --- |
-| Suite Python (`pytest`) | **124 pruebas pasan**, incluida integridad, candidatos sustitutos, estados, caché caducada y parser real |
+| Suite Python (`pytest`) | **166 pruebas pasan**, incluidos cuotas/proxy, reinicio, importación, disco y propagación tangencial |
 | Navegador real Edge / Playwright | **30 casos pasan**, escritorio y viewport móvil; sintético/proveedor controlado |
 | Build frontend (`tsc --noEmit && vite build`) | Correcto, genera `frontend/dist` |
 | Arranque `uvicorn api:app` | `/api/health`, `/api/presets` y `/` responden 200 |
 | Contrato resultado → manifiesto → PNG/FITS | Sintético y real: cinco secuencias reproducibles en Edge, 45 artefactos HTTP 200 |
 | Consulta real a IRSA SIA/TAP | SIA devuelve filas reales; IBE intermitente con 503; error de nombres VOTable corregido |
 | FITS real descargado e inspeccionado en esta copia | **Sí**, originales DR1 del tutorial, derivados y manifiestos; cinco campos aún sin validar |
+| Formulario real y reinicio | RW Aur D1: consulta SIA real en caché, tres frames, nueve artefactos 200, trabajo/resultado recuperados tras reiniciar; sin hosting público |
 
 El hito **H1 sigue parcial**: el primer FITS real y su recorrido al navegador
 están comprobados, pero la consulta de los cinco objetivos no es estable.
 Los 502/DNS/timeouts anteriores no deben confundirse con ausencia de cobertura.
-No se afirma detección ni calidad de los cinco objetos.
+No se afirma detección ni identificación de los cinco objetos. La posición de
+catálogo predicha está dentro de los nuevos frames, pero puede estar enmascarada.
 
 Para que el equipo pueda probar la interfaz mientras IRSA se recupera, el script
 `scripts/make_demo_result.py` genera un resultado **sintético claramente

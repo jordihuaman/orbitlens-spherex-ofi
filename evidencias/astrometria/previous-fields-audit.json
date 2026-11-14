@@ -1,0 +1,292 @@
+{
+  "created_at": "2026-11-14T23:22:35Z",
+  "source": {
+    "source": "SIMBAD TAP, espejo oficial Harvard",
+    "endpoint": "https://simbad.harvard.edu/simbad/sim-tap/sync",
+    "retrieved_date": "2026-11-14",
+    "frame": "ICRS",
+    "epoch_jyear": 2000.0,
+    "epoch_basis": "metadata TAP: mango:EpochPosition longitude/latitude CT.epoch=J2000",
+    "pm_convention": "pmra = mu_alpha*cos(delta); pmdec = mu_delta; mas/yr",
+    "entries": {
+      "barnard": {
+        "main_id": "NAME Barnard's star",
+        "ra_deg": 269.4520769586187,
+        "dec_deg": 4.693364966576667,
+        "pmra": -801.551,
+        "pmdec": 10362.394,
+        "coo_bibcode": "2020yCat.1350....0G",
+        "pm_bibcode": "2020yCat.1350....0G"
+      },
+      "epsindi_b": {
+        "main_id": "* eps Ind B",
+        "ra_deg": 331.04414658852124,
+        "dec_deg": -56.782844195116105,
+        "pmra": 3981.977,
+        "pmdec": -2466.832,
+        "coo_bibcode": "2020yCat.1350....0G",
+        "pm_bibcode": "2020yCat.1350....0G"
+      },
+      "wise0855": {
+        "main_id": "WISEA J085510.74-071442.5",
+        "ra_deg": 133.81890825,
+        "dec_deg": -7.247048000000001,
+        "pmra": -8123.7,
+        "pmdec": 673.2,
+        "coo_bibcode": "2021ApJS..253....7K",
+        "pm_bibcode": "2021ApJS..253....7K"
+      },
+      "rw_aur": {
+        "main_id": "V* RW Aur",
+        "ra_deg": 76.95652603458333,
+        "dec_deg": 30.401438173888888,
+        "pmra": 7.23,
+        "pmdec": -20.33,
+        "coo_bibcode": "2007A&A...474..653V",
+        "pm_bibcode": "2007A&A...474..653V"
+      },
+      "r_dra": {
+        "main_id": "V* R Dra",
+        "ra_deg": 248.16761083295,
+        "dec_deg": 66.75497941722,
+        "pmra": -20.643,
+        "pmdec": 6.149,
+        "coo_bibcode": "2020yCat.1350....0G",
+        "pm_bibcode": "2020yCat.1350....0G"
+      }
+    }
+  },
+  "limitations": "Predicción tangencial: sin paralaje anual, RV, aceleración ni movimiento orbital. No detección ni ajuste astrométrico a SPHEREx.",
+  "fields": [
+    {
+      "target": "barnard",
+      "result_id": "3b1352edd877bddd",
+      "catalog": {
+        "main_id": "NAME Barnard's star",
+        "ra_deg": 269.4520769586187,
+        "dec_deg": 4.693364966576667,
+        "pmra": -801.551,
+        "pmdec": 10362.394,
+        "coo_bibcode": "2020yCat.1350....0G",
+        "pm_bibcode": "2020yCat.1350....0G"
+      },
+      "frames": [
+        {
+          "obs_id": "2025W33_2C_0321_1",
+          "epoch_jyear": 2025.621806201232,
+          "predicted_ra_deg": 269.4463523870335,
+          "predicted_dec_deg": 4.767115805174001,
+          "separation_from_requested_center_arcsec": 266.20720380603456,
+          "inside_output": false,
+          "nearest_output_pixel_valid": false
+        },
+        {
+          "obs_id": "2025W33_2C_0321_2",
+          "epoch_jyear": 2025.6218102861053,
+          "predicted_ra_deg": 269.4463523861208,
+          "predicted_dec_deg": 4.767115816932048,
+          "separation_from_requested_center_arcsec": 266.2072462614736,
+          "inside_output": false,
+          "nearest_output_pixel_valid": false
+        },
+        {
+          "obs_id": "2026W34_2A_0081_1",
+          "epoch_jyear": 2026.6349245037645,
+          "predicted_ra_deg": 269.4461260054368,
+          "predicted_dec_deg": 4.770032001283846,
+          "separation_from_requested_center_arcsec": 276.73687713765247,
+          "inside_output": false,
+          "nearest_output_pixel_valid": false
+        }
+      ],
+      "recommended_center_J2026": [
+        269.446267879734,
+        4.768204411842282
+      ]
+    },
+    {
+      "target": "epsindi_b",
+      "result_id": "40457e8dccea6c10",
+      "catalog": {
+        "main_id": "* eps Ind B",
+        "ra_deg": 331.04414658852124,
+        "dec_deg": -56.782844195116105,
+        "pmra": 3981.977,
+        "pmdec": -2466.832,
+        "coo_bibcode": "2020yCat.1350....0G",
+        "pm_bibcode": "2020yCat.1350....0G"
+      },
+      "frames": [
+        {
+          "obs_id": "2025W18_1B_0081_2",
+          "epoch_jyear": 2025.3239283039015,
+          "predicted_ra_deg": 331.0953024256635,
+          "predicted_dec_deg": -56.800186474687315,
+          "separation_from_requested_center_arcsec": 119.6736422335535,
+          "inside_output": true,
+          "nearest_output_pixel_valid": true
+        },
+        {
+          "obs_id": "2025W18_1B_0238_1",
+          "epoch_jyear": 2025.3267150965094,
+          "predicted_ra_deg": 331.09530805775205,
+          "predicted_dec_deg": -56.80018838198035,
+          "separation_from_requested_center_arcsec": 119.68669600470433,
+          "inside_output": true,
+          "nearest_output_pixel_valid": true
+        },
+        {
+          "obs_id": "2026W39_1A_0578_4",
+          "epoch_jyear": 2026.7275134702259,
+          "predicted_ra_deg": 331.0981391340665,
+          "predicted_dec_deg": -56.80114706237119,
+          "separation_from_requested_center_arcsec": 126.24825445451984,
+          "inside_output": true,
+          "nearest_output_pixel_valid": true
+        }
+      ],
+      "recommended_center_J2026": [
+        331.0966687786697,
+        -56.80064917366798
+      ]
+    },
+    {
+      "target": "wise0855",
+      "result_id": "1966b97f9c87160f",
+      "catalog": {
+        "main_id": "WISEA J085510.74-071442.5",
+        "ra_deg": 133.81890825,
+        "dec_deg": -7.247048000000001,
+        "pmra": -8123.7,
+        "pmdec": 673.2,
+        "coo_bibcode": "2021ApJS..253....7K",
+        "pm_bibcode": "2021ApJS..253....7K"
+      },
+      "frames": [
+        {
+          "obs_id": "2025W19_1B_0181_2",
+          "epoch_jyear": 2025.343211742642,
+          "predicted_ra_deg": 133.76125926985284,
+          "predicted_dec_deg": -7.2423051924016315,
+          "separation_from_requested_center_arcsec": 121.3555926880171,
+          "inside_output": false,
+          "nearest_output_pixel_valid": false
+        },
+        {
+          "obs_id": "2025W19_1B_0181_3",
+          "epoch_jyear": 2025.3432158275155,
+          "predicted_ra_deg": 133.76125926056096,
+          "predicted_dec_deg": -7.242305191636592,
+          "separation_from_requested_center_arcsec": 121.35562598597696,
+          "inside_output": false,
+          "nearest_output_pixel_valid": false
+        },
+        {
+          "obs_id": "2025W19_1B_0231_3",
+          "epoch_jyear": 2025.3441440766599,
+          "predicted_ra_deg": 133.76125714906783,
+          "predicted_dec_deg": -7.242305017788394,
+          "separation_from_requested_center_arcsec": 121.36319263618506,
+          "inside_output": false,
+          "nearest_output_pixel_valid": false
+        }
+      ],
+      "recommended_center_J2026": [
+        133.7597652706523,
+        -7.242182182634441
+      ]
+    },
+    {
+      "target": "rw_aur",
+      "result_id": "69b4af920d55eff0",
+      "catalog": {
+        "main_id": "V* RW Aur",
+        "ra_deg": 76.95652603458333,
+        "dec_deg": 30.401438173888888,
+        "pmra": 7.23,
+        "pmdec": -20.33,
+        "coo_bibcode": "2007A&A...474..653V",
+        "pm_bibcode": "2007A&A...474..653V"
+      },
+      "frames": [
+        {
+          "obs_id": "2025W36_1A_0095_1",
+          "epoch_jyear": 2025.667131134839,
+          "predicted_ra_deg": 76.95658580040445,
+          "predicted_dec_deg": 30.401293225881954,
+          "separation_from_requested_center_arcsec": 0.8673092851245774,
+          "inside_output": true,
+          "nearest_output_pixel_valid": true
+        },
+        {
+          "obs_id": "2025W36_1A_0606_1",
+          "epoch_jyear": 2025.6734397891855,
+          "predicted_ra_deg": 76.95658581509412,
+          "predicted_dec_deg": 30.401293190255576,
+          "separation_from_requested_center_arcsec": 0.8674025792174874,
+          "inside_output": true,
+          "nearest_output_pixel_valid": false
+        },
+        {
+          "obs_id": "2026W37_1A_0234_3",
+          "epoch_jyear": 2026.6852201232032,
+          "predicted_ra_deg": 76.95658817101729,
+          "predicted_dec_deg": 30.401287476506102,
+          "separation_from_requested_center_arcsec": 0.8825091597035426,
+          "inside_output": true,
+          "nearest_output_pixel_valid": true
+        }
+      ],
+      "recommended_center_J2026": [
+        76.95658657548722,
+        30.401291346097146
+      ]
+    },
+    {
+      "target": "r_dra",
+      "result_id": "7266e9f837994b6f",
+      "catalog": {
+        "main_id": "V* R Dra",
+        "ra_deg": 248.16761083295,
+        "dec_deg": 66.75497941722,
+        "pmra": -20.643,
+        "pmdec": 6.149,
+        "coo_bibcode": "2020yCat.1350....0G",
+        "pm_bibcode": "2020yCat.1350....0G"
+      },
+      "frames": [
+        {
+          "obs_id": "2025W18_1B_0085_3",
+          "epoch_jyear": 2025.324006902122,
+          "predicted_ra_deg": 248.16724289381818,
+          "predicted_dec_deg": 66.75502267160226,
+          "separation_from_requested_center_arcsec": 0.4711857610025492,
+          "inside_output": true,
+          "nearest_output_pixel_valid": false
+        },
+        {
+          "obs_id": "2025W21_1B_0329_2",
+          "epoch_jyear": 2025.3831462642027,
+          "predicted_ra_deg": 248.1672420345654,
+          "predicted_dec_deg": 66.7550227726136,
+          "separation_from_requested_center_arcsec": 0.4723621601463557,
+          "inside_output": true,
+          "nearest_output_pixel_valid": false
+        },
+        {
+          "obs_id": "2026W21_2A_0325_3",
+          "epoch_jyear": 2026.3901259137576,
+          "predicted_ra_deg": 248.16722740386734,
+          "predicted_dec_deg": 66.75502449255593,
+          "separation_from_requested_center_arcsec": 0.4924673802477671,
+          "inside_output": true,
+          "nearest_output_pixel_valid": false
+        }
+      ],
+      "recommended_center_J2026": [
+        248.16723307211964,
+        66.75502382621288
+      ]
+    }
+  ]
+}

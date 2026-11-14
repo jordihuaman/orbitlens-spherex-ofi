@@ -1,5 +1,21 @@
 # Decisiones científicas y límites — OrbitLens SPHEREx
 
+## Corrección vigente: centrado de catálogo J2026, pipeline 0.1.5
+
+Ver `ASTROMETRIA.md` y la respuesta SIMBAD del espejo oficial Harvard. Barnard y
+WISE 0855 no estaban dentro de sus salidas antiguas de 4′ al propagar la posición
+de catálogo a las fechas reales. No utilizar esos paquetes como evidencia de
+no-detección. Se corrigieron centros por movimiento propio tangencial y se
+regeneraron/reproyectaron los campos; las posiciones predichas ahora quedan
+dentro de los 15 frames seleccionados, pero muchos píxeles siguen enmascarados.
+
+No se aplican paralaje anual, velocidad radial/aceleraciones ni órbitas. Se
+mantiene `verified=False` porque no se ha ajustado ni identificado una fuente
+en los píxeles SPHEREx. λ distinta, saturación/FLAGS y fondo impiden interpretar
+la película como fotometría o movimiento sin validación adicional. R Draconis
+usa una importación local D6 explícita; ready solo describe la construcción.
+Los estados y cifras de las secciones posteriores son históricos cuando difieren.
+
 Actualización pipeline 0.1.3: un recorte DR1 real del campo de referencia del
 tutorial IRSA fue descargado e inspeccionado. Evidencia y limitaciones en
 `DATOS_REALES.md`; las referencias anteriores a «ningún FITS real» describen el

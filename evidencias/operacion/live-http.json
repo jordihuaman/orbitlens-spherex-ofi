@@ -1,0 +1,101 @@
+{
+  "scope": "Formulario real → IRSA → resultado → reinicio; no hosting público ni teléfono físico",
+  "data_dir": "data/live-http (aislado por defecto)",
+  "started_at": "2026-11-14T23:31:07.430Z",
+  "browser": "157.0.4341.46",
+  "accepted": {
+    "job_id": "3380bd09da22",
+    "status": "running",
+    "status_url": "/api/status/3380bd09da22",
+    "deduplicated": false
+  },
+  "job": {
+    "job_id": "3380bd09da22",
+    "status": "partial",
+    "phase": null,
+    "created_at": "2026-11-14T23:31:12Z",
+    "updated_at": "2026-11-14T23:31:35Z",
+    "result_id": "f1c37bf6d18db6cf",
+    "error": null,
+    "warnings": [
+      "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+      "consulta SIA servida desde caché (2026-11-14T23:25:52Z)",
+      "Detector solicitado: D1; seleccionado: D1. Un mismo detector no garantiza compatibilidad espectral."
+    ],
+    "counts": {
+      "collections_queried": 4,
+      "records_found": 315,
+      "selected": 3,
+      "candidates": 46,
+      "attempted": 3,
+      "processed": 3,
+      "failed": 0
+    },
+    "request": {
+      "ra_deg": 76.95658658,
+      "dec_deg": 30.40129135,
+      "fov_arcmin": 4,
+      "frames": 3,
+      "detector": "D1",
+      "target_name": "rw_aur",
+      "coordinate_epoch_jyear": 2026,
+      "coordinate_reference": "RW Aur, ICRS J2026 aproximado; SIMBAD/2007A&A...474..653V, PM desde J2000",
+      "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita",
+      "astrometry_fitted_to_spherex": false
+    },
+    "status_url": "/api/status/3380bd09da22",
+    "queue_position": null
+  },
+  "artifact_http": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "restart_job_http": 200,
+  "restored_job": {
+    "job_id": "3380bd09da22",
+    "status": "partial",
+    "phase": null,
+    "created_at": "2026-11-14T23:31:12Z",
+    "updated_at": "2026-11-14T23:31:35Z",
+    "result_id": "f1c37bf6d18db6cf",
+    "error": null,
+    "warnings": [
+      "spherex_dr1: resultado truncado (QUERY_STATUS=OVERFLOW); la muestra no es exhaustiva",
+      "consulta SIA servida desde caché (2026-11-14T23:25:52Z)",
+      "Detector solicitado: D1; seleccionado: D1. Un mismo detector no garantiza compatibilidad espectral."
+    ],
+    "counts": {
+      "collections_queried": 4,
+      "records_found": 315,
+      "selected": 3,
+      "candidates": 46,
+      "attempted": 3,
+      "processed": 3,
+      "failed": 0
+    },
+    "request": {
+      "ra_deg": 76.95658658,
+      "dec_deg": 30.40129135,
+      "fov_arcmin": 4,
+      "frames": 3,
+      "detector": "D1",
+      "target_name": "rw_aur",
+      "coordinate_epoch_jyear": 2026,
+      "coordinate_reference": "RW Aur, ICRS J2026 aproximado; SIMBAD/2007A&A...474..653V, PM desde J2000",
+      "coordinate_model": "SIMBAD J2000 + movimiento tangencial a J2026; sin paralaje/RV/órbita",
+      "astrometry_fitted_to_spherex": false
+    },
+    "status_url": "/api/status/3380bd09da22",
+    "queue_position": null
+  },
+  "restart_result": "opened",
+  "ok": true,
+  "finished_at": "2026-11-14T23:31:42.171Z"
+}

@@ -44,16 +44,19 @@ def main() -> int:
                    "reference": "Campo del tutorial IRSA Intro, no un objetivo del reto", "verified": False}]
     report = {"started_at": utc_now_iso(), "pipeline_version": PIPELINE_VERSION,
               "code_commit": os.environ.get("ORBITLENS_CODE_COMMIT", "dev"),
-              "limits": vars(args), "fields": [],
-              "limitations": ["Coordenadas de referencia no verificadas astrométricamente.",
+              "limits": {**vars(args), "job_timeout_s": settings.job_timeout_s}, "fields": [],
+              "limitations": ["Centros aproximados de catálogo propagados a J2026; sin ajuste astrométrico a SPHEREx.",
                               "ready/partial no confirman detección ni movimiento propio.",
-                              "Timeouts por petición; aún no hay presupuesto temporal total por trabajo."]}
+                              "Presupuesto temporal cooperativo; no interrumpe un cálculo nativo en curso."]}
     report_path = settings.data_dir / "real-data" / f"sequences-{time.time_ns()}.json"
     service = SearchService(settings)
     try:
         for field in fields:
             request = {"ra_deg": field["ra_deg"], "dec_deg": field["dec_deg"],
                        "fov_arcmin": args.fov, "frames": args.frames, "detector": args.detector}
+            if "epoch_jyear" in field:
+                request.update(coordinate_epoch_jyear=field["epoch_jyear"], coordinate_reference=field["reference"],
+                               coordinate_model=field["coordinate_model"], astrometry_fitted_to_spherex=False)
             job = Job(id=f"verify-{field['id']}", request=request)
             started = time.monotonic()
             print(f"Consultando {field['id']}…", flush=True)

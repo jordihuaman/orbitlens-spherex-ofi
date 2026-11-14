@@ -1,5 +1,19 @@
 # QA del equipo — ejecución asistida, 2026-11-14
 
+## Actualización pipeline 0.1.5
+
+166 pruebas Python, 30/30 E2E Edge (escritorio y viewport móvil), Ruff y build
+correctos. Los presets de QA ya usan centros J2026 derivados de catálogo/PM.
+Informe actual: `evidencias/operacion/playwright-results.json`.
+Las diez capturas de los cinco paquetes reales vigentes y comprobación de
+45 descargas están en `evidencias/astrometria/corrected-fields/`.
+
+El recorrido real por formulario/reinicio está en `evidencias/operacion/`:
+ensayo exitoso con metadatos SIA reales en caché y recortes de IRSA; se conserva
+el intento previo con timeout. No se probó hosting público ni teléfono físico.
+Las secciones siguientes conservan el QA histórico de pipeline 0.1.2 y no se
+atribuyen a una aceptación personal de Dany.
+
 Preparado y ejecutado por el agente a petición de Jesús. **No es una aceptación
 atribuida a Dany**. Base: `97f0a` más los cambios de este bloque (pipeline 0.1.2).
 El commit que incorpora este documento identifica la versión revisada.

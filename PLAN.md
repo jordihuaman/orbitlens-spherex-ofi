@@ -103,11 +103,11 @@ comandos en [ENTREGA_TECNICA.md](ENTREGA_TECNICA.md); límites científicos en
 
 | Hito | Estado | Evidencia |
 | --- | --- | --- |
-| H0. Base reproducible | **Completado localmente** | `.venv`, dependencias fijadas, 124 pruebas Python, 30 E2E, Ruff y build Vite |
+| H0. Base reproducible | **Completado localmente** | `.venv`, dependencias fijadas, 166 pruebas Python, 30 E2E, Ruff y build Vite; CI añadido |
 | H1. Dato real actual | **Parcial: primer FITS verificado** | Recorte real DR1 del tutorial procesado y abierto en navegador; consultas de presets todavía inestables. Ver `DATOS_REALES.md` |
-| H2. Secuencia temporal | **Cinco secuencias reales, revisión pendiente** | Tres frames por campo (15 originales), todos partial por overflow/fallos; fichas técnicas y límites en `evidencias/irsa/five-fields/README.md`; astrometría no validada |
-| H3. Web de extremo a extremo | **Parcial** | 30 casos Edge controlados; cinco resultados reales abiertos con reproducción/pausa y 45 artefactos HTTP 200; falta adquisición real desde formulario |
-| H4. Versión pública | **No iniciado** | Sin despliegue en esta entrega |
+| H2. Secuencia temporal | **Centrado corregido, revisión científica pendiente** | 15 frames seleccionados con centros J2026: 4 SIA partial + R Dra local explícito. Posiciones predichas dentro, máscaras conservadas. `ASTROMETRIA.md` sustituye los IDs anteriores |
+| H3. Web de extremo a extremo | **Verificado local con caché real** | Formulario → tres frames reales → nueve descargas 200 → reinicio recupera trabajo/resultado. Cinco paquetes actuales abiertos en escritorio/viewport móvil y 45 artefactos 200 |
+| H4. Versión pública | **Preparada, no desplegada** | Cuotas/proxy, disco/tiempo, snapshots, Docker/Compose y guía. Pendientes host/credenciales, TLS, teléfono físico y aceptación pública |
 | H5. Cierre | **Aplazado por el usuario** | Guion, pitch, créditos y borrador preparados; video, ensayos y envío fuera de la prioridad actual |
 
 El resultado sintético (`scripts/make_demo_result.py`) permite probar la UI, pero

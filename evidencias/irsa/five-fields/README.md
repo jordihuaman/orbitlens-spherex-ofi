@@ -1,5 +1,11 @@
 # Cinco campos reales — adquisición y verificación técnica
 
+> **Histórico, centrado corregido después:** la auditoría de catálogo mostró
+> que las posiciones predichas de Barnard y WISE 0855 quedaban fuera de estas
+> salidas de 4′. Los archivos son reales, pero no acreditan cobertura del objeto
+> en su época. No utilizar estos IDs como presets vigentes. Ver
+> [ASTROMETRIA.md](../../../ASTROMETRIA.md) para los nuevos centros y paquetes.
+
 Pipeline 0.1.4; ejecución registrada en `acquisition-report.json`. Código base
 `19fd5+working-tree`: cambios del bloque de integridad/parser, no una ejecución
 del commit 19fd5 limpio. No se atribuye esta revisión técnica a Jordi/Dany.

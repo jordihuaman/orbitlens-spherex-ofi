@@ -1,4 +1,7 @@
 export interface Preset {
+  result_id?: string;
+  result_status?: string;
+  result_method?: string;
   id: string;
   name: string;
   ra_deg: number;
@@ -28,6 +31,7 @@ export interface Job {
   counts: Record<string, number>;
   request: Record<string, unknown>;
   status_url: string;
+  queue_position?: number | null;
 }
 
 export interface FrameTime {
@@ -71,6 +75,7 @@ export interface Grid {
 }
 
 export interface Manifest {
+  status?: "ready" | "partial";
   schema_version: number;
   pipeline_version: string;
   code_commit: string;

@@ -91,7 +91,10 @@ def test_service_detector_contract(tmp_path, requested, expected, expected_statu
         wcs, width, height = build_target_wcs(10, 20, 1)
         header = wcs.to_header()
         header["DETECTOR"] = fits_detector
-        fits.HDUList([fits.PrimaryHDU(), fits.ImageHDU(
+        header["BUNIT"] = "MJy/sr"
+        primary = fits.PrimaryHDU()
+        primary.header["VERSION"] = "fixture"
+        fits.HDUList([primary, fits.ImageHDU(
             data=np.ones((height, width)), header=header, name="IMAGE",
         )]).writeto(destination, overwrite=True)
         return destination
