@@ -103,8 +103,8 @@ comandos en [ENTREGA_TECNICA.md](ENTREGA_TECNICA.md); límites científicos en
 
 | Hito | Estado | Evidencia |
 | --- | --- | --- |
-| H0. Base reproducible | **Completado** | `.venv`, dependencias fijadas, 100 pruebas, build Vite; QA en `QA_EQUIPO.md` |
-| H1. Dato real actual | **Bloqueado** | IRSA SIA/TAP devuelve 502 y el DNS es intermitente; no se descargó ningún FITS real |
+| H0. Base reproducible | **Completado** | `.venv`, dependencias fijadas, 105 pruebas, build Vite; QA en `QA_EQUIPO.md` |
+| H1. Dato real actual | **Parcial: primer FITS verificado** | Recorte real DR1 del tutorial procesado y abierto en navegador; consultas de presets todavía inestables. Ver `DATOS_REALES.md` |
 | H2. Secuencia temporal | **No iniciado con datos reales** | Pipeline y contrato probados con fixtures y resultado sintético |
 | H3. Web de extremo a extremo | **Parcial** | API + frontend; 28 casos Edge con resultado sintético/proveedor controlado; falta recorrido con datos reales |
 | H4. Versión pública | **No iniciado** | Sin despliegue en esta entrega |

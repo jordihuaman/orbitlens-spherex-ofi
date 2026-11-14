@@ -1,5 +1,13 @@
 # Decisiones científicas y límites — OrbitLens SPHEREx
 
+Actualización pipeline 0.1.3: un recorte DR1 real del campo de referencia del
+tutorial IRSA fue descargado e inspeccionado. Evidencia y limitaciones en
+`DATOS_REALES.md`; las referencias anteriores a «ningún FITS real» describen el
+estado inicial, no el actual. No hay validación de los cinco objetivos.
+Con coordenada solicitada, λ/ancho se evalúan en su posición WCS dentro del
+recorte, no simplemente en el píxel central entero. Ambos ejes WAVE-TAB se
+interpretan cuando el WCS identifica el segundo como ancho de banda.
+
 Documento vivo. Registra **qué hace el pipeline**, **qué no puede afirmarse** y
 las decisiones que Jordi debe revisar. No es una validación científica: en esta
 copia no se ha inspeccionado ningún FITS real de SPHEREx (ver

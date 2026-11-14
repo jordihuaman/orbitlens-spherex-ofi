@@ -1,5 +1,23 @@
 # Entrega técnica — OrbitLens SPHEREx
 
+## Acceso real recuperado parcialmente (pipeline 0.1.3)
+
+Se descargó de IBE un recorte DR1 real del tutorial oficial: 3 954 240 bytes,
+IMAGE 12×12, VERSION 7.0.5, D1, OBSID `2025W18_1B_0074_2`. Se inspeccionaron
+HDU, tiempos, WCS, unidades, FLAGS, λ/ancho y original SHA-256. Se publicó con
+manifiesto y derivado y se abrió en Edge; la descarga original por API devolvió
+200 con hash coincidente. Evidencia y comandos en `DATOS_REALES.md`.
+
+La conexión sigue intermitente: sondas SIA/TAP/IBE 200 y S3 206, pero las cuatro
+consultas de Epsilon Indi B agotaron tiempo. El campo del tutorial NO sustituye
+los cinco objetivos. H1 se mantiene parcial, no bloqueado por ausencia total de
+FITS. No hay afirmaciones de detección/movimiento ni cinco secuencias cerradas.
+
+105 pruebas Python, Ruff y build frontend correctos. Se añadió lectura del
+ancho espectral desde WCS-WAVE y evaluación en coordenada objetivo. El importador
+local valida procedencia declarada, metadatos y pertenencia del objetivo al WCS;
+permite usar recortes descargados por Data Explorer sin SIA.
+
 ## Bloque de apoyo al equipo (pipeline 0.1.2)
 
 - 100 pruebas Python y Ruff; build React correcto.

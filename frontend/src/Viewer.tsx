@@ -79,6 +79,7 @@ export default function Viewer({ manifest }: Props) {
   const fitsFile = manifest.files.find(
     (file) => file.id === `${frame.frame_id}-fits`,
   );
+  const originalFile = manifest.files.find((file) => file.id === `${frame.frame_id}-original`);
 
   async function copyLink() {
     try {
@@ -95,7 +96,7 @@ export default function Viewer({ manifest }: Props) {
       <div className="viewer-heading">
         <div>
           <p className="eyebrow">Resultado {manifest.result_id}</p>
-          <h2>Secuencia temporal</h2>
+          <h2>{frames.length === 1 ? "Recorte individual" : "Secuencia temporal"}</h2>
         </div>
         <button className="ghost" type="button" onClick={copyLink}>
           {copied ? "Enlace copiado" : "Compartir"}
@@ -106,6 +107,9 @@ export default function Viewer({ manifest }: Props) {
         <p className="notice" role="note">
           Demostración sintética: no son imágenes de SPHEREx ni una detección.
         </p>
+      )}
+      {!synthetic && frames.length === 1 && (
+        <p role="note">Recorte real individual: no constituye una secuencia temporal ni confirma una detección.</p>
       )}
 
       <figure className="stage">
@@ -208,6 +212,9 @@ export default function Viewer({ manifest }: Props) {
       </dl>
 
       <div className="downloads">
+        {originalFile && (
+          <a href={fileUrl(manifest.result_id, originalFile.id)} download>FITS original</a>
+        )}
         {pngFile && (
           <a href={fileUrl(manifest.result_id, pngFile.id)} download>
             PNG

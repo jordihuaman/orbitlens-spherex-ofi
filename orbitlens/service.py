@@ -299,7 +299,7 @@ class SearchService:
                 backoff=self.settings.retry_backoff_s,
             )
 
-        image = read_spherex_image(raw_path)
+        image = read_spherex_image(raw_path, target=(ra_deg, dec_deg))
         if image.valid_fraction < self.settings.min_valid_fraction:
             raise ValueError(
                 f"cobertura válida {image.valid_fraction:.1%} < "

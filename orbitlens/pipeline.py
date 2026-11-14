@@ -12,6 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
+from astropy import units as u
 from astropy.io import fits
 from astropy.wcs import WCS
 from PIL import Image
@@ -122,12 +123,16 @@ def _normalize_microns(value: float | None) -> float | None:
 
 
 def _spectral_info(
-    hdul: fits.HDUList, header: fits.Header, shape: tuple[int, int]
+    hdul: fits.HDUList, header: fits.Header, shape: tuple[int, int],
+    pixel: tuple[float, float] | None = None,
 ) -> tuple[float | None, float | None, tuple[str, ...]]:
     warnings: list[str] = []
     y, x = shape[0] // 2, shape[1] // 2
+    if pixel is not None:
+        x, y = pixel
 
     lambda_um: float | None = None
+    bandwidth_um: float | None = None
     wave_wcs: WCS | None = None
     try:
         # IRSA Data Overview §8b: SIP solo corresponde al WCS celestial.
@@ -167,6 +172,11 @@ def _spectral_info(
                 lambda_um = _normalize_microns(raw)
                 if lambda_um is not None and unit:
                     warnings.append(f"unidad espectral no reconocida: {unit!r}")
+            # DR1: dos ejes WAVE-TAB, el segundo es el ancho de banda.
+            if len(world) == 2 and "bandwidth" in str(header.get("WCSNAMEW", "")).lower():
+                bandwidth_um = float((float(world[1]) * u.Unit(wave_wcs.wcs.cunit[1])).to_value(u.um))
+                if not math.isfinite(bandwidth_um) or bandwidth_um <= 0:
+                    bandwidth_um = None
         except Exception as exc:
             warnings.append(f"no se pudo evaluar WCS-WAVE: {exc}")
     else:
@@ -177,9 +187,8 @@ def _spectral_info(
                     warnings.append(f"λ tomada de la clave {key}; no de WCS-WAVE")
                     break
 
-    bandwidth_um: float | None = None
     for key in ("CBAND", "BANDWID", "BWIDTH"):
-        if key in header:
+        if bandwidth_um is None and key in header:
             bandwidth_um = _normalize_microns(float(header[key]))
             if bandwidth_um is not None:
                 break
@@ -191,7 +200,7 @@ def _spectral_info(
     return lambda_um, bandwidth_um, tuple(warnings)
 
 
-def read_spherex_image(path: Path) -> SpherexImage:
+def read_spherex_image(path: Path, *, target: tuple[float, float] | None = None) -> SpherexImage:
     """Abre un MEF Level 2 por nombre de HDU y valida el producto temporal."""
 
     path = Path(path)
@@ -244,8 +253,16 @@ def read_spherex_image(path: Path) -> SpherexImage:
         if not celestial.has_celestial:
             raise PipelineError(f"{path.name}: el WCS no contiene ejes celestiales")
 
+        pixel = None
+        if target is not None:
+            px, py = celestial.world_to_pixel_values(*target)
+            if not (math.isfinite(px) and math.isfinite(py)
+                    and -0.5 <= px < data.shape[1] - 0.5
+                    and -0.5 <= py < data.shape[0] - 0.5):
+                raise PipelineError("la coordenada solicitada queda fuera del recorte FITS")
+            pixel = (float(px), float(py))
         lambda_um, bandwidth_um, spectral_warnings = _spectral_info(
-            hdul, header, data.shape
+            hdul, header, data.shape, pixel
         )
         warnings.extend(spectral_warnings)
 

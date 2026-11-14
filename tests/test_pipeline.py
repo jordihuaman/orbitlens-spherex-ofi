@@ -120,6 +120,22 @@ def test_spectral_wcs_excludes_sip_without_altering_celestial(tmp_path) -> None:
     assert image.header["A_2_0"] == 0.01
 
 
+def test_wavelength_and_bandwidth_use_requested_position(tmp_path) -> None:
+    path = _write_fits(tmp_path, np.ones((20, 20)))
+    with fits.open(path, mode="update") as hdul:
+        header = hdul["IMAGE"].header
+        header["WCSNAMEW"] = "Approximated per-pixel wavelength and bandwidth"
+        for axis, ctype, value, delta in ((1, "WAVE", 1e-6, 1e-8), (2, "LINEAR", 2e-8, 1e-9)):
+            header[f"CTYPE{axis}W"] = ctype
+            header[f"CUNIT{axis}W"] = "m"
+            header[f"CRPIX{axis}W"] = 1
+            header[f"CRVAL{axis}W"] = value
+            header[f"CDELT{axis}W"] = delta
+    image = read_spherex_image(path, target=(10, 20))
+    assert image.lambda_um == pytest.approx(1.095)
+    assert image.bandwidth_um == pytest.approx(0.0295)
+
+
 def test_reproject_identity_grid_preserves_values(tmp_path) -> None:
     data = np.arange(400, dtype=np.float64).reshape(20, 20)
     path = _write_fits(tmp_path, data)

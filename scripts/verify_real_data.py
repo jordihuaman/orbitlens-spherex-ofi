@@ -110,7 +110,7 @@ def main() -> int:
                          attempts=settings.retry_attempts, backoff=settings.retry_backoff_s)
         print(f"FITS: {raw_path} ({raw_path.stat().st_size} bytes)")
 
-        image = read_spherex_image(raw_path)
+        image = read_spherex_image(raw_path, target=(preset.ra_deg, preset.dec_deg))
         actual = normalize_detector(image.detector)
         if actual is not None and actual != detector:
             raise ValueError("El detector del FITS contradice los metadatos SIA")

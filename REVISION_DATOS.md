@@ -1,5 +1,10 @@
 # Revisión de datos — Jordi
 
+> Evidencia real nueva registrada por el agente: un recorte DR1 del **campo de
+> referencia del tutorial**, no de los cinco objetivos, fue inspeccionado y
+> servido en navegador. Detalles/hashes en `DATOS_REALES.md`. Las fichas de los
+> cinco objetos siguen pendientes; no se atribuye este análisis a Jordi.
+
 > Actualización de integración por el agente a petición de Jesús: la aplicación
 > ya existe (pipeline 0.1.2). Epsilon Indi B, detector, VERSION y WCS espectral
 > tienen correcciones y regresiones; ver `ENTREGA_TECNICA.md`. Hay QA de

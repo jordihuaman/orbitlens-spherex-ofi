@@ -13,6 +13,10 @@ máscaras y longitudes de onda.
 
 ## Estado verificado — 2026-11-14
 
+**Actualización: ya se obtuvo y verificó un recorte real DR1** del campo de
+referencia del tutorial IRSA. Ver [DATOS_REALES.md](DATOS_REALES.md) para abrirlo
+o descargarlo de nuevo. No es uno de los cinco presets ni una secuencia temporal.
+
 Correcciones posteriores (pipeline 0.1.1): RA de Epsilon Indi B y selección
 estricta de un solo detector. Estado del recorte real y entregables de Dany y
 Terán en [CORRECCIONES_QA.md](CORRECCIONES_QA.md).
@@ -23,19 +27,18 @@ entorno es:
 
 | Comprobación | Resultado |
 | --- | --- |
-| Suite Python (`pytest`) | **100 pruebas pasan** (incluye detector, VERSION, WCS espectral y UTC) |
+| Suite Python (`pytest`) | **105 pruebas pasan** (incluye importación local y posición espectral) |
 | Navegador real Edge / Playwright | **28 casos pasan**, escritorio y viewport móvil; sintético/proveedor controlado |
 | Build frontend (`tsc --noEmit && vite build`) | Correcto, genera `frontend/dist` |
 | Arranque `uvicorn api:app` | `/api/health`, `/api/presets` y `/` responden 200 |
 | Contrato resultado → manifiesto → PNG/FITS | Verificado con un resultado **sintético** |
-| Consulta real a IRSA SIA/TAP | **Bloqueada por el entorno**: HTTP 502 y DNS intermitente |
-| FITS real descargado e inspeccionado en esta copia | **No** |
+| Consulta real a IRSA SIA/TAP | Intermitente: sondas 200; consultas posteriores del preset agotan timeout |
+| FITS real descargado e inspeccionado en esta copia | **Sí**, recorte DR1 del tutorial, 3 954 240 bytes; original, derivado y manifiesto |
 
-El hito **H1 (dato real actual) sigue abierto**. Las páginas estáticas de IRSA
-responden 200, pero `https://irsa.ipac.caltech.edu/SIA` y `/TAP/sync` devolvieron
-`502 Proxy Error` («Error reading from remote server») y el DNS falló de forma
-intermitente. Por tanto, no se ha descargado ningún recorte real de SPHEREx en
-esta copia y no se afirma cobertura, detección ni calidad de los cinco objetos.
+El hito **H1 sigue parcial**: el primer FITS real y su recorrido al navegador
+están comprobados, pero la consulta de los cinco objetivos no es estable.
+Los 502/DNS/timeouts anteriores no deben confundirse con ausencia de cobertura.
+No se afirma detección ni calidad de los cinco objetos.
 
 Para que el equipo pueda probar la interfaz mientras IRSA se recupera, el script
 `scripts/make_demo_result.py` genera un resultado **sintético claramente
