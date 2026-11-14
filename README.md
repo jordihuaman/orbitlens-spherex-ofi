@@ -166,8 +166,8 @@ Un `empty` significa «sin frames utilizables», no «el objeto no existe».
 
 ## Nota histórica
 
-El historial de `PLAN.md` describe ejecuciones de otra copia (QR2, 76 pruebas y
-un despliegue en Render) que **no acreditan este repositorio**. Esta copia se
+El historial de `PLAN.md` describe ejecuciones de otra copia (QR2 y un
+despliegue en Render) que **no acreditan este repositorio**. Esta copia se
 reconstruyó desde el protocolo y su estado se registra en
 [ENTREGA_TECNICA.md](ENTREGA_TECNICA.md). La demo citada en el plan
 (https://orbitlens-spherex.onrender.com) no se comprobó en esta revisión.
