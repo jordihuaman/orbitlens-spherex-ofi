@@ -1,5 +1,13 @@
 # PLAN — Planet X and SPHEREx (NASA Space Apps 2026)
 
+## Coordinación del equipo — 2026-11-14
+
+Reparto actual para Jesús, Jordi, Dany, Terán y Regalado, con Jesús a cargo de
+ingeniería e integración: [TRABAJO_EQUIPO.md](TRABAJO_EQUIPO.md). Incluye responsables,
+entregables, dependencias y criterios de cierre. La inspección de GitHub de esta
+fecha encontró únicamente este plan en `origin/master`; recuperar el código
+descrito en el historial es el primer bloqueo técnico.
+
 ## Estado vigente — 2026-11-06
 
 - 76 pruebas Python pasan, 3 avisos conocidos; TypeScript/Vite compilan.
