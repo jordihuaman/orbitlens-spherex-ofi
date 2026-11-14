@@ -73,7 +73,7 @@ resueltos y el commit publicado queda identificado.
 **Responsabilidad:** revisar que la demo explique correctamente qué muestran los
 datos. No requiere programar ni certificar descubrimientos.
 
-- [ ] Preparar una ficha por cada preset: Barnard, Epsilon Indi B, WISE 0855,
+- [x] Preparar una ficha por cada preset: Barnard, Epsilon Indi B, WISE 0855,
   RW Aurigae y R Draconis.
 - [ ] Revisar los cinco campos regenerados con DR1/QR3; no reutilizar los conteos
   de cobertura/máscaras QR2 como si describieran los datos actuales.
@@ -91,6 +91,11 @@ La vista Aladin es contextual y no demuestra la identidad de una fuente SPHEREx.
 
 **Cierre:** cinco fichas revisadas, cada afirmación respaldada por evidencia o
 marcada como pendiente, y texto científico del guion revisado con Terán.
+
+**Inicio — 2026-11-14:** cinco fichas preparadas en
+[REVISION_DATOS.md](REVISION_DATOS.md), rama `jordi/datos`, base `d7320f5`.
+La revisión de datos sigue bloqueada hasta recibir la implementación y los
+paquetes DR1/QR3 identificados; preparar las fichas no acredita validación.
 
 ### 3. Dany — Experiencia de usuario y QA funcional
 
