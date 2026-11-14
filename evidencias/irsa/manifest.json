@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "pipeline_version": "0.1.3",
+  "code_commit": "a0ed4b59e5df50c92029e692aae796854c5db167",
+  "result_id": "9362cdf8afb5c043",
+  "created_at": "2026-11-14T22:45:13Z",
+  "request": {
+    "ra_deg": 304.693508808,
+    "dec_deg": 42.4436872991,
+    "fov_arcmin": 1.2,
+    "frames": 1,
+    "detector": "D1"
+  },
+  "search": {
+    "method": "local-import",
+    "release": "dr1",
+    "source_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W18_1B/l2b-v27-2026-196/1/level2_2025W18_1B_0074_2D1_spx_l2b-v27-2026-196.fits?center=304.693508808,42.4436872991&size=0.02",
+    "queried_at": null,
+    "records_found": 1,
+    "selected": 1,
+    "detector_selected": "D1",
+    "survey": "no inferido; no se distingue wide/deep por la ruta del archivo"
+  },
+  "grid": {
+    "ra_deg": 304.693508808,
+    "dec_deg": 42.4436872991,
+    "fov_arcmin": 1.2,
+    "width": 12,
+    "height": 12,
+    "pixel_scale_arcsec": 6.15,
+    "projection": "RA---TAN/DEC--TAN"
+  },
+  "processing": {
+    "mask_policy_version": "1.0",
+    "spectral_location": "coordenada solicitada",
+    "stretch": {
+      "mode": "asinh",
+      "vmin": 0.33011016061246584,
+      "vmax": 7.4201141449951145
+    }
+  },
+  "frames": [
+    {
+      "frame_id": "01_real",
+      "png": "preview.png",
+      "fits": "aligned.fits",
+      "original_fits": "original.fits",
+      "obs_id": "2025W18_1B_0074_2",
+      "collection": "spherex_dr1 (survey no inferido)",
+      "detector": "D1",
+      "version": "7.0.5",
+      "bunit": "MJy / sr",
+      "time": {
+        "t_min_mjd": 60794.016989549,
+        "t_max_mjd": 60794.01832193287,
+        "label": "2025-04-29T00:24:27.897Z"
+      },
+      "lambda_um": 0.7530366926566194,
+      "bandwidth_um": 0.017555135505361794,
+      "valid_fraction": 0.8402777777777778,
+      "center_valid": true,
+      "warnings": [
+        "1 bits de rechazo sin definición en la cabecera (SATELLITE_HALO); no se enmascaran"
+      ]
+    }
+  ],
+  "inspection": {
+    "hdus": [
+      {
+        "name": "PRIMARY",
+        "type": "PrimaryHDU",
+        "shape": null
+      },
+      {
+        "name": "IMAGE",
+        "type": "ImageHDU",
+        "shape": [
+          12,
+          12
+        ]
+      },
+      {
+        "name": "FLAGS",
+        "type": "ImageHDU",
+        "shape": [
+          12,
+          12
+        ]
+      },
+      {
+        "name": "VARIANCE",
+        "type": "ImageHDU",
+        "shape": [
+          12,
+          12
+        ]
+      },
+      {
+        "name": "ZODI",
+        "type": "ImageHDU",
+        "shape": [
+          12,
+          12
+        ]
+      },
+      {
+        "name": "EPSF",
+        "type": "BinTableHDU",
+        "shape": [
+          441
+        ]
+      },
+      {
+        "name": "WCS-WAVE",
+        "type": "BinTableHDU",
+        "shape": [
+          1
+        ]
+      }
+    ],
+    "input_valid_fraction": 0.9861111111111112,
+    "flags": {
+      "TRANSIENT": 0,
+      "OVERFLOW": 1,
+      "SUR_ERROR": 2,
+      "NONFUNC": 6,
+      "DICHROIC": 7,
+      "MISSING_DATA": 9,
+      "HOT": 10,
+      "COLD": 11,
+      "FULLSAMPLE": 12,
+      "PHANMISS": 14,
+      "NONLINEAR": 15,
+      "PERSIST": 17,
+      "OUTLIER": 19,
+      "CROSSTALK": 20,
+      "SOURCE": 21,
+      "GHOST": 22,
+      "GHOST_FPA": 23,
+      "GHOST_EXT": 24,
+      "STREAK": 25,
+      "BLOOM": 26,
+      "SNOWBALL": 27,
+      "HALO": 28
+    },
+    "source_url": "https://irsa.ipac.caltech.edu/ibe/data/spherex/dr1/level2/2025W18_1B/l2b-v27-2026-196/1/level2_2025W18_1B_0074_2D1_spx_l2b-v27-2026-196.fits?center=304.693508808,42.4436872991&size=0.02",
+    "original_sha256": "c320ddcdb677ed23168a6cf161272c508b0dd9c808c664cdc492608014570f58"
+  },
+  "files": [
+    {
+      "id": "01_real-original",
+      "kind": "fits",
+      "path": "original.fits",
+      "sha256": "c320ddcdb677ed23168a6cf161272c508b0dd9c808c664cdc492608014570f58",
+      "bytes": 3954240
+    },
+    {
+      "id": "01_real-fits",
+      "kind": "fits",
+      "path": "aligned.fits",
+      "sha256": "9aae44fb0b9a886a570f004f3f97f13ce131999b2171d7a024e7585749a37670",
+      "bytes": 5760
+    },
+    {
+      "id": "01_real-png",
+      "kind": "png",
+      "path": "preview.png",
+      "sha256": "3cf02c735424c050dd86063c1bd4c1485b616e9b036d9ed0444759bfaa4e6f59",
+      "bytes": 404
+    }
+  ],
+  "warnings": [
+    "1 bits de rechazo sin definición en la cabecera (SATELLITE_HALO); no se enmascaran",
+    "Recorte real aislado: no constituye una secuencia temporal ni una detección confirmada.",
+    "Importación local; la URL de procedencia fue proporcionada por el operador, sin consulta SIA."
+  ]
+}
