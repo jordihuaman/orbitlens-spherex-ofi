@@ -95,6 +95,25 @@ Regalado debe comprobar plazo, zona horaria y reglas en la convocatoria vigente.
 - [x] Definir el protocolo de construcción y actualizar responsabilidades.
 - [ ] Completar H0–H5 con evidencia de la implementación disponible en este repo.
 
+### Implementación en esta copia — 2026-11-14
+
+Jesús construyó una implementación nueva conforme al protocolo. Evidencia y
+comandos en [ENTREGA_TECNICA.md](ENTREGA_TECNICA.md); límites científicos en
+[SCIENCE.md](SCIENCE.md).
+
+| Hito | Estado | Evidencia |
+| --- | --- | --- |
+| H0. Base reproducible | **Completado** | `.venv`, dependencias fijadas, 76 pruebas, build Vite |
+| H1. Dato real actual | **Bloqueado** | IRSA SIA/TAP devuelve 502 y el DNS es intermitente; no se descargó ningún FITS real |
+| H2. Secuencia temporal | **No iniciado con datos reales** | Pipeline y contrato probados con fixtures y resultado sintético |
+| H3. Web de extremo a extremo | **Parcial** | API + frontend + reproductor verificados con resultado sintético; falta el recorrido con datos reales |
+| H4. Versión pública | **No iniciado** | Sin despliegue en esta entrega |
+| H5. Cierre | **No iniciado** | Pendiente del equipo |
+
+El resultado sintético (`scripts/make_demo_result.py`) permite probar la UI, pero
+no acredita H1/H2. No se declaran detecciones, movimiento propio ni cobertura de
+los cinco objetos. Los presets siguen marcados `verified=False`.
+
 ---
 
 ## Historial conservado — no usar como configuración vigente
