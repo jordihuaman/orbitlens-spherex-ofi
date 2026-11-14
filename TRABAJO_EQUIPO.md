@@ -97,6 +97,13 @@ marcada como pendiente, y texto científico del guion revisado con Terán.
 La revisión de datos sigue bloqueada hasta recibir la implementación y los
 paquetes DR1/QR3 identificados; preparar las fichas no acredita validación.
 
+**Avance remoto — 2026-11-14:** Jordi leyó los cinco manifiestos públicos
+históricos (QR2/QR3, pipeline 0.2.2), documentó discrepancias frente al protocolo
+vigente y preparó texto científico para Terán en `REVISION_DATOS.md`. El enlace
+del pie de la demo apunta a `12FOCUS21/orbitlens-spherex`, repositorio público
+que Jesús debe examinar como posible origen del código. No se han validado
+FITS ni paquetes DR1/QR3 y no se cierra la revisión de los cinco campos.
+
 ### 3. Dany — Experiencia de usuario y QA funcional
 
 **Responsabilidad:** representar al visitante y producir errores reproducibles.
