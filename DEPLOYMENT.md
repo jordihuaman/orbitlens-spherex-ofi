@@ -143,6 +143,7 @@ ni para la IP: solo el proxy autorizado puede afirmarlas.
    corregir hallazgos. Revisar accesibilidad manualmente además de axe.
 8. Confirmar respaldo/restauración y plan de rollback.
 
-El CI añadido prueba fixtures sin IRSA y un trabajo de seguridad separado. No
-acredita disponibilidad pública, datos científicos, el resultado de la
-construcción Docker en esta máquina ni una auditoría externa.
+El CI remoto (`43659372301`, commit `017f5`) ejecutó `regression` y `security` en
+verde: pruebas con fixtures sin IRSA, build, E2E, `pip-audit`, Bandit y
+`npm audit`. No acredita disponibilidad pública, datos científicos, el resultado
+de la construcción Docker en esta máquina ni una auditoría externa.

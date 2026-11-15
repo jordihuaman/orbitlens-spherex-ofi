@@ -1,7 +1,7 @@
 # Evidencia de seguridad — 2026-11-14
 
-Base: commit `aa594` + árbol de trabajo de este bloque (pipeline 0.1.6). No se ha
-publicado un commit con estos cambios al generar esta evidencia.
+Base: commit `017f5` (pipeline 0.1.6), publicado en `origin/master`. CI remoto de
+GitHub Actions `43659372301` en **success**: trabajos `regression` y `security`.
 
 ## Comandos y resultados
 
@@ -26,7 +26,7 @@ publicado un commit con estos cambios al generar esta evidencia.
 
 ## Límites
 
-Estos resultados son locales. No sustituyen el CI remoto, una auditoría externa,
-un pentest, SSL Labs, ZAP, Mozilla Observatory ni una prueba en el host público.
-El Dockerfile/Compose no se construyó aquí porque Docker no está instalado.
-Ver `../../SEGURIDAD.md` para riesgos residuales y checklist.
+Estos resultados son locales salvo el CI remoto indicado. No sustituyen una
+auditoría externa, un pentest, SSL Labs, ZAP, Mozilla Observatory ni una prueba
+en el host público. El Dockerfile/Compose no se construyó aquí porque Docker no
+está instalado. Ver `../../SEGURIDAD.md` para riesgos residuales y checklist.

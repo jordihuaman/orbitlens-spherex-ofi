@@ -175,5 +175,8 @@ npm --prefix frontend run test:e2e
 npm audit --audit-level=high --prefix frontend
 ```
 
-Los resultados locales no acreditan el CI remoto ni el host. El CI incluye un
-trabajo `security` separado; su ejecución debe comprobarse tras publicar el commit.
+Los resultados locales no acreditan el host. El CI remoto de GitHub Actions sí se
+comprobó para el commit `017f5`: ejecución `43659372301`, trabajos `regression` y
+`security` en **success**. Eso cubre pruebas, build, E2E con Chromium, `pip-audit`,
+Bandit y `npm audit`; no sustituye un pentest, un escaneo externo del host ni la
+prueba en un teléfono físico.

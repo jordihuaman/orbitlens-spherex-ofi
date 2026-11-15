@@ -38,6 +38,7 @@ entorno es:
 | Navegador real Edge / Playwright | **34 casos pasan**, escritorio y viewport móvil; incluye axe WCAG y CSP |
 | Seguridad de dependencias | `pip-audit` y `npm audit`: **0 vulnerabilidades conocidas**; Bandit sin hallazgos |
 | Build frontend (`tsc --noEmit && vite build`) | Correcto, genera `frontend/dist` |
+| CI remoto de GitHub Actions | **En verde** (`43659372301`, commit `017f5`): trabajos `regression` y `security` |
 | Arranque `uvicorn api:app` | `/api/health`, `/api/presets` y `/` responden 200 |
 | Contrato resultado → manifiesto → PNG/FITS | Sintético y real: cinco secuencias reproducibles en Edge, 45 artefactos HTTP 200 |
 | Consulta real a IRSA SIA/TAP | SIA devuelve filas reales; IBE intermitente con 503; error de nombres VOTable corregido |
