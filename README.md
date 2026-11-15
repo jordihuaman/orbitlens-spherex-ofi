@@ -39,7 +39,7 @@ entorno es:
 | Seguridad de dependencias | `pip-audit` y `npm audit`: **0 vulnerabilidades conocidas**; Bandit sin hallazgos |
 | Build frontend (`tsc --noEmit && vite build`) | Correcto, genera `frontend/dist` |
 | Interfaz web | Rediseño tipo consola científica: topbar, héroe orbital, ficha de misión, visor con filmstrip y panel de recursos; axe WCAG 2.2 AA sin violaciones y sin overflow a 390/1366 px |
-| CI remoto de GitHub Actions | **En verde** (`43659372301`, commit `017f5`): trabajos `regression` y `security` |
+| CI remoto de GitHub Actions | **En verde** (`43661924465`, commit `1d557`): trabajos `regression` y `security` |
 | Arranque `uvicorn api:app` | `/api/health`, `/api/presets` y `/` responden 200 |
 | Contrato resultado → manifiesto → PNG/FITS | Sintético y real: cinco secuencias reproducibles en Edge, 45 artefactos HTTP 200 |
 | Consulta real a IRSA SIA/TAP | SIA devuelve filas reales; IBE intermitente con 503; error de nombres VOTable corregido |

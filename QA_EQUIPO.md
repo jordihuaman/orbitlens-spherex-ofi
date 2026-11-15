@@ -29,7 +29,8 @@ etiquetas accesibles y los textos exactos que usan los E2E.
 
 Evidencia: `evidencias/qa/ui-desktop-redesign.png`,
 `evidencias/qa/ui-mobile-redesign.png` y `evidencias/qa/playwright-results.json`.
-No se probó teléfono físico, red externa ni producción pública.
+CI remoto del commit `1d557`: **`43661924465` en verde** (`regression` y
+`security`). No se probó teléfono físico, red externa ni producción pública.
 
 El recorrido real por formulario/reinicio está en `evidencias/operacion/`:
 ensayo exitoso con metadatos SIA reales en caché y recortes de IRSA; se conserva
