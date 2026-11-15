@@ -5,7 +5,7 @@ RUN npm ci --no-audit --no-fund
 COPY frontend/ ./
 RUN npm run build
 
-FROM python:3.12-slim
+FROM python:3.15-slim
 ARG CODE_COMMIT=unknown
 LABEL org.opencontainers.image.title="OrbitLens SPHEREx" \
       org.opencontainers.image.description="Secuencias temporales SPHEREx desde IRSA" \
