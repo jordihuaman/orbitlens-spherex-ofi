@@ -35,24 +35,45 @@ const COUNT_LABELS: Record<string, string> = {
   failed: "fallidos",
 };
 
+const STEPS = ["Cola", "Consulta", "Descarga", "Alineado", "Publicado"];
+
+const PHASE_STEP: Record<string, number> = {
+  starting: 0,
+  resolving: 0,
+  searching: 1,
+  downloading: 2,
+  processing: 3,
+  writing: 4,
+};
+
 export default function StatusPanel({ job, error, busy }: Props) {
   if (error) {
     return (
       <div className="panel notice error" role="alert">
+        <p className="eyebrow">02 · Estado del trabajo</p>
         <h2>No se pudo completar la búsqueda</h2>
         <p>{error}</p>
+        <p className="notice-hint">
+          Revisa las coordenadas o inténtalo de nuevo. Los fallos de IRSA no
+          implican ausencia de cobertura.
+        </p>
       </div>
     );
   }
 
   if (!job) {
     return (
-      <div className="panel notice">
+      <div className="panel notice idle" id="estado">
+        <p className="eyebrow">02 · Estado del trabajo</p>
         <h2>{busy ? "Conectando con el servicio…" : "Listo para buscar"}</h2>
         <p>
           {busy
             ? "La petición se está registrando en la cola de trabajos."
             : "Los resultados se construyen a partir de imágenes individuales DR1 y QR3 de IRSA."}
+        </p>
+        <p className="notice-hint">
+          La cola se procesa en este servidor; el visor se actualiza
+          automáticamente cuando el resultado está publicado.
         </p>
       </div>
     );
@@ -61,11 +82,16 @@ export default function StatusPanel({ job, error, busy }: Props) {
   const counts = Object.entries(job.counts).filter(
     ([key]) => COUNT_LABELS[key],
   );
+  const activeStep = job.status === "queued" ? 0 : PHASE_STEP[job.phase ?? ""] ?? 0;
+  const finished = ["ready", "partial", "empty"].includes(job.status);
 
   return (
-    <div className={`panel status status-${job.status}`}>
+    <div className={`panel status status-${job.status}`} id="estado">
       <div className="status-heading" role="status" aria-live="polite" aria-atomic="true">
-        <h2>{STATUS_LABELS[job.status]}</h2>
+        <div>
+          <p className="eyebrow">02 · Estado del trabajo</p>
+          <h2>{STATUS_LABELS[job.status]}</h2>
+        </div>
         <span className={`chip chip-${job.status}`}>{job.status}</span>
       </div>
 
@@ -76,8 +102,29 @@ export default function StatusPanel({ job, error, busy }: Props) {
         </p>
       )}
       {job.status === "queued" && job.queue_position != null && (
-        <p>Posición en cola: {job.queue_position}</p>
+        <p className="queue-note">Posición en cola: {job.queue_position}</p>
       )}
+
+      <ol className="phase-track" aria-label="Progreso del trabajo">
+        {STEPS.map((step, index) => (
+          <li
+            key={step}
+            className={
+              finished
+                ? "phase-step done"
+                : index < activeStep
+                  ? "phase-step done"
+                  : index === activeStep
+                    ? "phase-step current"
+                    : "phase-step"
+            }
+            aria-current={!finished && index === activeStep ? "step" : undefined}
+          >
+            <span className="phase-dot" aria-hidden="true" />
+            <span>{step}</span>
+          </li>
+        ))}
+      </ol>
 
       {job.status === "empty" && (
         <p>
@@ -97,7 +144,8 @@ export default function StatusPanel({ job, error, busy }: Props) {
       {job.status === "partial" && (
         <p>
           Hay menos frames de los solicitados o algún fallo parcial. La
-          secuencia no es exhaustiva. La reproducción requiere al menos tres frames.
+          secuencia no es exhaustiva. La reproducción requiere al menos tres
+          frames.
         </p>
       )}
 

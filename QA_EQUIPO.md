@@ -10,6 +10,27 @@ Informe actual: `evidencias/operacion/playwright-results.json`.
 Las diez capturas de los cinco paquetes reales vigentes y comprobación de
 45 descargas están en `evidencias/astrometria/corrected-fields/`.
 
+## Rediseño de interfaz (2026-11-14)
+
+Se reescribió la capa visual completa (`App.tsx`, `SearchForm`, `StatusPanel`,
+`Viewer`, `ResourcesPanel`, `styles.css`, `index.html` y favicon) con un tema
+oscuro de consola científica, sin recursos externos. Se conservaron las
+etiquetas accesibles y los textos exactos que usan los E2E.
+
+- **34/34 E2E pasan** en Edge, escritorio 1366×900 y viewport móvil 390×844.
+- Axe con etiquetas WCAG 2.0/2.1/2.2 A y AA: **0 violaciones** en ambos tamaños.
+- Sin overflow horizontal; capturas completas regeneradas y revisadas.
+- El fallo intermitente del caso de recursos se debía al panel de búsqueda
+  sticky (`z-index` alto y altura casi completa): cubría el `<summary>` del panel
+  inferior e interceptaba el puntero. Se retiró el sticky del formulario y se
+  mantuvo la barra superior sticky; el caso volvió a pasar en ambos proyectos.
+- En ≤460 px los botones del héroe se apilan a ancho completo y el pie permite
+  partir cadenas largas.
+
+Evidencia: `evidencias/qa/ui-desktop-redesign.png`,
+`evidencias/qa/ui-mobile-redesign.png` y `evidencias/qa/playwright-results.json`.
+No se probó teléfono físico, red externa ni producción pública.
+
 El recorrido real por formulario/reinicio está en `evidencias/operacion/`:
 ensayo exitoso con metadatos SIA reales en caché y recortes de IRSA; se conserva
 el intento previo con timeout. No se probó hosting público ni teléfono físico.

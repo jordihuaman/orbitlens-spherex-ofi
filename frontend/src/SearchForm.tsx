@@ -51,6 +51,7 @@ export default function SearchForm({
   return (
     <form
       className="panel search-panel"
+      id="campo"
       onSubmit={(event) => {
         event.preventDefault();
         onSubmit();
@@ -58,7 +59,7 @@ export default function SearchForm({
     >
       <div className="panel-heading">
         <div>
-          <p className="eyebrow">Campo de observación</p>
+          <p className="eyebrow">01 · Campo de observación</p>
           <h2>Buscar secuencia</h2>
         </div>
         <span className="badge">DR1 + QR3</span>
@@ -80,13 +81,25 @@ export default function SearchForm({
       </label>
 
       {preset && (
-        <p className="hint">
-          {preset.reference}. {preset.note}
-          {!preset.verified && " Centrado por catálogo; identificación astrométrica en SPHEREx pendiente."}
-        </p>
-      )}
-      {preset?.result_id && (
-        <p><a href={`/?result=${preset.result_id}`}>Abrir secuencia real guardada ({preset.result_status}, {preset.result_method})</a></p>
+        <div className="preset-card">
+          <p className="preset-reference">{preset.reference}</p>
+          <p>{preset.note}</p>
+          {!preset.verified && (
+            <p className="preset-caveat">
+              Centrado por catálogo; identificación astrométrica en SPHEREx
+              pendiente.
+            </p>
+          )}
+          {preset.result_id && (
+            <a
+              className="inline-action"
+              href={`/?result=${preset.result_id}`}
+            >
+              Abrir secuencia real guardada ({preset.result_status},{" "}
+              {preset.result_method})
+            </a>
+          )}
+        </div>
       )}
 
       <div className="field-row">
@@ -143,6 +156,10 @@ export default function SearchForm({
             update({ fovArcmin: Number(event.target.value) })
           }
         />
+        <span className="range-scale" aria-hidden="true">
+          <span>1′</span>
+          <span>30′</span>
+        </span>
       </label>
 
       <div className="field-row">
@@ -182,8 +199,16 @@ export default function SearchForm({
       </p>
 
       <button className="primary" type="submit" disabled={busy}>
+        <span aria-hidden="true" className="button-glyph">
+          →
+        </span>
         {busy ? "Procesando…" : "Buscar secuencia"}
       </button>
+
+      <p className="form-footnote">
+        Consulta SIA2 a IRSA y descarga de recortes públicos. Sin registro y sin
+        cookies.
+      </p>
     </form>
   );
 }

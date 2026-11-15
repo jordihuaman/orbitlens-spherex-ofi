@@ -13,7 +13,8 @@ function formatDate(frame: Frame): string {
   if (frame.time.label) {
     // Los manifiestos antiguos usan Astropy isot sin Z, pero declaran UTC.
     const label = /(?:Z|[+-]\d{2}:?\d{2})$/i.test(frame.time.label)
-      ? frame.time.label : `${frame.time.label}Z`;
+      ? frame.time.label
+      : `${frame.time.label}Z`;
     const date = new Date(label);
     if (!Number.isNaN(date.getTime())) {
       return `${date.toLocaleString("es-ES", {
@@ -66,6 +67,7 @@ export default function Viewer({ manifest }: Props) {
   if (frames.length === 0) {
     return (
       <div className="panel notice">
+        <p className="eyebrow">04 · Visor</p>
         <h2>Manifiesto sin frames</h2>
         <p>El resultado no contiene imágenes reproducibles.</p>
       </div>
@@ -79,7 +81,9 @@ export default function Viewer({ manifest }: Props) {
   const fitsFile = manifest.files.find(
     (file) => file.id === `${frame.frame_id}-fits`,
   );
-  const originalFile = manifest.files.find((file) => file.id === `${frame.frame_id}-original`);
+  const originalFile = manifest.files.find(
+    (file) => file.id === `${frame.frame_id}-original`,
+  );
 
   async function copyLink() {
     try {
@@ -95,49 +99,94 @@ export default function Viewer({ manifest }: Props) {
     <div className="panel viewer">
       <div className="viewer-heading">
         <div>
-          <p className="eyebrow">Resultado {manifest.result_id}</p>
+          <p className="eyebrow">04 · Visor de la secuencia</p>
           <h2>{frames.length === 1 ? "Recorte individual" : "Secuencia temporal"}</h2>
+          <p className="viewer-id">
+            <span className="mono-label">Resultado</span>
+            <span className="mono">{manifest.result_id}</span>
+          </p>
         </div>
         <button className="ghost" type="button" onClick={copyLink}>
           {copied ? "Enlace copiado" : "Compartir"}
         </button>
       </div>
 
-      {manifest.status === "partial" && (
-        <p role="note">Resultado parcial: la consulta o construcción no es exhaustiva. Revisa los avisos antes de interpretar cambios.</p>
-      )}
-      {manifest.search.method === "local-sequence-import" && (
-        <p role="note">Secuencia importada localmente: procedencia declarada por el operador, sin nueva consulta a IRSA.</p>
-      )}
-      {synthetic && (
-        <p className="notice" role="note">
-          Demostración sintética: no son imágenes de SPHEREx ni una detección.
-        </p>
-      )}
-      {!synthetic && frames.length === 1 && (
-        <p role="note">Recorte real individual: no constituye una secuencia temporal ni confirma una detección.</p>
-      )}
-      {frames.length === 2 && (
-        <p role="note">Solo hay dos frames: puedes inspeccionarlos, pero la reproducción requiere al menos tres.</p>
-      )}
+      <div className="viewer-notices">
+        {manifest.status === "partial" && (
+          <p className="callout warning" role="note">
+            Resultado parcial: la consulta o construcción no es exhaustiva.
+            Revisa los avisos antes de interpretar cambios.
+          </p>
+        )}
+        {manifest.search.method === "local-sequence-import" && (
+          <p className="callout info" role="note">
+            Secuencia importada localmente: procedencia declarada por el
+            operador, sin nueva consulta a IRSA.
+          </p>
+        )}
+        {synthetic && (
+          <p className="callout synthetic" role="note">
+            Demostración sintética: no son imágenes de SPHEREx ni una detección.
+          </p>
+        )}
+        {!synthetic && frames.length === 1 && (
+          <p className="callout info" role="note">
+            Recorte real individual: no constituye una secuencia temporal ni
+            confirma una detección.
+          </p>
+        )}
+        {frames.length === 2 && (
+          <p className="callout info" role="note">
+            Solo hay dos frames: puedes inspeccionarlos, pero la reproducción
+            requiere al menos tres.
+          </p>
+        )}
+      </div>
 
       <figure className="stage">
+        <div className="stage-brackets" aria-hidden="true" />
         <img
           src={fileUrl(manifest.result_id, `${frame.frame_id}-png`)}
           alt={`${synthetic ? "Imagen sintética" : "Imagen SPHEREx"} ${frame.obs_id}`}
         />
         <figcaption>
-          <strong>{formatDate(frame)}</strong>
-          <span>
-            {index + 1} / {frames.length}
+          <span className="stage-caption-main">
+            <span className="stage-date-label">Época</span>
+            <strong>{formatDate(frame)}</strong>
+          </span>
+          <span className="stage-counter">
+            <span>{index + 1}</span> / {frames.length}
           </span>
         </figcaption>
       </figure>
 
+      <div className="filmstrip" role="group" aria-label="Miniaturas de la secuencia">
+        {frames.map((item, position) => (
+          <button
+            key={item.frame_id}
+            type="button"
+            className={`filmstrip-item${position === index ? " active" : ""}`}
+            aria-label={`Ir al frame ${position + 1}: ${formatDate(item)}`}
+            aria-pressed={position === index}
+            onClick={() => {
+              setPlaying(false);
+              setIndex(position);
+            }}
+          >
+            <img
+              src={fileUrl(manifest.result_id, `${item.frame_id}-png`)}
+              alt=""
+              aria-hidden="true"
+            />
+            <span aria-hidden="true">{position + 1}</span>
+          </button>
+        ))}
+      </div>
+
       <div className="controls">
         <button
           type="button"
-          className="ghost"
+          className="ghost icon-button"
           aria-label="Frame anterior"
           onClick={() =>
             setIndex((current) => (current - 1 + frames.length) % frames.length)
@@ -151,11 +200,14 @@ export default function Viewer({ manifest }: Props) {
           onClick={() => setPlaying((current) => !current)}
           disabled={frames.length < 3}
         >
+          <span aria-hidden="true" className="button-glyph">
+            {playing ? "❚❚" : "▶"}
+          </span>
           {playing ? "Pausa" : "Reproducir"}
         </button>
         <button
           type="button"
-          className="ghost"
+          className="ghost icon-button"
           aria-label="Frame siguiente"
           onClick={() => setIndex((current) => (current + 1) % frames.length)}
         >
@@ -183,6 +235,11 @@ export default function Viewer({ manifest }: Props) {
             ))}
           </select>
         </label>
+      </div>
+
+      <div className="frame-heading">
+        <p className="eyebrow">Metadatos del frame</p>
+        <span className="chip chip-neutral">{frame.detector ?? "sin detector"}</span>
       </div>
 
       <dl className="metadata">
@@ -222,7 +279,9 @@ export default function Viewer({ manifest }: Props) {
 
       <div className="downloads">
         {originalFile && (
-          <a href={fileUrl(manifest.result_id, originalFile.id)} download>FITS original</a>
+          <a href={fileUrl(manifest.result_id, originalFile.id)} download>
+            FITS original
+          </a>
         )}
         {pngFile && (
           <a href={fileUrl(manifest.result_id, pngFile.id)} download>

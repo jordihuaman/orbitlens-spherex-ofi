@@ -206,24 +206,118 @@ export default function App() {
 
   return (
     <div className="app">
-      <a className="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
-      <header className="hero">
-        <p className="eyebrow">
-          NASA Space Apps 2026 · Planet X and SPHEREx
-        </p>
-        <h1>OrbitLens</h1>
-        <p className="lede">
-          Secuencias temporales de imágenes infrarrojas de SPHEREx para un campo
-          celeste.
-        </p>
-        <p className="hero-note">
-          Datos públicos de IRSA (DR1 + QR3). Una secuencia no implica detección
-          ni movimiento confirmado.
-        </p>
+      <a className="skip-link" href="#contenido-principal">
+        Saltar al contenido principal
+      </a>
+
+      <header className="topbar">
+        <a className="brand" href="/" aria-label="OrbitLens, inicio">
+          <span className="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" role="presentation" focusable="false">
+              <circle cx="16" cy="16" r="5.2" className="mark-core" />
+              <ellipse cx="16" cy="16" rx="13.2" ry="6.4" className="mark-orbit" />
+              <circle cx="27" cy="12" r="1.9" className="mark-dot" />
+            </svg>
+          </span>
+          <span className="brand-text">
+            <strong>OrbitLens</strong>
+            <small>SPHEREx temporal explorer</small>
+          </span>
+        </a>
+        <nav className="topnav" aria-label="Secciones de la aplicación">
+          <a href="#campo">Campo</a>
+          <a href="#estado">Estado</a>
+          <a href="#visor">Visor</a>
+          <a href="#recursos">Recursos</a>
+        </nav>
+        <span className="mission-pill">
+          <span className="mission-dot" aria-hidden="true" />
+          DR1 + QR3
+        </span>
       </header>
 
+      <header className="hero">
+        <div className="hero-copy">
+          <p className="eyebrow">
+            NASA Space Apps 2026 · Planet X and SPHEREx
+          </p>
+          <h1>OrbitLens</h1>
+          <p className="lede">
+            Secuencias temporales de imágenes infrarrojas de SPHEREx para un
+            campo celeste.
+          </p>
+          <p className="hero-note">
+            Datos públicos de IRSA (DR1 + QR3). Una secuencia no implica
+            detección ni movimiento confirmado.
+          </p>
+          <div className="hero-actions">
+            <a className="primary link-button" href="#campo">
+              Construir una secuencia
+            </a>
+            <a className="ghost link-button" href="#visor">
+              Explorar el visor
+            </a>
+          </div>
+        </div>
+        <div className="hero-orbit" aria-hidden="true">
+          <svg viewBox="0 0 260 260" role="presentation" focusable="false">
+            <defs>
+              <linearGradient id="orbitStroke" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor="#7dd3fc" stopOpacity="0.9" />
+                <stop offset="0.55" stopColor="#a78bfa" stopOpacity="0.55" />
+                <stop offset="1" stopColor="#ff8a3d" stopOpacity="0.85" />
+              </linearGradient>
+              <radialGradient id="orbitCore" cx="0.35" cy="0.3" r="0.8">
+                <stop offset="0" stopColor="#fff7ed" />
+                <stop offset="0.55" stopColor="#ffb37a" />
+                <stop offset="1" stopColor="#c2410c" />
+              </radialGradient>
+            </defs>
+            <circle cx="130" cy="130" r="118" className="orbit-halo" />
+            <circle
+              cx="130"
+              cy="130"
+              r="92"
+              className="orbit-ring"
+              stroke="url(#orbitStroke)"
+            />
+            <ellipse cx="130" cy="130" rx="118" ry="42" className="orbit-path" />
+            <ellipse
+              cx="130"
+              cy="130"
+              rx="76"
+              ry="118"
+              className="orbit-path orbit-path-vertical"
+            />
+            <circle cx="130" cy="130" r="30" fill="url(#orbitCore)" className="orbit-core" />
+            <circle cx="230" cy="150" r="4.5" className="orbit-satellite" />
+            <circle cx="54" cy="84" r="2.6" className="orbit-satellite faint" />
+          </svg>
+          <span className="orbit-caption">SPHEREx · 0.75–5 µm</span>
+        </div>
+      </header>
+
+      <dl className="mission-stats" aria-label="Ficha de la misión">
+        <div>
+          <dt>Misión</dt>
+          <dd>SPHEREx</dd>
+        </div>
+        <div>
+          <dt>Archivo</dt>
+          <dd>IRSA · NASA/IPAC</dd>
+        </div>
+        <div>
+          <dt>Colecciones</dt>
+          <dd>DR1 + QR3</dd>
+        </div>
+        <div>
+          <dt>Época de centros</dt>
+          <dd>J2026</dd>
+        </div>
+      </dl>
+
       <main className="layout" id="contenido-principal" tabIndex={-1}>
-        <section className="column">
+        <section className="column" aria-label="Control y estado">
           <SearchForm
             presets={presets}
             values={values}
@@ -232,14 +326,24 @@ export default function App() {
             onSubmit={handleSubmit}
           />
           <StatusPanel job={job} error={error} busy={busy} />
-          <ResourcesPanel values={values} presets={presets} grid={manifest?.grid} />
+          <ResourcesPanel
+            values={values}
+            presets={presets}
+            grid={manifest?.grid}
+          />
         </section>
 
-        <section className="column viewer-column">
+        <section className="column viewer-column" id="visor" aria-label="Visor de la secuencia">
           {manifest ? (
             <Viewer manifest={manifest} />
           ) : (
             <div className="panel placeholder">
+              <div className="placeholder-orbit" aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </div>
+              <p className="eyebrow">Visor de secuencias</p>
               <h2>
                 {busy ? "Preparando la secuencia…" : "Sin secuencia cargada"}
               </h2>
@@ -248,17 +352,36 @@ export default function App() {
                   ? "Consultando IRSA, descargando recortes y alineando las imágenes."
                   : "Elige uno de los cinco campos de prueba o introduce coordenadas para comenzar."}
               </p>
+              <p className="placeholder-note">
+                Cada resultado incluye PNG, FITS derivados, manifiesto y
+                metadatos de cobertura y máscaras.
+              </p>
             </div>
           )}
         </section>
       </main>
 
       <footer className="footer">
-        <span>OrbitLens · SPHEREx DR1/QR3 · IRSA</span>
-        <span>
-          Los recortes son derivados del proyecto; no sustituyen los FITS
-          originales.
-        </span>
+        <div className="footer-brand">
+          <span className="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" role="presentation" focusable="false">
+              <circle cx="16" cy="16" r="5.2" className="mark-core" />
+              <ellipse cx="16" cy="16" rx="13.2" ry="6.4" className="mark-orbit" />
+              <circle cx="27" cy="12" r="1.9" className="mark-dot" />
+            </svg>
+          </span>
+          <div>
+            <strong>OrbitLens</strong>
+            <p>Secuencias temporales SPHEREx · NASA Space Apps 2026</p>
+          </div>
+        </div>
+        <div className="footer-meta">
+          <p>Datos: NASA/IPAC IRSA · DR1 + QR3 · centros J2026</p>
+          <p>
+            Los recortes son derivados del proyecto; no sustituyen los FITS
+            originales. No se declara detección ni validación científica.
+          </p>
+        </div>
       </footer>
     </div>
   );

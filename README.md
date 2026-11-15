@@ -38,6 +38,7 @@ entorno es:
 | Navegador real Edge / Playwright | **34 casos pasan**, escritorio y viewport móvil; incluye axe WCAG y CSP |
 | Seguridad de dependencias | `pip-audit` y `npm audit`: **0 vulnerabilidades conocidas**; Bandit sin hallazgos |
 | Build frontend (`tsc --noEmit && vite build`) | Correcto, genera `frontend/dist` |
+| Interfaz web | Rediseño tipo consola científica: topbar, héroe orbital, ficha de misión, visor con filmstrip y panel de recursos; axe WCAG 2.2 AA sin violaciones y sin overflow a 390/1366 px |
 | CI remoto de GitHub Actions | **En verde** (`43659372301`, commit `017f5`): trabajos `regression` y `security` |
 | Arranque `uvicorn api:app` | `/api/health`, `/api/presets` y `/` responden 200 |
 | Contrato resultado → manifiesto → PNG/FITS | Sintético y real: cinco secuencias reproducibles en Edge, 45 artefactos HTTP 200 |
@@ -54,6 +55,20 @@ catálogo predicha está dentro de los nuevos frames, pero puede estar enmascara
 Para que el equipo pueda probar la interfaz mientras IRSA se recupera, el script
 `scripts/make_demo_result.py` genera un resultado **sintético claramente
 etiquetado**. No son datos de SPHEREx.
+
+## Interfaz
+
+El frontend usa un tema oscuro de consola científica, servido íntegramente desde
+el mismo origen (sin fuentes, imágenes ni CDN externos). La página incluye barra
+superior con navegación por secciones, héroe con órbita SVG, ficha de misión,
+formulario de campo, estado del trabajo con stepper de fases, visor con filmstrip
+y panel de recursos externos. Las etiquetas accesibles y los textos que verifican
+los E2E se mantienen estables.
+
+El panel de búsqueda **no es sticky**: en ventanas bajas se solapaba con el panel
+de recursos y bloqueaba clics reales. La navegación superior sticky conserva el
+acceso a las secciones sin cubrir contenido interactivo. Capturas del rediseño
+en `evidencias/qa/`.
 
 ## Requisitos
 
