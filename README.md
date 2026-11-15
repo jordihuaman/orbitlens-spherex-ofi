@@ -120,6 +120,15 @@ secreto ni descarga.
 El archivo `.env` no se carga automáticamente: exportar sus variables en la
 shell o configurarlas en el servicio de despliegue.
 
+### Despliegue público
+
+El perfil recomendado es un VPS Linux con Docker + Caddy:
+`cp .env.production.example .env.production`, completar dominio/contacto y
+ejecutar `./scripts/deploy_vps.sh --check` y `./scripts/deploy_vps.sh`. Caddy
+termina TLS; el backend no se publica directamente. Respaldo del volumen:
+`./scripts/backup_volume.sh /ruta/fuera-del-vps`. Guía completa y lista de
+aceptación en [DEPLOYMENT.md](DEPLOYMENT.md). Aún no hay URL pública desplegada.
+
 ## Pruebas
 
 ```powershell

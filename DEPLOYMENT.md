@@ -40,20 +40,66 @@ Solo expone `127.0.0.1:8000`; poner un reverse proxy TLS delante. El volumen
 con nombre conserva resultados/trabajos tras recrear el contenedor.
 No ejecutar `docker compose down -v` salvo decisión explícita de borrar datos.
 
-## Opción C: perfil público con Caddy
+## Opción C: VPS con Docker + Caddy (recomendada)
 
-Copiar `.env.production.example` a `.env.production`, completar los valores y
-arrancar el perfil que termina TLS:
+Requisitos del servidor: Linux x86-64, 2 vCPU, 2–4 GiB de RAM, ≥10 GiB de disco,
+Docker Engine 24+ con el plugin Compose, y salida HTTPS a IRSA y a Let's Encrypt.
+
+1. **DNS:** crea un registro `A` (y `AAAA` si hay IPv6) del dominio al IP del VPS.
+   Espera la propagación antes de arrancar; Caddy necesita resolver el nombre.
+2. **Firewall:** permite `22/tcp` (restringido a tu IP), `80/tcp` y `443/tcp`
+   (TCP y UDP para HTTP/3). No abras `8000`.
+3. **Código:** clona el repositorio en `/opt/orbitlens` y fija el commit que
+   quieres publicar (`git checkout <commit>`).
+4. **Variables:** `cp .env.production.example .env.production` y completa dominio,
+   origen HTTPS, hosts, contacto de seguridad, proxies (`172.28.0.0/24` con el
+   Compose incluido) y `ORBITLENS_CODE_COMMIT=$(git rev-parse HEAD)`.
+   Guarda el archivo con finales de línea LF. El archivo real no se versiona.
+5. **Validación y arranque:**
+
+   ```bash
+   chmod +x scripts/deploy_vps.sh scripts/backup_volume.sh
+   ./scripts/deploy_vps.sh --check
+   ./scripts/deploy_vps.sh
+   ```
+
+   El script valida que no queden valores de ejemplo, que el origen sea HTTPS y
+   que el host esté en la allowlist; después construye la imagen, arranca Caddy y
+   espera a `/api/health` por HTTPS. Si falla, muestra los últimos logs.
+
+6. **Volumen:** `orbitlens-data` conserva resultados y snapshots; `caddy-data` y
+   `caddy-config` conservan certificados. No ejecutar `docker compose down -v`.
+7. **Respaldo:** `./scripts/backup_volume.sh /ruta/fuera-del-vps` crea un tar.gz
+   con SHA-256. Copiarlo fuera del servidor y probar la restauración.
+
+   Restauración (detener antes el servicio y conservar una copia del volumen
+   actual):
+
+   ```bash
+   docker compose -f compose.yaml -f compose.production.yaml --env-file .env.production stop orbitlens
+   VOLUME=$(docker volume ls --filter label=com.docker.compose.volume=orbitlens-data --format '{{.Name}}' | head -n 1)
+   docker run --rm -v "$VOLUME":/data -v /ruta:/backup alpine:3.21 \
+     sh -c 'cd /data && tar xzf /backup/orbitlens-data-FECHA.tar.gz'
+   ./scripts/deploy_vps.sh
+   ```
+
+   El nombre exacto del volumen también se obtiene con
+   `docker volume ls --filter label=com.docker.compose.volume=orbitlens-data`.
+
+Actualizar una versión publicada:
 
 ```bash
-docker compose -f compose.yaml -f compose.production.yaml \
-  --env-file .env.production up -d --build
+git fetch origin && git checkout <commit-nuevo>
+./scripts/deploy_vps.sh --check && ./scripts/deploy_vps.sh
 ```
+
+Rollback: volver al commit anterior y repetir. Los datos del volumen no se
+modifican al cambiar la imagen, pero un esquema incompatible requeriría restaurar
+el respaldo.
 
 Caddy obtiene el certificado, redirige HTTP a HTTPS y reescribe
 `X-Forwarded-For` con la IP directa. El backend sigue sin publicarse fuera de la
-red interna. Guardar los volúmenes `orbitlens-data`, `caddy-data` y
-`caddy-config`. Alternativa Nginx en `deploy/nginx.conf`.
+red interna. Alternativa Nginx en `deploy/nginx.conf`.
 
 ### Variables que fallan cerrado
 
@@ -143,7 +189,7 @@ ni para la IP: solo el proxy autorizado puede afirmarlas.
    corregir hallazgos. Revisar accesibilidad manualmente además de axe.
 8. Confirmar respaldo/restauración y plan de rollback.
 
-El CI remoto (`43659372301`, commit `017f5`) ejecutó `regression` y `security` en
+El CI remoto (`43662140990`, commit `1cd6d`) ejecutó `regression` y `security` en
 verde: pruebas con fixtures sin IRSA, build, E2E, `pip-audit`, Bandit y
 `npm audit`. No acredita disponibilidad pública, datos científicos, el resultado
 de la construcción Docker en esta máquina ni una auditoría externa.

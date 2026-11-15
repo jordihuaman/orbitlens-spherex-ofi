@@ -11,7 +11,14 @@ una URL.
    origen, hosts, red del proxy y contacto. No versionar ese archivo.
 3. Revisar `compose.yaml` y `compose.production.yaml`. El backend no se publica
    fuera de `127.0.0.1`; Caddy es el único servicio con 80/443.
-4. Construir y arrancar:
+4. Validar y arrancar con el script (recomendado):
+
+   ```bash
+   ./scripts/deploy_vps.sh --check
+   ./scripts/deploy_vps.sh
+   ```
+
+   O manualmente:
 
    ```bash
    docker compose -f compose.yaml -f compose.production.yaml \
@@ -28,6 +35,11 @@ una URL.
 
 6. Ejecutar una búsqueda real, reiniciar el contenedor y reabrir el resultado.
 7. Probar desde un teléfono físico y una red externa.
+8. Respaldar el volumen y probar la restauración:
+
+   ```bash
+   ./scripts/backup_volume.sh /ruta/fuera-del-vps
+   ```
 
 Caddy obtiene y renueva el certificado. El volumen `caddy-data` debe conservarse.
 El volumen `orbitlens-data` contiene resultados, trabajos y caché: respaldarlo y

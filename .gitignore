@@ -10,6 +10,7 @@ __pycache__/
 # Datos y caché local (nunca versionar descargas)
 data/
 .cache/
+backups/
 
 # Frontend
 frontend/node_modules/
