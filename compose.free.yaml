@@ -1,0 +1,14 @@
+# Perfil para hosts gratuitos con 1 GB de RAM (por ejemplo Azure for Students B1s).
+# Uso:
+#   docker compose -f compose.yaml -f compose.free.yaml \
+#     -f compose.production.yaml --env-file .env.production up -d --build
+#
+# Antes de construir, añade swap en el host (2 GB) para que pip/npm no agoten
+# la memoria. No reduce la funcionalidad, pero limita la concurrencia.
+
+services:
+  orbitlens:
+    mem_limit: 900m
+    cpus: 1
+    environment:
+      ORBITLENS_MAX_WORKERS: "1"

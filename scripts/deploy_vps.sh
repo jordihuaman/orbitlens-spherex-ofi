@@ -64,7 +64,12 @@ if [[ "$CHECK_ONLY" == "1" ]]; then
   exit 0
 fi
 
-COMPOSE=(docker compose -f compose.yaml -f compose.production.yaml --env-file "$ENV_FILE")
+COMPOSE_FILES=(-f compose.yaml)
+if [[ "${ORBITLENS_COMPOSE_FREE:-0}" == "1" ]]; then
+  COMPOSE_FILES+=(-f compose.free.yaml)
+fi
+COMPOSE_FILES+=(-f compose.production.yaml)
+COMPOSE=(docker compose "${COMPOSE_FILES[@]}" --env-file "$ENV_FILE")
 
 "${COMPOSE[@]}" config >/dev/null
 note "configuración de Compose válida"

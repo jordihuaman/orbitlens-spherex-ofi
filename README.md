@@ -129,6 +129,10 @@ termina TLS; el backend no se publica directamente. Respaldo del volumen:
 `./scripts/backup_volume.sh /ruta/fuera-del-vps`. Guía completa y lista de
 aceptación en [DEPLOYMENT.md](DEPLOYMENT.md). Aún no hay URL pública desplegada.
 
+Con presupuesto 0 USD hay alternativas: Oracle Cloud Always Free + `sslip.io`/
+DuckDNS, o Azure for Students con `compose.free.yaml`. Ver
+[DEPLOYMENT.md](DEPLOYMENT.md) y [HANDOFF.md](HANDOFF.md).
+
 ## Pruebas
 
 ```powershell
@@ -228,6 +232,7 @@ Un `empty` significa «sin frames utilizables», no «el objeto no existe».
 
 ## Documentación
 
+- [Handoff para continuar el proyecto](HANDOFF.md)
 - [QA ejecutado y evidencias](QA_EQUIPO.md)
 - [Guion de demo de 90 segundos](GUION_DEMO.md) (borrador, sin video grabado)
 - [Texto y pitch para submission](SUBMISSION.md) (no enviado)

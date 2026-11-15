@@ -13,6 +13,11 @@ grabación/tres ensayos, despliegue público, licencia y envío autorizado.
 El diagnóstico inicial de abajo se conserva como historial, no describe la
 ausencia de código en el estado actual.
 
+**Continuación (2026-11-14):** el estado real, los comandos de arranque, las
+pruebas, las opciones de hosting gratuito y los pendientes están en
+[HANDOFF.md](HANDOFF.md). Ese documento es la entrada recomendada para otra
+persona; este reparto conserva el contexto histórico y las responsabilidades.
+
 Entregar una demo reproducible para explorar imágenes infrarrojas de SPHEREx,
 con procedencia de datos, controles de calidad y una presentación verificable.
 El alcance funcional y el historial están en [PLAN.md](PLAN.md).

@@ -101,6 +101,70 @@ Caddy obtiene el certificado, redirige HTTP a HTTPS y reescribe
 `X-Forwarded-For` con la IP directa. El backend sigue sin publicarse fuera de la
 red interna. Alternativa Nginx en `deploy/nginx.conf`.
 
+## Opción D: proveedores gratuitos
+
+El código no exige un VPS de pago. Opciones verificadas a fecha 2026-11-14:
+
+### Oracle Cloud Always Free
+
+- 2 OCPU ARM Ampere + 12 GB de RAM (o dos VM AMD de 1 GB), 200 GB de disco y
+  10 TB de salida al mes.
+- Requiere tarjeta **solo para verificar identidad**; no se cobra si no se
+  amplía la cuenta. No aceptan prepago ni débito con PIN.
+- Elegir la región home correcta al registrarse: no se puede cambiar.
+- La capacidad ARM puede agotarse; probar otro dominio de disponibilidad.
+- Oracle puede reclamar instancias inactivas durante 7 días. Para una demo del
+  reto es aceptable; para producción continua, usar un VPS de pago.
+- Abrir en la VCN `80/tcp` y `443/tcp` desde `0.0.0.0/0`, y `22/tcp` solo desde
+  la IP del operador. Instalar Docker y ejecutar `scripts/deploy_vps.sh`.
+
+### Azure for Students
+
+- 100 USD de crédito durante 12 meses, sin tarjeta, renovable mientras se sea
+  estudiante. Verificar en `azure.microsoft.com/free/students` o en el GitHub
+  Student Developer Pack.
+- Una VM B1s (1 vCPU, 1 GB) es suficiente con swap. Antes de construir:
+
+  ```bash
+  sudo fallocate -l 2G /swapfile
+  sudo chmod 600 /swapfile
+  sudo mkswap /swapfile && sudo swapon /swapfile
+  echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+  ```
+
+- Desplegar con el perfil de memoria reducida:
+
+  ```bash
+  ORBITLENS_COMPOSE_FREE=1 ./scripts/deploy_vps.sh
+  ```
+
+  `compose.free.yaml` limita el contenedor a 900 MB y un worker.
+
+### Render Free y túneles
+
+- Render Free da HTTPS en `*.onrender.com`, pero **no incluye disco
+  persistente**: resultados y trabajos se pierden al reiniciar o redesplegar.
+  Solo sirve para enseñar la UI, no para la entrega con datos.
+- Un túnel `cloudflared tunnel --url http://localhost:8000` desde un PC da una
+  URL temporal `*.trycloudflare.com`. El PC debe estar encendido y la URL cambia
+  al reiniciar. No usar como demo oficial.
+
+### Dominio gratuito
+
+- `TU-IP-con-guiones.sslip.io` resuelve a esa IP sin registro ni cuenta. Caddy
+  obtiene un certificado Let's Encrypt por HTTP-01. No soporta wildcard y el
+  nombre es feo, pero es válido para HTTPS.
+- `nombre.duckdns.org` es más presentable; requiere cuenta y actualizar la IP
+  periódicamente.
+- Si se es estudiante, el GitHub Student Developer Pack incluye un dominio
+  `.me` en Namecheap, `.tech` o uno de Name.com (`.dev`, `.app`) durante un año.
+- Google Cloud e2-micro no se recomienda: solo 1 GB de salida al mes, insuficiente
+  para servir PNG/FITS.
+
+Con cualquiera de estas opciones, `ORBITLENS_PUBLIC_ORIGIN` y
+`ORBITLENS_ALLOWED_WEB_HOSTS` deben usar el hostname gratuito elegido, y
+`ORBITLENS_SECURITY_CONTACT` debe ser un contacto real.
+
 ### Variables que fallan cerrado
 
 Con `ORBITLENS_PRODUCTION=true` la aplicación exige:
