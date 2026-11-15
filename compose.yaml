@@ -9,11 +9,32 @@ services:
     environment:
       ORBITLENS_DATA_DIR: /app/data
       ORBITLENS_JOB_TIMEOUT_S: "600"
-      ORBITLENS_TRUSTED_PROXIES: ""
+      ORBITLENS_TRUSTED_PROXIES: ${ORBITLENS_TRUSTED_PROXIES:-}
+      ORBITLENS_PRODUCTION: ${ORBITLENS_PRODUCTION:-false}
+      ORBITLENS_PUBLIC_ORIGIN: ${ORBITLENS_PUBLIC_ORIGIN:-}
+      ORBITLENS_ALLOWED_WEB_HOSTS: ${ORBITLENS_ALLOWED_WEB_HOSTS:-localhost,127.0.0.1}
+      ORBITLENS_SECURITY_CONTACT: ${ORBITLENS_SECURITY_CONTACT:-}
+      ORBITLENS_ENABLE_DOCS: ${ORBITLENS_ENABLE_DOCS:-false}
     volumes:
       - orbitlens-data:/app/data
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 256
+    mem_limit: 2g
+    cpus: 2
     restart: unless-stopped
     stop_grace_period: 650s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   orbitlens-data:

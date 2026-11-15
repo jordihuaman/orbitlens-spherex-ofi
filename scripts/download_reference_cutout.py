@@ -33,7 +33,8 @@ def main() -> int:
         with httpx.Client(timeout=httpx.Timeout(settings.read_timeout_s,
                                                connect=settings.connect_timeout_s)) as client:
             download_to_file(client, SOURCE_URL, path, max_bytes=settings.max_download_bytes,
-                             attempts=settings.retry_attempts, backoff=settings.retry_backoff_s)
+                             attempts=settings.retry_attempts, backoff=settings.retry_backoff_s,
+                             allowed_hosts=settings.allowed_cutout_hosts)
     manifest = publish(path, SOURCE_URL, RA, DEC, FOV, settings)
     print(f"FITS y manifiesto: {manifest.parent}")
     print(f"Abrir: /?result={manifest.parent.name}")

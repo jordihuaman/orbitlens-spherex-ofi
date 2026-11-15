@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from pydantic import BaseModel, Field, model_validator
+from typing import Annotated
+
+from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
 
 from .coordinates import CoordinateError, parse_dec, parse_ra
 from .targets import get_preset
@@ -11,13 +13,14 @@ __all__ = ["SearchRequest"]
 
 
 class SearchRequest(BaseModel):
-    ra_deg: float | str | None = None
-    dec_deg: float | str | None = None
-    target_name: str | None = None
-    fov_arcmin: float = Field(default=10.0, ge=1.0, le=30.0)
-    frames: int = Field(default=12, ge=3, le=16)
-    detector: str = Field(default="auto")
-    sexagesimal: bool = False
+    model_config = ConfigDict(extra="forbid")
+    ra_deg: Annotated[float, Field(strict=True, allow_inf_nan=False)] | Annotated[str, StringConstraints(max_length=80)] | None = None
+    dec_deg: Annotated[float, Field(strict=True, allow_inf_nan=False)] | Annotated[str, StringConstraints(max_length=80)] | None = None
+    target_name: str | None = Field(default=None, max_length=128)
+    fov_arcmin: float = Field(default=10.0, ge=1.0, le=30.0, allow_inf_nan=False)
+    frames: int = Field(default=12, ge=3, le=16, strict=True)
+    detector: str = Field(default="auto", max_length=16)
+    sexagesimal: bool = Field(default=False, strict=True)
 
     @model_validator(mode="after")
     def _validate_and_normalize(self) -> SearchRequest:
@@ -31,7 +34,7 @@ class SearchRequest(BaseModel):
             preset = get_preset(self.target_name)
             if preset is None:
                 raise ValueError(
-                    f"objetivo desconocido: {self.target_name!r}; "
+                    "objetivo desconocido; "
                     "use uno de los cinco presets o coordenadas"
                 )
             self.ra_deg = preset.ra_deg

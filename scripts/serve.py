@@ -14,6 +14,8 @@ from orbitlens.config import Settings  # noqa: E402
 
 if __name__ == "__main__":
     settings = Settings.from_env()
-    uvicorn.run("api:app", host="0.0.0.0", port=int(os.environ.get("PORT", "8000")),
-                workers=1, proxy_headers=False,
+    # Escucha en todas las interfaces dentro del contenedor; el puerto solo se
+    # publica en 127.0.0.1 vía compose y el proxy/TLS termina fuera.
+    uvicorn.run("api:app", host="0.0.0.0", port=int(os.environ.get("PORT", "8000")),  # nosec B104
+                workers=1, proxy_headers=False, server_header=False, access_log=False,
                 timeout_graceful_shutdown=int(settings.job_timeout_s + 30))

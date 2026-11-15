@@ -1,6 +1,6 @@
 # Revisión de datos — Jordi
 
-> Actualización técnica por el agente, pipeline 0.1.5: catálogo/PM consultados
+> Actualización técnica por el agente, pipeline 0.1.6: catálogo/PM consultados
 > desde SIMBAD Harvard y centrado propagado a J2026. Los paquetes anteriores de
 > Barnard/WISE 0855 no contenían sus posiciones predichas; usar la selección nueva
 > de `ASTROMETRIA.md`. Se registra geometría/máscara, no detección. No se atribuye

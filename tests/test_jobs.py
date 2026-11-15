@@ -65,7 +65,8 @@ def test_exception_becomes_error_status() -> None:
         job, _ = manager.submit({}, "error", work)
         finished = _wait_until_terminal(manager, job.id)
         assert finished.status == "error"
-        assert "fallo controlado" in (finished.error or "")
+        assert "fallo controlado" not in (finished.error or "")
+        assert "no se pudo procesar" in (finished.error or "")
     finally:
         manager.shutdown()
 

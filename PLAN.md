@@ -103,7 +103,7 @@ comandos en [ENTREGA_TECNICA.md](ENTREGA_TECNICA.md); límites científicos en
 
 | Hito | Estado | Evidencia |
 | --- | --- | --- |
-| H0. Base reproducible | **Completado localmente** | `.venv`, dependencias fijadas, 166 pruebas Python, 30 E2E, Ruff y build Vite; CI añadido |
+| H0. Base reproducible | **Completado localmente** | `.venv`, dependencias fijadas, 215 pruebas Python, 34 E2E, Ruff, build Vite y auditorías de seguridad; CI añadido |
 | H1. Dato real actual | **Parcial: primer FITS verificado** | Recorte real DR1 del tutorial procesado y abierto en navegador; consultas de presets todavía inestables. Ver `DATOS_REALES.md` |
 | H2. Secuencia temporal | **Centrado corregido, revisión científica pendiente** | 15 frames seleccionados con centros J2026: 4 SIA partial + R Dra local explícito. Posiciones predichas dentro, máscaras conservadas. `ASTROMETRIA.md` sustituye los IDs anteriores |
 | H3. Web de extremo a extremo | **Verificado local con caché real** | Formulario → tres frames reales → nueve descargas 200 → reinicio recupera trabajo/resultado. Cinco paquetes actuales abiertos en escritorio/viewport móvil y 45 artefactos 200 |

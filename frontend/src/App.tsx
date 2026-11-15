@@ -206,6 +206,7 @@ export default function App() {
 
   return (
     <div className="app">
+      <a className="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
       <header className="hero">
         <p className="eyebrow">
           NASA Space Apps 2026 · Planet X and SPHEREx
@@ -221,7 +222,7 @@ export default function App() {
         </p>
       </header>
 
-      <main className="layout">
+      <main className="layout" id="contenido-principal" tabIndex={-1}>
         <section className="column">
           <SearchForm
             presets={presets}

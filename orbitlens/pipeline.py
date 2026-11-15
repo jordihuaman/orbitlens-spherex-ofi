@@ -200,16 +200,47 @@ def _spectral_info(
     return lambda_um, bandwidth_um, tuple(warnings)
 
 
-def read_spherex_image(path: Path, *, target: tuple[float, float] | None = None) -> SpherexImage:
+def read_spherex_image(path: Path, *, target: tuple[float, float] | None = None,
+                       max_pixels: int = 4_194_304) -> SpherexImage:
     """Abre un MEF Level 2 por nombre de HDU y valida el producto temporal."""
 
     path = Path(path)
     try:
+        with path.open("rb") as handle:
+            if handle.read(2) == b"\x1f\x8b":
+                raise PipelineError("se requiere MEF sin gzip de archivo; se admite compresión FITS por teselas")
         hdul = fits.open(path, memmap=False)
     except (OSError, ValueError) as exc:
         raise PipelineError(f"no se pudo abrir el FITS {path.name}: {exc}") from exc
 
     with hdul:
+        # Comprobar dimensiones antes de materializar arrays/descomprimir teselas.
+        for index, hdu in enumerate(hdul):
+            if index >= 32:
+                raise PipelineError("FITS excede el límite de 32 HDU")
+            header = hdu.header
+            try:
+                def declared_elements(prefix: str, current=header) -> int:
+                    axes = int(current.get(prefix, 0))
+                    if not 0 <= axes <= 3:
+                        raise ValueError("axes")
+                    lengths = [int(current.get(f"{prefix}{axis}", 0)) for axis in range(1, axes + 1)]
+                    if any(value < 0 for value in lengths):
+                        raise ValueError("length")
+                    return math.prod(lengths) if lengths else 0
+
+                elements = max(declared_elements("NAXIS"), declared_elements("ZNAXIS"))
+                compressed = int(header.get("ZNAXIS", 0)) > 0 or bool(header.get("ZIMAGE", False))
+                if (hdu.name in {"IMAGE", "FLAGS"} or compressed) and elements > max_pixels:
+                    raise PipelineError("IMAGE/FLAGS excede el límite de píxeles antes de cargar datos")
+                bitpix = max(abs(int(header.get("BITPIX", 8))), abs(int(header.get("ZBITPIX", 8))))
+                if bitpix * elements // 8 > 64 * 1024 * 1024:
+                    raise PipelineError("HDU excede el presupuesto de memoria declarado")
+                heap = max(int(header.get("PCOUNT", 0)), int(header.get("ZPCOUNT", 0)))
+                if heap > 64 * 1024 * 1024:
+                    raise PipelineError("heap FITS excede el presupuesto de memoria declarado")
+            except (ValueError, TypeError, OverflowError) as exc:
+                raise PipelineError("dimensiones FITS inválidas") from exc
         if "IMAGE" not in hdul:
             raise PipelineError(f"{path.name}: falta la extensión IMAGE")
         image_hdu = hdul["IMAGE"]
@@ -220,12 +251,16 @@ def read_spherex_image(path: Path, *, target: tuple[float, float] | None = None)
             )
         if data.size == 0:
             raise PipelineError(f"{path.name}: IMAGE está vacío")
+        if data.size > max_pixels:
+            raise PipelineError("IMAGE excede el límite de píxeles tras descomprimir")
 
         header = image_hdu.header.copy()
         warnings: list[str] = []
 
         if "FLAGS" in hdul:
             flags = np.asarray(hdul["FLAGS"].data)
+            if flags.size > max_pixels:
+                raise PipelineError("FLAGS excede el límite de píxeles tras descomprimir")
             if flags.shape != data.shape:
                 warnings.append(
                     f"FLAGS {flags.shape} no coincide con IMAGE {data.shape}; "

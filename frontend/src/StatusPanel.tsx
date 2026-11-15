@@ -64,7 +64,7 @@ export default function StatusPanel({ job, error, busy }: Props) {
 
   return (
     <div className={`panel status status-${job.status}`}>
-      <div className="status-heading">
+      <div className="status-heading" role="status" aria-live="polite" aria-atomic="true">
         <h2>{STATUS_LABELS[job.status]}</h2>
         <span className={`chip chip-${job.status}`}>{job.status}</span>
       </div>

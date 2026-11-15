@@ -19,6 +19,7 @@ from .execution import (
     retry_delay,
     wait_retry,
 )
+from .network_policy import validate_remote_url
 
 _SLOTS = threading.BoundedSemaphore(3)
 
@@ -75,7 +76,7 @@ def _download_once(
     total = 0
     try:
         check_deadline()
-        with client.stream("GET", url, follow_redirects=True, timeout=request_timeout(client)) as response:
+        with client.stream("GET", url, follow_redirects=False, timeout=request_timeout(client)) as response:
             response.raise_for_status()
             with temporary.open("wb") as handle:
                 for chunk in response.iter_bytes(chunk_size):
@@ -137,6 +138,7 @@ def download_to_file(
     attempts: int = 1,
     backoff: float = 0.0,
     space_check: Callable[[int], None] | None = None,
+    allowed_hosts: tuple[str, ...] | None = None,
 ) -> Path:
     """Descarga en streaming y publica el archivo solo si es válido.
 
@@ -145,6 +147,8 @@ def download_to_file(
     con backoff; agotar el presupuesto no se reintenta.
     """
 
+    if allowed_hosts is not None:
+        validate_remote_url(url, allowed_hosts)
     last_error: DownloadError | None = None
     for attempt in range(max(1, attempts)):
         check_deadline()

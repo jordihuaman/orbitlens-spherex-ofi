@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import logging
 import math
 import threading
 import time
@@ -15,6 +16,9 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from .manifest import read_json, write_json_atomic
+from .public_errors import public_failure
+
+logger = logging.getLogger("orbitlens.jobs")
 
 __all__ = ["Job", "JobManager", "JobCapacityError", "TERMINAL_STATES"]
 
@@ -232,10 +236,11 @@ class JobManager:
             if job.status not in TERMINAL_STATES:
                 raise RuntimeError("el trabajo terminó sin estado terminal")
         except Exception as exc:  # noqa: BLE001 - se publica como estado del trabajo
+            logger.exception("job_failed job_id=%s", job.id)
             job.update(
                 status="error",
                 phase=None,
-                error=f"{type(exc).__name__}: {exc}",
+                error=public_failure(exc),
             )
         finally:
             with self._lock:

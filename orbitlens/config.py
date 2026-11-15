@@ -11,8 +11,9 @@ import math
 import os
 from dataclasses import dataclass, replace
 from pathlib import Path
+from urllib.parse import urlsplit
 
-PIPELINE_VERSION = "0.1.5"
+PIPELINE_VERSION = "0.1.6"
 SCHEMA_VERSION = 1
 
 # Colecciones vigentes tras la revisión de noviembre de 2026 (DR1 + QR3).
@@ -49,6 +50,17 @@ def _env_float(name: str, default: float) -> float:
         return float(raw)
     except ValueError as exc:  # pragma: no cover - configuración inválida
         raise ValueError(f"{name} debe ser un número, se recibió {raw!r}") from exc
+
+
+def _env_bool(name: str, default: bool) -> bool:
+    raw = os.environ.get(name)
+    if raw is None:
+        return default
+    if raw.lower() in {"1", "true", "yes"}:
+        return True
+    if raw.lower() in {"0", "false", "no"}:
+        return False
+    raise ValueError(f"{name} debe ser true/false")
 
 
 @dataclass(frozen=True)
@@ -97,14 +109,26 @@ class Settings:
     storage_max_bytes: int = 2 * 1024 * 1024 * 1024
     min_free_disk_bytes: int = 64 * 1024 * 1024
 
+    # Perfil HTTP: no implica certificación ni sustituye TLS/firewall del host.
+    production: bool = False
+    public_origin: str | None = None
+    allowed_hosts: tuple[str, ...] = ("localhost", "127.0.0.1", "[::1]", "testserver")
+    enable_docs: bool = False
+    max_request_bytes: int = 16 * 1024
+    request_body_timeout_s: float = 10.0
+    http_requests_per_minute: int = 600
+    http_burst: int = 120
+    max_http_clients: int = 2048
+    security_contact: str | None = None
+
     def __post_init__(self) -> None:
-        for name in ("connect_timeout_s", "read_timeout_s", "job_timeout_s", "pixel_scale_arcsec"):
+        for name in ("connect_timeout_s", "read_timeout_s", "job_timeout_s", "pixel_scale_arcsec", "request_body_timeout_s"):
             value = getattr(self, name)
             if not math.isfinite(value) or value <= 0:
                 raise ValueError(f"{name} debe ser finito y positivo")
         for name in ("max_workers", "max_active_jobs", "max_active_per_ip", "searches_per_minute",
                      "max_download_bytes", "max_job_download_bytes", "max_sia_bytes", "max_candidates",
-                     "storage_max_bytes"):
+                     "storage_max_bytes", "max_request_bytes", "http_requests_per_minute", "http_burst", "max_http_clients"):
             if getattr(self, name) < 1:
                 raise ValueError(f"{name} debe ser positivo")
         for proxy in self.trusted_proxies:
@@ -127,6 +151,23 @@ class Settings:
             raise ValueError("empty_cache_ttl_s debe ser >= 0")
         if self.min_free_disk_bytes < 0:
             raise ValueError("min_free_disk_bytes debe ser >= 0")
+        if not self.allowed_hosts or any("*" in value or "/" in value or "@" in value for value in self.allowed_hosts):
+            raise ValueError("allowed_hosts requiere hosts concretos, sin comodines ni rutas")
+        for origin in (*self.cors_origins, *((self.public_origin,) if self.public_origin else ())):
+            parts = urlsplit(origin)
+            if (parts.scheme not in {"https", "http"} or not parts.hostname or parts.path
+                    or parts.query or parts.fragment or parts.username or parts.password):
+                raise ValueError("los orígenes deben ser scheme://host[:puerto], sin ruta ni credenciales")
+            if self.production and parts.scheme != "https":
+                raise ValueError("producción requiere orígenes HTTPS")
+        if self.production:
+            if not self.public_origin or self.enable_docs:
+                raise ValueError("producción requiere public_origin HTTPS y documentación interactiva desactivada")
+            if urlsplit(self.public_origin).hostname not in {value.strip("[]").lower() for value in self.allowed_hosts}:
+                raise ValueError("el host de public_origin debe figurar en allowed_hosts")
+        if self.security_contact and ("\r" in self.security_contact or "\n" in self.security_contact
+                                      or not self.security_contact.startswith(("mailto:", "https://"))):
+            raise ValueError("security_contact requiere mailto: o https: sin saltos de línea")
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -134,6 +175,16 @@ class Settings:
 
         base = cls()
         overrides: dict[str, object] = {}
+        overrides["production"] = _env_bool("ORBITLENS_PRODUCTION", base.production)
+        overrides["enable_docs"] = _env_bool("ORBITLENS_ENABLE_DOCS", base.enable_docs)
+        if overrides["production"] and "ORBITLENS_CORS_ORIGINS" not in os.environ:
+            overrides["cors_origins"] = ()
+        for name, field_name in (("ORBITLENS_PUBLIC_ORIGIN", "public_origin"),
+                                 ("ORBITLENS_SECURITY_CONTACT", "security_contact")):
+            if os.environ.get(name):
+                overrides[field_name] = os.environ[name]
+        if raw := os.environ.get("ORBITLENS_ALLOWED_WEB_HOSTS"):
+            overrides["allowed_hosts"] = _split_csv(raw)
 
         if raw := os.environ.get("ORBITLENS_DATA_DIR"):
             overrides["data_dir"] = Path(raw)
@@ -143,8 +194,8 @@ class Settings:
             overrides["collections"] = _split_csv(raw)
         if raw := os.environ.get("ORBITLENS_ALLOWED_HOSTS"):
             overrides["allowed_cutout_hosts"] = _split_csv(raw)
-        if raw := os.environ.get("ORBITLENS_CORS_ORIGINS"):
-            overrides["cors_origins"] = _split_csv(raw)
+        if "ORBITLENS_CORS_ORIGINS" in os.environ:
+            overrides["cors_origins"] = _split_csv(os.environ["ORBITLENS_CORS_ORIGINS"])
         if raw := os.environ.get("ORBITLENS_TRUSTED_PROXIES"):
             overrides["trusted_proxies"] = _split_csv(raw)
 
@@ -165,6 +216,10 @@ class Settings:
             ("ORBITLENS_MAX_SIA_BYTES", "max_sia_bytes"),
             ("ORBITLENS_STORAGE_MAX_BYTES", "storage_max_bytes"),
             ("ORBITLENS_MIN_FREE_DISK_BYTES", "min_free_disk_bytes"),
+            ("ORBITLENS_MAX_REQUEST_BYTES", "max_request_bytes"),
+            ("ORBITLENS_HTTP_REQUESTS_PER_MINUTE", "http_requests_per_minute"),
+            ("ORBITLENS_HTTP_BURST", "http_burst"),
+            ("ORBITLENS_MAX_HTTP_CLIENTS", "max_http_clients"),
         ):
             if os.environ.get(name) is not None:
                 overrides[field_name] = _env_int(name, int(getattr(base, field_name)))
@@ -177,6 +232,7 @@ class Settings:
             ("ORBITLENS_CONNECT_TIMEOUT_S", "connect_timeout_s"),
             ("ORBITLENS_RETRY_BACKOFF_S", "retry_backoff_s"),
             ("ORBITLENS_JOB_TIMEOUT_S", "job_timeout_s"),
+            ("ORBITLENS_REQUEST_BODY_TIMEOUT_S", "request_body_timeout_s"),
         ):
             if os.environ.get(name) is not None:
                 overrides[field_name] = _env_float(name, float(getattr(base, field_name)))

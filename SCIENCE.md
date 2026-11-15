@@ -1,6 +1,6 @@
 # Decisiones científicas y límites — OrbitLens SPHEREx
 
-## Corrección vigente: centrado de catálogo J2026, pipeline 0.1.5
+## Corrección vigente: centrado de catálogo J2026, pipeline 0.1.6
 
 Ver `ASTROMETRIA.md` y la respuesta SIMBAD del espejo oficial Harvard. Barnard y
 WISE 0855 no estaban dentro de sus salidas antiguas de 4′ al propagar la posición

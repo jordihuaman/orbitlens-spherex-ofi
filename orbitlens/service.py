@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import logging
 import math
 import os
 import re
@@ -38,7 +39,10 @@ from .pipeline import (
     write_derived_fits,
     write_png,
 )
+from .public_errors import public_failure
 from .storage import KeyedLocks, StorageError, StorageManager
+
+logger = logging.getLogger("orbitlens.service")
 
 __all__ = [
     "SearchService",
@@ -154,7 +158,8 @@ class SearchService:
             timeout=httpx.Timeout(
                 settings.read_timeout_s, connect=settings.connect_timeout_s
             ),
-            follow_redirects=True,
+            follow_redirects=False,
+            trust_env=False,
         )
         self._search = search_fn
         self._download = download_fn
@@ -327,6 +332,7 @@ class SearchService:
                     max_bytes=self.settings.max_download_bytes, budget=budget,
                     attempts=self.settings.retry_attempts, backoff=self.settings.retry_backoff_s,
                     space_check=self.storage.ensure_space,
+                    allowed_hosts=self.settings.allowed_cutout_hosts,
                 )
             if not checksum_path.is_file():
                 write_json_atomic({"bytes": raw_path.stat().st_size, "sha256": sha256_file(raw_path)}, checksum_path)
@@ -457,8 +463,10 @@ class SearchService:
             except (DeadlineExceeded, StorageError):
                 raise
             except Exception as exc:  # noqa: BLE001 - un frame no debe tumbar el trabajo
-                failures.append(f"{record.obs_id}: {exc}")
-                job.add_warning(f"frame descartado {record.obs_id}: {exc}")
+                reason = public_failure(exc)
+                logger.info("frame_failed obs_id=%s exception_type=%s", sanitize_name(record.obs_id), type(exc).__name__)
+                failures.append(f"{record.obs_id}: {reason}")
+                job.add_warning(f"frame descartado {record.obs_id}: {reason}")
             job.set_counts(
                 attempted=index,
                 processed=len(prepared),

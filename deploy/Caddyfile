@@ -1,0 +1,39 @@
+# Caddy 2: TLS automático (ACME) y proxy al contenedor OrbitLens.
+# Requiere ORBITLENS_DOMAIN y ORBITLENS_UPSTREAM en el entorno del contenedor.
+{$ORBITLENS_DOMAIN} {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "no-referrer"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), accelerometer=(), gyroscope=()"
+		Cross-Origin-Opener-Policy "same-origin"
+		Cross-Origin-Resource-Policy "same-origin"
+		X-Permitted-Cross-Domain-Policies "none"
+		-Server
+	}
+
+	request_body {
+		max_size 16KB
+	}
+
+	reverse_proxy {$ORBITLENS_UPSTREAM} {
+		# Sobrescribe cualquier X-Forwarded-For del visitante.
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+		header_up X-Real-IP {remote_host}
+		transport http {
+			dial_timeout 5s
+			response_header_timeout 30s
+			read_timeout 650s
+		}
+	}
+
+	log {
+		output stdout
+		format json
+		level INFO
+	}
+}

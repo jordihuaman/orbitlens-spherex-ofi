@@ -1,10 +1,36 @@
 import { expect, test, type Page } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 
 const result = "5e1c78336933afa7";
 const presets = [
   ["barnard", "269.446268"], ["epsindi_b", "331.096669"],
   ["wise0855", "133.759765"], ["rw_aur", "76.956587"], ["r_dra", "248.167233"],
 ];
+
+test("controles automáticos WCAG y acceso por teclado", async ({ page }, info) => {
+  await page.goto(`/?result=${result}`);
+  await expect(page.getByRole("button", { name: "Reproducir", exact: true })).toBeEnabled();
+  const audit = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
+  await info.attach("axe", { body: JSON.stringify(audit), contentType: "application/json" });
+  expect(audit.violations).toEqual([]);
+  await page.keyboard.press("Tab");
+  await expect(page.getByRole("link", { name: "Saltar al contenido principal" })).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("main")).toBeFocused();
+});
+
+test("CSP bloquea ejecución inline y entradas no insertan HTML", async ({ page }) => {
+  const response = await page.goto("/?ra=%3Cimg%20src%3Dx%20onerror%3Dalert(1)%3E&dec=20");
+  expect(response?.headers()["content-security-policy"]).toContain("script-src 'self'");
+  expect(response?.headers()["x-content-type-options"]).toBe("nosniff");
+  await page.evaluate(() => {
+    const script = document.createElement("script");
+    script.textContent = "window.securityProbe = 'executed'";
+    document.body.appendChild(script);
+  });
+  expect(await page.evaluate(() => (window as unknown as Record<string, unknown>).securityProbe)).toBeUndefined();
+  expect(await page.locator("img[onerror]").count()).toBe(0);
+});
 
 // Solo el flujo búsqueda/estado se simula; navegador, HTML, JS, manifiesto,
 // PNG y FITS vienen del servidor real con datos sintéticos aislados.

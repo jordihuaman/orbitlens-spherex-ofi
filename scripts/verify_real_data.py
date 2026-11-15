@@ -107,7 +107,8 @@ def main() -> int:
         raw_path = raw_dir / "cutout.fits"
         print(f"Descargando {url}")
         download_to_file(client, url, raw_path, max_bytes=settings.max_download_bytes,
-                         attempts=settings.retry_attempts, backoff=settings.retry_backoff_s)
+                          attempts=settings.retry_attempts, backoff=settings.retry_backoff_s,
+                          allowed_hosts=settings.allowed_cutout_hosts)
         print(f"FITS: {raw_path} ({raw_path.stat().st_size} bytes)")
 
         image = read_spherex_image(raw_path, target=(preset.ra_deg, preset.dec_deg))

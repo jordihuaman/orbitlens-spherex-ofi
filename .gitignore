@@ -22,6 +22,7 @@ frontend/playwright-report/
 .env
 .env.*
 !.env.example
+!.env.production.example
 
 # Sistema y editores
 .DS_Store

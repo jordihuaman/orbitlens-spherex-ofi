@@ -7,14 +7,16 @@ Ejecutar en desarrollo:
 from __future__ import annotations
 
 import json
+import logging
 import os
 import re
 from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
 from orbitlens import __version__
@@ -23,11 +25,15 @@ from orbitlens.client_ip import client_ip
 from orbitlens.config import PIPELINE_VERSION, Settings
 from orbitlens.jobs import JobCapacityError, JobManager
 from orbitlens.manifest import validate_file_entry, validate_manifest, validate_result_files
+from orbitlens.security import SecurityMiddleware, security_headers
 from orbitlens.service import SearchService
 from orbitlens.targets import public_presets
 
 RESULT_ID_RE = re.compile(r"^[a-f0-9]{16}$")
+MAX_MANIFEST_BYTES = 2 * 1024 * 1024
+MAX_PRESET_INDEX_BYTES = 1024 * 1024
 FRONTEND_DIR = Path(__file__).resolve().parent / "frontend" / "dist"
+logger = logging.getLogger("orbitlens.api")
 
 
 def create_app(
@@ -36,9 +42,10 @@ def create_app(
     service: SearchService | None = None,
     manager: JobManager | None = None,
 ) -> FastAPI:
+    active_settings = settings or Settings.from_env()
+
     @asynccontextmanager
     async def lifespan(app: FastAPI):
-        active_settings = settings or Settings.from_env()
         owned_service = service is None
         owned_manager = manager is None
         active_service = service or SearchService(active_settings)
@@ -65,9 +72,11 @@ def create_app(
         version=__version__,
         description="Secuencias temporales de imágenes SPHEREx a partir de RA/Dec.",
         lifespan=lifespan,
+        docs_url="/docs" if active_settings.enable_docs else None,
+        redoc_url="/redoc" if active_settings.enable_docs else None,
+        openapi_url="/openapi.json" if active_settings.enable_docs else None,
     )
 
-    active_settings = settings or Settings.from_env()
     app.add_middleware(
         CORSMiddleware,
         allow_origins=list(active_settings.cors_origins),
@@ -75,6 +84,34 @@ def create_app(
         allow_methods=["GET", "POST"],
         allow_headers=["Content-Type"],
     )
+    app.add_middleware(SecurityMiddleware, settings=active_settings)
+
+    @app.exception_handler(RequestValidationError)
+    async def invalid_request(request: Request, exc: RequestValidationError):
+        errors = [{"loc": [str(part)[:80] for part in item["loc"]], "type": item["type"],
+                   "msg": item["msg"][:240]} for item in exc.errors()[:8]]
+        return JSONResponse({"detail": errors, "request_id": request.state.request_id}, status_code=422)
+
+    @app.exception_handler(Exception)
+    async def unexpected_error(request: Request, exc: Exception):
+        request_id = getattr(request.state, "request_id", "unavailable")
+        logger.error("unexpected_error request_id=%s", request_id, exc_info=exc)
+        return JSONResponse({"detail": "error interno; contacte con soporte indicando el identificador",
+                             "request_id": request_id}, status_code=500,
+                            headers={**security_headers(active_settings), "X-Request-ID": request_id,
+                                     "Cache-Control": "no-store"})
+
+    @app.get("/.well-known/security.txt", response_class=PlainTextResponse, include_in_schema=False)
+    def disclosure_policy():
+        from datetime import UTC, datetime, timedelta
+
+        if not active_settings.security_contact:
+            raise HTTPException(status_code=404, detail="contacto de seguridad no configurado")
+        expires = (datetime.now(UTC) + timedelta(days=180)).isoformat()
+        lines = [f"Contact: {active_settings.security_contact}", f"Expires: {expires}", "Preferred-Languages: es, en"]
+        if active_settings.public_origin:
+            lines.append(f"Canonical: {active_settings.public_origin}/.well-known/security.txt")
+        return "\n".join(lines) + "\n"
 
     def get_settings(request: Request) -> Settings:
         return request.app.state.settings
@@ -102,6 +139,8 @@ def create_app(
         items = public_presets()
         index_path = get_settings(request).data_dir / "presets.json"
         try:
+            if index_path.stat().st_size > MAX_PRESET_INDEX_BYTES:
+                raise ValueError("índice demasiado grande")
             index = json.loads(index_path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             index = {}
@@ -167,10 +206,18 @@ def create_app(
         if not RESULT_ID_RE.fullmatch(result_id):
             raise HTTPException(status_code=404, detail="resultado desconocido")
         result_dir = get_settings(request).data_dir / "results" / result_id
+        root = (get_settings(request).data_dir / "results").resolve()
+        try:
+            if result_dir.is_symlink() or not result_dir.resolve().is_relative_to(root):
+                raise HTTPException(status_code=404, detail="resultado desconocido")
+        except OSError as exc:
+            raise HTTPException(status_code=404, detail="resultado desconocido") from exc
         manifest_path = result_dir / "manifest.json"
-        if not manifest_path.is_file():
+        if not manifest_path.is_file() or manifest_path.is_symlink():
             raise HTTPException(status_code=404, detail="resultado desconocido")
         try:
+            if manifest_path.stat().st_size > MAX_MANIFEST_BYTES:
+                raise ValueError("manifiesto demasiado grande")
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
             validate_manifest(manifest)
             if manifest["result_id"] != result_id:
@@ -199,8 +246,13 @@ def create_app(
             raise HTTPException(status_code=404, detail="archivo no indexado")
 
         relative = Path(str(entry.get("path", "")))
-        candidate = (result_dir / relative).resolve()
-        if not candidate.is_relative_to(result_dir.resolve()) or not candidate.is_file():
+        raw_candidate = result_dir / relative
+        try:
+            candidate = raw_candidate.resolve()
+        except OSError as exc:
+            raise HTTPException(status_code=404, detail="archivo no disponible") from exc
+        if (raw_candidate.is_symlink() or not candidate.is_relative_to(result_dir.resolve())
+                or not candidate.is_file()):
             raise HTTPException(status_code=404, detail="archivo no disponible")
 
         try:
@@ -229,7 +281,7 @@ def create_app(
 
         @app.get("/{full_path:path}", include_in_schema=False)
         def spa_fallback(full_path: str) -> FileResponse:
-            if full_path.startswith("api/"):
+            if full_path.startswith("api/") or any(part.startswith(".") for part in Path(full_path).parts):
                 raise HTTPException(status_code=404, detail="ruta desconocida")
             candidate = (FRONTEND_DIR / full_path).resolve()
             if (

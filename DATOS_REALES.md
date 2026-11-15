@@ -1,6 +1,6 @@
 # Datos reales IRSA — primer recorte verificado, 2026-11-14
 
-## Estado vigente: pipeline 0.1.5, centros J2026 y operación
+## Estado vigente: pipeline 0.1.6, centros J2026 y operación
 
 **Corrección importante:** el catálogo/PM mostró que Barnard y WISE 0855 no
 quedaban dentro de sus recortes anteriores de 4′. Las secciones posteriores

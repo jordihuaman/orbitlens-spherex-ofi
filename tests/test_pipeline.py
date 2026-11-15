@@ -8,6 +8,7 @@ from astropy.io import fits
 from astropy.wcs import WCS
 
 from orbitlens.pipeline import (
+    PipelineError,
     ProcessedFrame,
     SpherexImage,
     apply_colormap,
@@ -134,6 +135,30 @@ def test_wavelength_and_bandwidth_use_requested_position(tmp_path) -> None:
     image = read_spherex_image(path, target=(10, 20))
     assert image.lambda_um == pytest.approx(1.095)
     assert image.bandwidth_um == pytest.approx(0.0295)
+
+
+def test_image_pixel_limit_is_checked_before_loading_data(tmp_path):
+    path = _write_fits(tmp_path, np.ones((20, 20)))
+    with pytest.raises(PipelineError, match="límite de píxeles"):
+        read_spherex_image(path, max_pixels=100)
+
+
+def test_whole_file_gzip_is_rejected_without_inflating(tmp_path):
+    path = tmp_path / "compressed.fits.gz"
+    path.write_bytes(b"\x1f\x8b" + b"not actually a gzip stream")
+    with pytest.raises(PipelineError, match="sin gzip"):
+        read_spherex_image(path)
+
+
+def test_compressed_image_dimensions_are_checked_before_decompressing(tmp_path):
+    header = _celestial_header((20, 20))
+    path = tmp_path / "compressed.fits"
+    fits.HDUList([
+        fits.PrimaryHDU(),
+        fits.CompImageHDU(data=np.ones((20, 20)), header=header, name="IMAGE"),
+    ]).writeto(path)
+    with pytest.raises(PipelineError, match="límite de píxeles"):
+        read_spherex_image(path, max_pixels=100)
 
 
 def test_reproject_identity_grid_preserves_values(tmp_path) -> None:

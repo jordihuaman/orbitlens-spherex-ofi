@@ -1,17 +1,24 @@
 # Entrega técnica — OrbitLens SPHEREx
 
-## Bloque vigente: operación y catálogo, pipeline 0.1.5
+## Bloque vigente: seguridad y operación, pipeline 0.1.6
 
-166 pruebas Python, 30 E2E, Ruff/build correctos. Se añaden cuotas por IP y
-cadena de proxies, snapshots/recuperación y posición de cola, presupuesto temporal
-cooperativo con Retry-After, descarga global acotada, límites de cuerpo SIA,
-temporales únicos, validación de metadata FITS/SIA y checksum de caché original.
-LRU conservador de caché y comprobación de disco; resultados/manuales protegidos.
+215 pruebas Python, 34 E2E, Ruff/build correctos, `pip-audit` y `npm audit` sin
+vulnerabilidades conocidas y Bandit sin hallazgos. Se añaden CSP/cabeceras,
+allowlist de `Host`, límites de cuerpo y timeout de recepción, CSRF por origen,
+SSRF sin redirects, cuotas HTTP por IP, FITS acotado antes de cargar arrays,
+errores públicos sin trazas, logs sin IP y contenedor no root/solo lectura.
+Ver `SEGURIDAD.md`; no es una certificación ni sustituye pentest/WAF/monitorización.
+
+Se mantienen cuotas por IP y cadena de proxies, snapshots/recuperación y posición
+de cola, presupuesto temporal cooperativo con Retry-After, descarga global
+acotada, límites de cuerpo SIA, temporales únicos, validación de metadata
+FITS/SIA y checksum de caché original. LRU conservador de caché y comprobación de
+disco; resultados/manuales protegidos.
 
 Importación de secuencias locales sin red e índice de presets validados por
 centro/integridad, con enlaces desde la UI y método visible. Docker/Compose,
-arranque de producción y CI preparados; **no se ha construido Docker ni se ha
-publicado en un hosting**. Ver `DEPLOYMENT.md` para límites y aceptación pendiente.
+Caddy/Nginx y CI preparados; **no se ha construido Docker ni se ha publicado en
+un hosting**. Ver `DEPLOYMENT.md` para límites y aceptación pendiente.
 
 SIMBAD Harvard proporcionó catálogo/PM con bibliografía y metadata de época.
 Se corrigieron centros a J2026; la auditoría anterior detectó Barnard/WISE 0855

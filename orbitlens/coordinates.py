@@ -29,9 +29,9 @@ def _finite(value: object, field: str) -> float:
     try:
         number = float(str(value).strip())
     except (TypeError, ValueError) as exc:
-        raise CoordinateError(f"{field} no es un número válido: {value!r}") from exc
+        raise CoordinateError(f"{field} no es un número válido") from exc
     if not math.isfinite(number):
-        raise CoordinateError(f"{field} debe ser finito, se recibió {value!r}")
+        raise CoordinateError(f"{field} debe ser finito")
     return number
 
 
@@ -42,7 +42,7 @@ def validate_ra(ra_deg: float) -> float:
         raise CoordinateError("RA debe ser finita")
     if not (0.0 <= ra_deg < 360.0):
         raise CoordinateError(
-            f"RA fuera de rango: {ra_deg}. Use grados en [0, 360); 360 equivale a 0."
+            "RA fuera de rango; use grados en [0, 360); 360 equivale a 0."
         )
     return ra_deg
 
@@ -53,7 +53,7 @@ def validate_dec(dec_deg: float) -> float:
     if not math.isfinite(dec_deg):
         raise CoordinateError("Dec debe ser finita")
     if not (-90.0 <= dec_deg <= 90.0):
-        raise CoordinateError(f"Dec fuera de rango: {dec_deg}. Use grados en [-90, 90].")
+        raise CoordinateError("Dec fuera de rango; use grados en [-90, 90].")
     return dec_deg
 
 
@@ -70,7 +70,7 @@ def _sexagesimal_parts(value: object, field: str) -> tuple[int, float, float, fl
     parts = re.findall(r"\d+(?:\.\d+)?", raw)
     if len(parts) != 3:
         raise CoordinateError(
-            f"{field} sexagesimal debe tener tres componentes (g/h, m, s): {value!r}"
+            f"{field} sexagesimal debe tener tres componentes (g/h, m, s)"
         )
 
     first, minutes, seconds = (float(part) for part in parts)
@@ -93,7 +93,7 @@ def parse_ra(value: object, *, sexagesimal: bool = False) -> float:
     if sign < 0:
         raise CoordinateError("RA no puede ser negativa")
     if hours >= 24.0:
-        raise CoordinateError(f"RA en horas debe estar en [0, 24): {value!r}")
+        raise CoordinateError("RA en horas debe estar en [0, 24)")
     return validate_ra((hours + minutes / 60.0 + seconds / 3600.0) * 15.0)
 
 
@@ -105,7 +105,7 @@ def parse_dec(value: object, *, sexagesimal: bool = False) -> float:
 
     sign, degrees, minutes, seconds = _sexagesimal_parts(value, "Dec")
     if degrees > 90.0:
-        raise CoordinateError(f"Dec en grados debe estar en [-90, 90]: {value!r}")
+        raise CoordinateError("Dec en grados debe estar en [-90, 90]")
     if degrees == 90.0 and (minutes or seconds):
         raise CoordinateError("Dec = 90° solo admite 0 minutos y 0 segundos")
     magnitude = degrees + minutes / 60.0 + seconds / 3600.0

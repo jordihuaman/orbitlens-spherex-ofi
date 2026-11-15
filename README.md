@@ -13,13 +13,16 @@ máscaras y longitudes de onda.
 
 ## Estado verificado — 2026-11-14
 
-**Actualización pipeline 0.1.5:** cuotas, snapshots de trabajos, presupuesto
-temporal/disco e importación de secuencias locales. Los centros de los cinco
-presets se corrigieron con catálogo/PM a J2026: los recortes anteriores de
-Barnard/WISE 0855 no incluían sus posiciones predichas. Hay tres frames reales
-por campo en la selección actual (cuatro paquetes SIA partial y R Draconis por
-importación local explícita). Ver [ASTROMETRIA.md](ASTROMETRIA.md),
-[DEPLOYMENT.md](DEPLOYMENT.md) y [brechas pendientes](BRECHAS_REQUISITOS.md).
+**Actualización pipeline 0.1.6:** refuerzo de seguridad para exposición pública
+(cabeceras/CSP, allowlist de host, límites de cuerpo, SSRF sin redirects,
+auditorías de dependencias, contenedor endurecido y pruebas de regresión). Se
+mantienen cuotas, snapshots, presupuesto temporal/disco e importación local. Los
+centros de los cinco presets se corrigieron con catálogo/PM a J2026: los recortes
+anteriores de Barnard/WISE 0855 no incluían sus posiciones predichas. Hay tres
+frames reales por campo en la selección actual (cuatro paquetes SIA partial y R
+Draconis por importación local explícita). Ver [ASTROMETRIA.md](ASTROMETRIA.md),
+[SEGURIDAD.md](SEGURIDAD.md), [DEPLOYMENT.md](DEPLOYMENT.md) y
+[brechas pendientes](BRECHAS_REQUISITOS.md).
 
 Correcciones posteriores (pipeline 0.1.1): RA de Epsilon Indi B y selección
 estricta de un solo detector. Estado del recorte real y entregables de Dany y
@@ -31,8 +34,9 @@ entorno es:
 
 | Comprobación | Resultado |
 | --- | --- |
-| Suite Python (`pytest`) | **166 pruebas pasan**, incluidos cuotas/proxy, reinicio, importación, disco y propagación tangencial |
-| Navegador real Edge / Playwright | **30 casos pasan**, escritorio y viewport móvil; sintético/proveedor controlado |
+| Suite Python (`pytest`) | **215 pruebas pasan**, incluidas cuotas/proxy, reinicio, importación, disco, SSRF, CSP y propagación tangencial |
+| Navegador real Edge / Playwright | **34 casos pasan**, escritorio y viewport móvil; incluye axe WCAG y CSP |
+| Seguridad de dependencias | `pip-audit` y `npm audit`: **0 vulnerabilidades conocidas**; Bandit sin hallazgos |
 | Build frontend (`tsc --noEmit && vite build`) | Correcto, genera `frontend/dist` |
 | Arranque `uvicorn api:app` | `/api/health`, `/api/presets` y `/` responden 200 |
 | Contrato resultado → manifiesto → PNG/FITS | Sintético y real: cinco secuencias reproducibles en Edge, 45 artefactos HTTP 200 |
@@ -56,8 +60,10 @@ etiquetado**. No son datos de SPHEREx.
 - Node.js 20+ (probado con Node 26.13.0 y npm 11.20.0)
 - Acceso a Internet solo para consultar IRSA; las pruebas no usan red
 
-Versiones fijadas en `requirements.txt`: FastAPI 0.115.6, uvicorn 0.34.0,
-httpx 0.28.1, Astropy 7.0.0, NumPy 2.2.1, reproject 0.14.0 y Pillow 11.1.0.
+Versiones fijadas en `requirements.txt`: FastAPI 0.163.0, Starlette 1.10.0,
+uvicorn 0.34.0, httpx 0.28.1, Astropy 7.0.0, NumPy 2.2.1, reproject 0.14.0 y
+Pillow 13.0.0. `requirements-dev.txt` fija pytest 9.2.0, Ruff 0.17.5,
+pip-audit 2.10.1 y Bandit 1.9.4.
 
 ## Instalación
 
@@ -121,6 +127,28 @@ npm --prefix frontend run test:e2e
 Playwright arranca y detiene un servidor local de pruebas con datos sintéticos
 aislados. Resultados, capturas y límites en `QA_EQUIPO.md`.
 
+## Seguridad
+
+Controles, modelo de amenazas, riesgos residuales y checklist de publicación:
+[SEGURIDAD.md](SEGURIDAD.md). La política de divulgación está en
+[SECURITY.md](SECURITY.md). El perfil público de referencia usa Caddy/Nginx con
+TLS en [deploy/](deploy/).
+
+```powershell
+.\.venv\Scripts\python.exe -m pip_audit -r requirements.txt -r requirements-dev.txt --strict
+.\.venv\Scripts\python.exe -m bandit -q -r api.py orbitlens scripts -ll
+npm audit --audit-level=high --prefix frontend
+```
+
+En desarrollo la documentación interactiva está desactivada por defecto. Para
+verla solo en local: `$env:ORBITLENS_ENABLE_DOCS='true'` antes de arrancar. En
+producción debe permanecer desactivada; el perfil público falla si se habilita.
+
+No se declara certificación ISO, SOC 2, ASVS ni pentest. Los controles son
+verificables en código y pruebas, pero requieren auditoría externa y controles del
+host (WAF/CDN, monitorización, respaldos, respuesta a incidentes) antes de una
+exposición internacional.
+
 ## Resultado sintético para probar la UI
 
 ```powershell
@@ -169,8 +197,9 @@ Un `empty` significa «sin frames utilizables», no «el objeto no existe».
   que el contenido descargado sea realmente FITS.
 - El manifiesto se escribe de forma atómica, se valida y cada archivo se indexa
   con SHA-256 y tamaño.
-- Los presets usan coordenadas J2000 aproximadas y están marcados
-  `verified=False`; deben revisarse antes de afirmar identificación.
+- Los presets usan coordenadas de catálogo propagadas a J2026 y están marcados
+  `verified=False`; deben revisarse antes de afirmar identificación. Un píxel
+  válido o la posición dentro del frame no confirman detección.
 
 ## Documentación
 

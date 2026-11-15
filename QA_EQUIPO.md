@@ -1,9 +1,11 @@
 # QA del equipo — ejecución asistida, 2026-11-14
 
-## Actualización pipeline 0.1.5
+## Actualización pipeline 0.1.6
 
-166 pruebas Python, 30/30 E2E Edge (escritorio y viewport móvil), Ruff y build
-correctos. Los presets de QA ya usan centros J2026 derivados de catálogo/PM.
+215 pruebas Python, 34/34 E2E Edge (escritorio y viewport móvil), Ruff y build
+correctos. Incluye auditoría axe WCAG, CSP, allowlist de host, límites de cuerpo
+y pruebas SSRF; `pip-audit`, Bandit y `npm audit` sin hallazgos. Los presets de QA
+ya usan centros J2026 derivados de catálogo/PM.
 Informe actual: `evidencias/operacion/playwright-results.json`.
 Las diez capturas de los cinco paquetes reales vigentes y comprobación de
 45 descargas están en `evidencias/astrometria/corrected-fields/`.

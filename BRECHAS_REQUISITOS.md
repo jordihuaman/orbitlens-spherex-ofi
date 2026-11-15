@@ -1,4 +1,4 @@
-# Contraste de requisitos y ejecución — pipeline 0.1.5
+# Contraste de requisitos y ejecución — pipeline 0.1.6
 
 Revisión: 2026-11-14. Base: `PLAN.md` (O1–O4),
 `PROTOCOLO_CONSTRUCCION.md` (§§4–7) y evidencia de esta copia.
@@ -12,7 +12,8 @@ La presentación y el video están aplazados por el usuario.
 | O2: entrada RA/Dec | Implementado y probado | API valida decimales/sexagesimales y rangos; QA de navegador controlada. No implica resolver astrometría de presets. |
 | O3: secuencia real de un mismo campo / H2 | Implementado, límites explícitos | Tres frames por campo con centrado J2026: cuatro paquetes SIA partial y uno de importación local ready de construcción. Ver `ASTROMETRIA.md`; no son mediciones científicas. |
 | O4: cinco campos | Revisados técnicamente y por catálogo | Los centros anteriores de Barnard/WISE 0855 no incluían sus posiciones predichas; se corrigieron y regeneraron. En los 15 frames seleccionados la posición predicha está dentro, pero muchos píxeles están enmascarados. Sin identificación/detección confirmada. |
-| H0: base reproducible | Verificado localmente | 166 pruebas Python, 30 E2E, Ruff y build; CI sin IRSA añadido, no se declara su ejecución remota antes de comprobarla. |
+| H0: base reproducible | Verificado localmente | 215 pruebas Python, 34 E2E, Ruff, build, `pip-audit`, Bandit y `npm audit`; CI sin IRSA añadido. La ejecución remota del commit actual debe comprobarse. |
+| Seguridad para exposición pública | Implementada y probada localmente, no certificada | CSP/cabeceras, allowlist de host, límites de cuerpo, CSRF por origen, cuotas, SSRF sin redirects, FITS acotado, rutas/symlinks, errores genéricos, logs sin IP, contenedor no root/solo lectura y auditorías de dependencias. Faltan pentest, WAF/anti-DDoS, monitorización, respaldos probados y despliegue real. Ver `SEGURIDAD.md`. |
 | H1: primer dato real actual | Evidencia parcial suficiente para lector/visor | FITS DR1 original del tutorial inspeccionado y abierto en Edge; falta contrastar píxel/λ con Firefly/tutorial y revisión astrométrica de objetivos. |
 | H3: recorrido web | Verificado localmente con caché real | Formulario → pipeline → tres frames → reproducción → nueve descargas 200 → reinicio → trabajo/resultado recuperados. Metadatos SIA reales en caché, recortes de IRSA; un intento anterior agotó timeout y se conserva. Ver `evidencias/operacion/`. |
 | H5: presentación/video/envío | Aplazado | No bloquea este bloque de ingeniería. No se declara enviado. |
@@ -38,6 +39,11 @@ La presentación y el video están aplazados por el usuario.
 | Procedencia HTTP | ETag/Last-Modified se conservan si el servidor los devuelve, sin inventarlos para archivos anteriores. |
 | Importación local | Varios MEF con OBSID/tiempos/detector del FITS, URLs y hashes; orden temporal y escala común sin red. R Draconis D6 reimportado explícitamente, no fallback oculto. |
 | Presets recuperables | Índice persistente validado por integridad y centro actual; la UI ofrece abrir el resultado guardado e identifica el método. No anuncia sintéticos como resultados reales. |
+| Exposición HTTP | CSP estricta, HSTS en producción, allowlist de `Host`, límite de 16 KiB, timeout de cuerpo, rechazo de `Content-Encoding` y delimitación ambigua, CSRF por `Origin`/`Sec-Fetch-Site`, cuotas por IP y `Retry-After`. Pruebas en `tests/test_http_security.py`. |
+| SSRF y redirecciones | Solo HTTPS, host exacto, puerto 443, sin credenciales/fragmentos ni redirects automáticos; validación antes de la red. Prueba con `MockTransport` y destino de metadata. |
+| FITS hostil | Límites de HDU/ejes/píxeles/bytes/heap antes de cargar arrays; rechazo de gzip completo; MEF/WCS/detector/tiempo validados. |
+| Errores y logs | Mensajes públicos sin traceback/rutas/URLs; `request_id`; logs JSON sin IP, query ni cabeceras; acceso Uvicorn desactivado. |
+| Cadena de suministro | Versiones fijadas, `pip-audit`, Bandit, `npm audit`, Dependabot y trabajo CI `security`. Contenedor no root, solo lectura, `cap_drop: ALL`, límites y healthcheck. |
 
 Pruebas principales: `tests/test_irsa_client.py`, `tests/test_service_reliability.py`,
 `tests/test_api.py`, `frontend/e2e/orbitlens.spec.ts`. Las fixtures sintéticas no
@@ -46,8 +52,10 @@ son evidencia científica. La adquisición real se registra separadamente.
 ## Trabajo pendiente priorizado
 
 1. **Publicación:** elegir/proveer acceso al host y volumen persistente; Docker,
-   Compose, arranque y guía listos, pero no hay Docker instalado ni hosting
-   autorizado/configurado en esta máquina. TLS/proxy y teléfono físico pendientes.
+   Compose, Caddy/Nginx y guía listos, pero no hay Docker instalado ni hosting
+   autorizado/configurado en esta máquina. TLS/proxy, WAF/anti-DDoS,
+   monitorización, respaldos y teléfono físico pendientes. Antes de anunciar,
+   ejecutar pentest/ZAP, SSL Labs y Observatory; ver `SEGURIDAD.md`.
 2. **Validación científica:** revisar errores de catálogo/épocas y binariedad;
    contrastar λ con Firefly/calibraciones, no solo con el mismo lector. Un píxel
    válido no confirma fuente; muchas posiciones predichas están enmascaradas.

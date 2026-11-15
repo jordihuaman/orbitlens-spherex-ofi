@@ -18,6 +18,7 @@ from astropy.io.votable import parse as parse_votable
 
 from .config import Settings
 from .execution import check_deadline, request_timeout, retry_delay, wait_retry
+from .network_policy import validate_remote_url
 
 __all__ = [
     "IrsaError",
@@ -77,14 +78,11 @@ class SiaRecord:
         if not (0 < size_deg <= 5):
             raise IrsaError(f"tamaño de recorte fuera de rango: {size_deg}")
 
+        try:
+            validate_remote_url(self.access_url, allowed_hosts or ("irsa.ipac.caltech.edu",))
+        except ValueError as exc:
+            raise IrsaError(str(exc)) from exc
         parts = urlsplit(self.access_url)
-        if parts.scheme not in {"http", "https"}:
-            raise IrsaError(f"URL de acceso no soportada: {self.access_url!r}")
-        if allowed_hosts is not None and parts.hostname not in allowed_hosts:
-            raise IrsaError(
-                f"host de datos no permitido: {parts.hostname!r}; "
-                f"configurados: {allowed_hosts!r}"
-            )
 
         query = [
             (key, value)
@@ -269,7 +267,7 @@ def _get_with_retries(
         check_deadline()
         retry_after = None
         try:
-            with client.stream("GET", url, params=params, timeout=request_timeout(client)) as stream:
+            with client.stream("GET", url, params=params, timeout=request_timeout(client), follow_redirects=False) as stream:
                 chunks = []
                 size = 0
                 for chunk in stream.iter_bytes(65536):
@@ -317,6 +315,7 @@ def query_collection(
         radius_deg,
         maxrec=maxrec if maxrec is not None else settings.search_maxrec,
     )
+    validate_remote_url(settings.sia_url, ("irsa.ipac.caltech.edu",))
     response = _get_with_retries(
         client,
         settings.sia_url,
