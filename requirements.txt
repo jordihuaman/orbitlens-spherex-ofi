@@ -1,10 +1,10 @@
 # Dependencias de ejecución — OrbitLens SPHEREx
 # Versiones fijadas para reproducibilidad (Python 3.12).
-fastapi==0.163.0
+fastapi==0.165.0
 starlette==1.10.0
-uvicorn[standard]==0.34.0
+uvicorn[standard]==0.54.0
 httpx==0.28.1
-astropy==7.0.0
-numpy==2.2.1
-reproject==0.14.0
+astropy==8.0.3
+numpy==2.5.5
+reproject==0.21.0
 pillow==13.0.0
